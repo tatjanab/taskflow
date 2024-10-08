@@ -1,16 +1,26 @@
-// app/layout.tsx
-import { Providers } from './providers'
+import Sidebar from "./components/sidebar";
+import { Providers } from "./providers";
+import "./globals.css";
+import TopBar from "./components/TopBar";
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode,
+  children: React.ReactNode;
 }) {
   return (
     <html lang='en'>
       <body>
-        <Providers>{children}</Providers>
+        <Providers>
+          <div className='flex flex-row'>
+            <Sidebar />
+            <div className="w-full">
+              <TopBar />
+              {children}
+            </div>
+          </div>
+        </Providers>
       </body>
     </html>
-  )
+  );
 }
