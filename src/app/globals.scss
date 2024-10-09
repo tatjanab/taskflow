@@ -14,9 +14,15 @@
   }
 }
 
-// body {
-//   font-family: "Arimo", sans-serif !important;
-// }
+body {
+  color: #333;
+}
+
+a {
+  &:hover {
+    text-decoration: none !important;
+  }
+}
 
 @layer utilities {
   .text-balance {

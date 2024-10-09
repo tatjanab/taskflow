@@ -29,11 +29,11 @@ function Dashboard() {
         <Tbody>
           {testData.map((item) => {
             return (
-              <Tr key={item.id}>
+              <Tr key={item.id} className='hover:bg-slate-100'>
                 <Td width='40px'>{item.id}</Td>
                 <Td>{item.summary}</Td>
                 <Td>
-                  <span className='rounded-sm bg-green-200 p-1 font-bold text-green-700'>
+                  <span className='rounded-sm bg-green-100 p-1 font-medium text-green-700'>
                     {item.status}
                   </span>
                 </Td>
