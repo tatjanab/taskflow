@@ -18,27 +18,35 @@ function Dashboard() {
       <Table className='text-xs'>
         <Thead>
           <Tr className='text-sm'>
-            <Th>ID #</Th>
+            <Th width='40px'>ID #</Th>
             <Th>Summary</Th>
             <Th>Status</Th>
             <Th>Assignee</Th>
+            <Th>Priority</Th>
+            <Th>Date</Th>
           </Tr>
         </Thead>
         <Tbody>
-            {testData.map(item => {
-                return (
-                  <Tr key={item.id}>
-                    <Td width="50px">{item.id}</Td>
-                    <Td>{item.summary}</Td>
-                    <Td>
-                      <span className='rounded-sm bg-green-200 p-1 font-bold text-green-700'>
-                        {item.status}
-                      </span>
-                    </Td>
-                    <Td>{item.assignee}</Td>
-                  </Tr>
-                )
-            })}
+          {testData.map((item) => {
+            return (
+              <Tr key={item.id}>
+                <Td width='40px'>{item.id}</Td>
+                <Td>{item.summary}</Td>
+                <Td>
+                  <span className='rounded-sm bg-green-200 p-1 font-bold text-green-700'>
+                    {item.status}
+                  </span>
+                </Td>
+                <Td>{item.assignee}</Td>
+                <Td>{item.priority}</Td>
+                <Td>
+                  <span className='rounded-sm bg-slate-100 p-1 font-medium text-slate-500'>
+                    {item.date}
+                  </span>
+                </Td>
+              </Tr>
+            );
+          })}
         </Tbody>
       </Table>
     </TableContainer>

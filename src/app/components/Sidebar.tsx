@@ -20,7 +20,11 @@ import { ExternalLinkIcon } from "@chakra-ui/icons";
 
 function Sidebar() {
   return (
-    <Box height='100vh' padding='20px' className='flex flex-col bg-slate-200'>
+    <Box
+      height='100vh'
+      padding='20px'
+      className='bg-gray-primary flex flex-col'
+    >
       <Link>Logo</Link>
       <Link>Dashboard</Link>
       <Link>Settings</Link>

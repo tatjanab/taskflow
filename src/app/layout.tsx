@@ -1,6 +1,6 @@
-import Sidebar from "./components/sidebar";
+import Sidebar from "./components/Sidebar";
 import { Providers } from "./providers";
-import "./globals.css";
+import "./globals.scss";
 import TopBar from "./components/TopBar";
 
 export default function RootLayout({
@@ -10,11 +10,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body>
+      <body className='font-mainFont'>
         <Providers>
           <div className='flex flex-row'>
             <Sidebar />
-            <div className="w-full">
+            <div className='w-full'>
               <TopBar />
               {children}
             </div>
