@@ -24,6 +24,10 @@ a {
   }
 }
 
+p {
+  @apply text-zinc-500;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
