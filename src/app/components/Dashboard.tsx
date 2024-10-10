@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import {
   Table,
@@ -8,9 +8,9 @@ import {
   Th,
   Td,
   TableContainer,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react'
 
-import testData from "../mock/testData";
+import testData from '../mock/testData'
 
 function Dashboard() {
   return (
@@ -45,12 +45,12 @@ function Dashboard() {
                   </span>
                 </Td>
               </Tr>
-            );
+            )
           })}
         </Tbody>
       </Table>
     </TableContainer>
-  );
+  )
 }
 
-export default Dashboard;
+export default Dashboard
