@@ -1,9 +1,9 @@
-"use client";
+'use client'
 
-import { Box, Link } from "@chakra-ui/react";
+import { Box, Link } from '@chakra-ui/react'
 
-import { DragHandleIcon, PlusSquareIcon, SunIcon } from "@chakra-ui/icons";
-import { Table, Settings, Command } from "react-feather";
+import { DragHandleIcon, PlusSquareIcon, SunIcon } from '@chakra-ui/icons'
+import { Table, Settings, Command } from 'react-feather'
 
 function Sidebar() {
   return (
@@ -26,7 +26,7 @@ function Sidebar() {
         </div>
       </div>
     </Box>
-  );
+  )
 }
 
-export default Sidebar;
+export default Sidebar

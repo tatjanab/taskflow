@@ -1,5 +1,5 @@
-import { Link } from "@chakra-ui/react";
-import { User } from "react-feather";
+import { Link } from '@chakra-ui/react'
+import { User } from 'react-feather'
 
 function TopBar() {
   return (
@@ -15,7 +15,7 @@ function TopBar() {
         </p>
       </div>
     </>
-  );
+  )
 }
 
-export default TopBar;
+export default TopBar
