@@ -1,7 +1,12 @@
-import Sidebar from './components/Sidebar'
-import { Providers } from './providers'
-import './globals.scss'
-import TopBar from './components/TopBar'
+import Sidebar from '../components/Sidebar'
+import { Providers } from '../providers'
+import '../globals.scss'
+import TopBar from '../components/TopBar'
+
+export const metadata = {
+  title: 'Taskflow',
+  description: 'Tasks managed easy',
+}
 
 export default function RootLayout({
   children,
