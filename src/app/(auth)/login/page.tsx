@@ -41,7 +41,9 @@ function Login() {
           >
             Log in
           </button>
-          <p className='text-xs mt-4'>Don't have an account? Sign up here.</p>
+          <p className='text-xs mt-4'>
+            Don&apos;t have an account? Sign up here.
+          </p>
         </form>
       </div>
     </div>
