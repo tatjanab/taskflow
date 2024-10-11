@@ -1,8 +1,6 @@
 'use client'
 
 import { Box, Link } from '@chakra-ui/react'
-
-import { DragHandleIcon, PlusSquareIcon, SunIcon } from '@chakra-ui/icons'
 import { Table, Settings, Command } from 'react-feather'
 
 function Sidebar() {
@@ -13,7 +11,10 @@ function Sidebar() {
       </Link>
       <div className='flex h-full flex-col justify-between pb-4'>
         <div className='main-nav mt-6 flex flex-col text-xs'>
-          <Link className='flex flex-row items-center rounded-sm px-6 py-2 hover:bg-sky-100'>
+          <Link
+            href='/'
+            className='flex flex-row items-center rounded-sm px-6 py-2 hover:bg-sky-100'
+          >
             <Table height={15} /> <span>Dashboard</span>
           </Link>
           <Link className='flex flex-row items-center rounded-sm px-6 py-2 hover:bg-sky-100'>

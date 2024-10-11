@@ -5,7 +5,7 @@ function TopBar() {
   return (
     <>
       <div className='bg-gray-primary flex flex-row justify-end px-4 py-2'>
-        <Link className='flex flex-row items-center text-xs'>
+        <Link href='/profile' className='flex flex-row items-center text-xs'>
           <User className='mr-1' size={15} /> <span>Name Lastname</span>
         </Link>
       </div>
