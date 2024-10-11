@@ -28,6 +28,12 @@ p {
   @apply text-zinc-500;
 }
 
+.input-row {
+  input {
+    border: solid 1px #e4e4e4;
+  }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
