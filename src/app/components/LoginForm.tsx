@@ -1,12 +1,16 @@
 'use client'
 import { Input } from '@chakra-ui/react'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { Command } from 'react-feather'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { z } from 'zod'
 
-type FormFields = {
-  email: string
-  password: string
-}
+const schema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8),
+})
+
+type FormFields = z.infer<typeof schema>
 
 function LoginForm() {
   const {
@@ -14,7 +18,9 @@ function LoginForm() {
     handleSubmit,
     formState: { errors, isSubmitting },
     setError,
-  } = useForm<FormFields>()
+  } = useForm<FormFields>({
+    resolver: zodResolver(schema),
+  })
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
     try {
@@ -43,16 +49,7 @@ function LoginForm() {
               Email address
             </label>
             <Input
-              {...register('email', {
-                required: 'Email address is required',
-                validate: (value) => {
-                  if (!value.includes('@')) {
-                    return 'Email must include @'
-                  }
-
-                  return true
-                },
-              })}
+              {...register('email')}
               name='email'
               type='text'
               height='30px'
@@ -67,13 +64,7 @@ function LoginForm() {
               Password
             </label>
             <Input
-              {...register('password', {
-                required: 'Password is required',
-                minLength: {
-                  value: 8,
-                  message: 'Password must have at least  8 characters',
-                },
-              })}
+              {...register('password')}
               name='password'
               type='password'
               height='30px'
