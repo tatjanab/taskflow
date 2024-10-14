@@ -11,10 +11,16 @@ export default async function handler(
 
     res.status(200).json({ success: true })
   } catch (error) {
-    if (error.type === 'CredentialsSignin') {
-      res.status(401).json({ error: 'Invalid credentials' })
+    // Narrow down error type safely
+    if (error instanceof Error) {
+      if ((error as any).type === 'CredentialsSignin') {
+        // If error type exists and is 'CredentialsSignin'
+        res.status(401).json({ error: 'Invalid credentials' })
+      } else {
+        res.status(500).json({ error: error.message || 'Something went wrong' })
+      }
     } else {
-      res.status(500).json({ error: 'Something went wrong' })
+      res.status(500).json({ error: 'Unknown error occurred' })
     }
   }
 }
