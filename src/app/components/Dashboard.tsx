@@ -10,7 +10,7 @@ import {
   TableContainer,
 } from '@chakra-ui/react'
 
-import testData from '../mock/testData'
+import testData from '@/mock/testData'
 
 function Dashboard() {
   return (
