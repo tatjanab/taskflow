@@ -1,7 +1,6 @@
 import LoginForm from '@/components/LoginForm'
 import { Link } from '@chakra-ui/react'
 
-
 function Login() {
   return (
     <>
