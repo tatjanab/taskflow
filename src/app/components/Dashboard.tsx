@@ -1,5 +1,7 @@
 'use client'
 
+import { useEffect } from 'react'
+
 import {
   Table,
   Thead,
@@ -13,6 +15,19 @@ import {
 import testData from '@/mock/testData'
 
 function Dashboard() {
+  useEffect(() => {
+    const fetchTasks = async () => {
+      const res = await fetch('/api/tasks')
+      const data = await res.json()
+
+      console.log(data)
+
+      return data.tasks
+    }
+
+    fetchTasks()
+  }, [])
+
   return (
     <TableContainer width='100%' className='py-4'>
       <Table className='text-xs'>
