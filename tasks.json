@@ -1,0 +1,142 @@
+[
+  {
+    "_id": 1,
+    "type": "Feature",
+    "summary": "Set up Next.js project",
+    "status": "Done",
+    "details": {
+      "assignee": "Iris Ribic",
+      "priority": "High",
+      "labels": ["Setup", "Project", "Feature"],
+      "creationDate": "2024-10-15T10:00:00Z",
+      "completionDate": "2024-10-16T10:00:00Z"
+    },
+    "description": "Initialize the Next.js project for the task manager app using the latest version of Next.js."
+  },
+  {
+    "_id": 2,
+    "type": "Feature",
+    "summary": "Implement task creation form",
+    "status": "In Progress",
+    "details": {
+      "assignee": "Iris Ribic",
+      "priority": "High",
+      "labels": ["Feature", "Form", "UI"],
+      "creationDate": "2024-10-17T12:00:00Z",
+      "completionDate": null
+    },
+    "description": "Create a form that allows users to add tasks, including fields for title, description, priority, and due date."
+  },
+  {
+    "_id": 3,
+    "type": "Improvement",
+    "summary": "Add validation to the task form",
+    "status": "Open",
+    "details": {
+      "assignee": "Iris Ribic",
+      "priority": "Medium",
+      "labels": ["Validation", "Form", "Improvement"],
+      "creationDate": "2024-10-18T09:00:00Z",
+      "completionDate": null
+    },
+    "description": "Use Zod to add validation for task form fields to ensure correct data entry by users."
+  },
+  {
+    "_id": 4,
+    "type": "Task",
+    "summary": "Design task list UI",
+    "status": "Open",
+    "details": {
+      "assignee": "Iris Ribic",
+      "priority": "Medium",
+      "labels": ["UI", "Design", "Feature"],
+      "creationDate": "2024-10-18T10:30:00Z",
+      "completionDate": null
+    },
+    "description": "Create the task list UI where users can view all tasks, filter by status, and see priority."
+  },
+  {
+    "_id": 5,
+    "type": "Feature",
+    "summary": "Implement task editing functionality",
+    "status": "Open",
+    "details": {
+      "assignee": "Iris Ribic",
+      "priority": "High",
+      "labels": ["Feature", "Edit", "UI"],
+      "creationDate": "2024-10-19T08:00:00Z",
+      "completionDate": null
+    },
+    "description": "Allow users to edit existing tasks, including updating the task's title, description, and priority."
+  },
+  {
+    "_id": 6,
+    "type": "Improvement",
+    "summary": "Enhance task filtering options",
+    "status": "In Progress",
+    "details": {
+      "assignee": "Iris Ribic",
+      "priority": "Low",
+      "labels": ["Filtering", "Improvement"],
+      "creationDate": "2024-10-20T09:30:00Z",
+      "completionDate": null
+    },
+    "description": "Improve the task filtering options by allowing users to filter tasks by status, priority, and due date."
+  },
+  {
+    "_id": 7,
+    "type": "Feature",
+    "summary": "Add task deletion functionality",
+    "status": "Open",
+    "details": {
+      "assignee": "Iris Ribic",
+      "priority": "High",
+      "labels": ["Feature", "Delete"],
+      "creationDate": "2024-10-21T07:45:00Z",
+      "completionDate": null
+    },
+    "description": "Implement the ability to delete tasks from the task manager. Ensure confirmation before deletion."
+  },
+  {
+    "_id": 8,
+    "type": "Improvement",
+    "summary": "Refactor task manager state management",
+    "status": "Open",
+    "details": {
+      "assignee": "Iris Ribic",
+      "priority": "Medium",
+      "labels": ["Refactor", "State", "Improvement"],
+      "creationDate": "2024-10-21T10:00:00Z",
+      "completionDate": null
+    },
+    "description": "Refactor the state management in the task manager app to improve performance and clarity."
+  },
+  {
+    "_id": 9,
+    "type": "Task",
+    "summary": "Write tests for task creation",
+    "status": "Open",
+    "details": {
+      "assignee": "Iris Ribic",
+      "priority": "Medium",
+      "labels": ["Testing", "Task"],
+      "creationDate": "2024-10-22T08:00:00Z",
+      "completionDate": null
+    },
+    "description": "Write unit and integration tests to ensure the task creation form works correctly under various conditions."
+  },
+  {
+    "_id": 10,
+    "type": "Buy",
+    "summary": "Purchase UI library",
+    "status": "Open",
+    "details": {
+      "assignee": "Iris Ribic",
+      "priority": "Low",
+      "labels": ["Purchase", "UI"],
+      "creationDate": "2024-10-23T12:30:00Z",
+      "completionDate": null
+    },
+    "description": "Buy a UI component library to accelerate the development of the task manager app's UI."
+  }
+]
