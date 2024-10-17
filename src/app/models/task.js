@@ -2,6 +2,10 @@ import mongoose from 'mongoose'
 
 // Define the schema
 const TaskSchema = new mongoose.Schema({
+  _id: {
+    type: Number,
+    required: true,
+  },
   type: {
     type: String,
     enum: ['Task', 'Buy', 'Feature', 'Improvement'],

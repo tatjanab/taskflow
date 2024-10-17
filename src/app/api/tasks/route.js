@@ -17,3 +17,10 @@ export const GET = async () => {
     return new Response('Failed to fetch all tasks', { status: 500 })
   }
 }
+
+export const POST = async (request) => {
+  try {
+  } catch (error) {
+    return new Response('Failed to post a new task', { status: 500 })
+  }
+}
