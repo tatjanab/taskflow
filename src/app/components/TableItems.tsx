@@ -1,7 +1,8 @@
 import { Tr, Td } from '@chakra-ui/react'
 import { format } from 'date-fns' // Optional, for better formatting
+import { TaskItem } from '@/models/types'
 
-function TableItems({ taskList }) {
+function TableItems({ taskList }: TaskItem[]) {
   const taskListSorted = taskList.sort((a, b) => a._id - b._id)
   return (
     <>
