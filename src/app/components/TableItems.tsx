@@ -1,8 +1,13 @@
 import { Tr, Td } from '@chakra-ui/react'
 import { format } from 'date-fns' // Optional, for better formatting
-import { TaskItem } from '@/models/types'
+import taskSchema from '@/models/zod_schema'
+import { z } from 'zod'
 
-function TableItems({ taskList }: TaskItem[]) {
+type TaskLists = {
+  taskList: z.infer<typeof taskSchema>
+}
+
+function TableItems({ taskList }: TaskLists) {
   const taskListSorted = taskList.sort((a, b) => a._id - b._id)
   return (
     <>
