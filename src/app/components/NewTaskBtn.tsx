@@ -43,6 +43,9 @@ function NewTaskBtn() {
 
     if (response.ok) {
       console.log('Task created', response.message)
+      onClose()
+    } else {
+      console.log('Error creating task')
     }
   }
   return (
