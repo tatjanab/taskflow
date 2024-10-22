@@ -13,8 +13,12 @@ import {
 } from '@chakra-ui/react'
 
 import { useForm, SubmitHandler } from 'react-hook-form'
-// import taskSchema from '@/models/zod_schema'
-import { TaskItem } from '@/models/types'
+import taskSchema from '@/models/zod_schema'
+import { z } from 'zod'
+// import { TaskItem } from '@/models/types'
+import { zodResolver } from '@hookform/resolvers/zod'
+
+type addTaskFields = z.infer<typeof taskSchema>
 
 function NewTaskBtn() {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -24,9 +28,12 @@ function NewTaskBtn() {
     handleSubmit,
     formState: { errors, isSubmitting },
     setError,
-  } = useForm<TaskItem>({})
+  } = useForm<addTaskFields>({
+    resolver: zodResolver(taskSchema),
+    mode: 'onChange',
+  })
 
-  const handleAddTask: SubmitHandler<TaskItem> = async (data) => {
+  const handleAddTask: SubmitHandler<addTaskFields> = async (data) => {
     console.log('submitting')
     console.log(JSON.stringify(data))
 
@@ -68,11 +75,16 @@ function NewTaskBtn() {
           <ModalBody>
             <form onSubmit={handleSubmit(handleAddTask)}>
               <div>
-                <div>
+                <div className='flex flex-col mb-3 w-1/2'>
+                  <label className='text-xs mb-1'>Task ID</label>
                   <input
                     {...register('_id')}
+                    type='number'
                     className='text-xs border-gray-400 border p-1'
                   />
+                  {errors._id && (
+                    <p className='text-xs text-red-600'>{errors._id.message}</p>
+                  )}
                 </div>
                 <div className='flex flex-col mb-3 w-1/2'>
                   <label className='text-xs mb-1'>Summary</label>
@@ -81,7 +93,11 @@ function NewTaskBtn() {
                     {...register('summary')}
                     className='text-xs border-gray-400 border p-1'
                   />
-                  {errors.summary && <p>{errors.summary.message}</p>}
+                  {errors.summary && (
+                    <p className='text-xs text-red-600'>
+                      {errors.summary.message}
+                    </p>
+                  )}
                 </div>
                 <div className='flex flex-row gap-4'>
                   <div className='flex flex-col mb-3 w-1/2'>
@@ -95,7 +111,11 @@ function NewTaskBtn() {
                       <option value='Task'>Task</option>
                       <option value='Bug'>Bug</option>
                     </select>
-                    {errors.type && <p>{errors.type.message}</p>}
+                    {errors.type && (
+                      <p className='text-xs text-red-600'>
+                        {errors.type.message}
+                      </p>
+                    )}
                   </div>
                   <div className='flex flex-col mb-3 w-1/2'>
                     <label className='text-xs mb-1'>Priority</label>
@@ -107,9 +127,6 @@ function NewTaskBtn() {
                       <option value='Medium'>Medium</option>
                       <option value='Low'>Low</option>
                     </select>
-                    {errors.details?.priority && (
-                      <p>{errors.details?.priority.message}</p>
-                    )}
                   </div>
                 </div>
 
@@ -123,7 +140,6 @@ function NewTaskBtn() {
                     <option value='In progress'>In progress</option>
                     <option value='Done'>Done</option>
                   </select>
-                  {errors.status && <p>{errors.status.message}</p>}
                 </div>
                 <div className='flex flex-col mb-3 w-1/2'>
                   <label className='text-xs mb-1'>Assignee</label>
@@ -133,7 +149,9 @@ function NewTaskBtn() {
                     className='text-xs border-gray-400 border p-1'
                   />
                   {errors.details?.assignee && (
-                    <p>{errors.details?.assignee.message}</p>
+                    <p className='text-xs text-red-600'>
+                      {errors.details?.assignee.message}
+                    </p>
                   )}
                 </div>
               </div>
@@ -142,12 +160,15 @@ function NewTaskBtn() {
                 <label className='text-xs'>Description</label>
                 <textarea
                   {...register('description')}
-                  className='border-gray-400 border p-1'
+                  className='border-gray-400 border p-1 text-xs'
                 ></textarea>
                 {errors.description && <p>{errors.description.message}</p>}
               </div>
               <Button
-                colorScheme='green'
+                colorScheme='blue'
+                size='sm'
+                width='100px'
+                borderRadius='0'
                 type='submit'
                 isLoading={isSubmitting}
               >

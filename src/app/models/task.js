@@ -8,7 +8,7 @@ const TaskSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ['Task', 'Buy', 'Feature', 'Improvement'],
+    enum: ['Task', 'Bug', 'Feature', 'Improvement'],
     required: true,
   },
   summary: {
