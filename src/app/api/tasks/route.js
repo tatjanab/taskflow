@@ -32,9 +32,9 @@ export const POST = async (request) => {
       details: {
         assignee: body.details.assignee,
         priority: body.details.priority,
-        labels: body.priority.labels,
-        creationDate: body.details.creationDate,
-        completionDate: body.details.completionDate,
+        labels: body.detils?.labels,
+        creationDate: body.details?.creationDate,
+        completionDate: body.details?.completionDate,
       },
       description: body.description,
     })

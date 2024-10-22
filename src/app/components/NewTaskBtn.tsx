@@ -29,6 +29,21 @@ function NewTaskBtn() {
   const handleAddTask: SubmitHandler<TaskItem> = async (data) => {
     console.log('submitting')
     console.log(JSON.stringify(data))
+
+    const res = await fetch('/api/tasks', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+
+      body: JSON.stringify(data),
+    })
+
+    const response = await res.json()
+
+    if (response.ok) {
+      console.log('Task created', response.message)
+    }
   }
   return (
     <>
@@ -50,6 +65,12 @@ function NewTaskBtn() {
           <ModalBody>
             <form onSubmit={handleSubmit(handleAddTask)}>
               <div>
+                <div>
+                  <input
+                    {...register('_id')}
+                    className='text-xs border-gray-400 border p-1'
+                  />
+                </div>
                 <div className='flex flex-col mb-3 w-1/2'>
                   <label className='text-xs mb-1'>Summary</label>
                   <input
