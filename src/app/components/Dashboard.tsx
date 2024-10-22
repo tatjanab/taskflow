@@ -18,9 +18,14 @@ function Dashboard() {
   })
 
   return (
-    <TableContainer width='100%' className='p-4'>
+    <TableContainer
+      width='100%'
+      className='px-4'
+      maxH='400px'
+      overflowY='scroll'
+    >
       <Table className='text-xs'>
-        <Thead>
+        <Thead position='sticky' top='0' className='bg-white'>
           <Tr className='text-sm'>
             <Th p='8px' width='40px'>
               ID #
