@@ -28,9 +28,7 @@ function NewTaskBtn() {
 
   const handleAddTask: SubmitHandler<TaskItem> = async (data) => {
     console.log('submitting')
-    try {
-      console.log(JSON.stringify(data))
-    } catch (error) {}
+    console.log(JSON.stringify(data))
   }
   return (
     <>

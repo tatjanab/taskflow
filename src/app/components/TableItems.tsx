@@ -4,7 +4,7 @@ import taskSchema from '@/models/zod_schema'
 import { z } from 'zod'
 
 type TaskLists = {
-  taskList: z.infer<typeof taskSchema>
+  taskList: z.infer<typeof taskSchema>[]
 }
 
 function TableItems({ taskList }: TaskLists) {
