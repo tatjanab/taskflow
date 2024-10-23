@@ -4,7 +4,7 @@ const taskSchema = z.object({
   _id: z.string().min(1),
   type: z.enum(['Feature', 'Improvement', 'Task', 'Bug']),
   summary: z.string().min(1),
-  status: z.enum(['Open', 'In progress', 'Done']),
+  status: z.enum(['Open', 'In Progress', 'Done']),
   details: z.object({
     assignee: z.string().min(1),
     priority: z.string().optional(),
