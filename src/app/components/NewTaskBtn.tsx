@@ -19,7 +19,7 @@ import {
   FormHelperText,
 } from '@chakra-ui/react'
 
-import { TriangleUpIcon } from '@chakra-ui/icons'
+import { CloseIcon } from '@chakra-ui/icons'
 
 import { useForm, SubmitHandler } from 'react-hook-form'
 import taskSchema from '@/models/zod_schema'
@@ -77,7 +77,7 @@ function NewTaskBtn() {
       </Button>
 
       <Modal
-        isOpen={!isOpen}
+        isOpen={isOpen}
         onClose={onClose}
         blockScrollOnMount={true}
         size='lg'
@@ -87,9 +87,15 @@ function NewTaskBtn() {
           <ModalHeader
             position='sticky'
             top='0'
-            className='text-sm border-b-2 bg-white'
+            bg='white'
+            zIndex={1}
+            className='border-b-2 flex flex-row justify-between items-center'
           >
-            Create a new task
+            <h3>Create a new task</h3>
+
+            <Button variant='transparent' size='sm' onClick={onClose}>
+              <CloseIcon />
+            </Button>
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
@@ -137,6 +143,7 @@ function NewTaskBtn() {
                       size='sm'
                       {...register('status')}
                       borderRadius='0'
+                      backgroundColor='gray.100'
                     >
                       <option value='Open'>Open</option>
                       <option value='In Progress'>In Progress</option>
@@ -283,11 +290,7 @@ function NewTaskBtn() {
             </form>
           </ModalBody>
 
-          <ModalFooter>
-            {/* <Button variant='outline' mr={3} onClick={onClose}>
-              Close
-            </Button> */}
-          </ModalFooter>
+          <ModalFooter></ModalFooter>
         </ModalContent>
       </Modal>
     </>
