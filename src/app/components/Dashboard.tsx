@@ -1,26 +1,31 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import { Table, Thead, Tbody, Tr, Th, TableContainer } from '@chakra-ui/react'
 import TableItems from './TableItems'
+import { useQuery } from '@tanstack/react-query'
 
 function Dashboard() {
-  const [taskList, setTaskList] = useState([])
+  const fetchTasks = async () => {
+    const res = await fetch('/api/tasks')
+    const response = await res.json()
 
-  useEffect(() => {
-    const fetchTasks = async () => {
-      const res = await fetch('/api/tasks')
-      const response = await res.json()
-      setTaskList(response.data)
-    }
+    return response.data
+  }
 
-    fetchTasks()
-  }, [])
+  const { data: taskList = [], isError } = useQuery({
+    queryKey: ['taskList'],
+    queryFn: fetchTasks,
+  })
 
   return (
-    <TableContainer width='100%' className='p-4'>
+    <TableContainer
+      width='100%'
+      className='px-4'
+      maxH='400px'
+      overflowY='scroll'
+    >
       <Table className='text-xs'>
-        <Thead>
+        <Thead position='sticky' top='0' className='bg-white'>
           <Tr className='text-sm'>
             <Th p='8px' width='40px'>
               ID #
@@ -33,7 +38,8 @@ function Dashboard() {
           </Tr>
         </Thead>
         <Tbody>
-          <TableItems taskList={taskList} />
+          {isError && <h2>No tasks in the list</h2>}
+          {!isError && <TableItems taskList={taskList} />}
         </Tbody>
       </Table>
     </TableContainer>

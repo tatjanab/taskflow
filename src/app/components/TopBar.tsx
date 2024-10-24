@@ -1,5 +1,6 @@
 import { Link } from '@chakra-ui/react'
 import { User } from 'react-feather'
+import NewTaskBtn from '@/components/NewTaskBtn'
 
 function TopBar() {
   return (
@@ -9,10 +10,11 @@ function TopBar() {
           <User className='mr-1' size={15} /> <span>Name Lastname</span>
         </Link>
       </div>
-      <div className='p-4'>
+      <div className='p-4 flex flex-row justify-between items-center'>
         <p className='text-xs text-gray-500'>
           Dashboard / Projects / First project
         </p>
+        <NewTaskBtn />
       </div>
     </>
   )

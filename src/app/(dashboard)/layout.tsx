@@ -15,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body className='font-mainFont'>
+      <body className='font-mainFont overflow-y-hidden'>
         <Providers>
           <div className='flex flex-row'>
             <Sidebar />

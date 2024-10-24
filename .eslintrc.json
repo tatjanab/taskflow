@@ -1,7 +1,35 @@
 {
-  "extends": ["next/core-web-vitals", "plugin:prettier/recommended"],
-  "plugins": ["prettier"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "next/core-web-vitals"
+  ],
+  "plugins": ["@typescript-eslint", "react", "react-hooks", "@next/next"],
+  "parser": "@typescript-eslint/parser",
   "rules": {
-    "prettier/prettier": ["error", { "singleQuote": true, "semi": false }]
+    // TypeScript-specific rules
+    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/no-explicit-any": "warn",
+
+    // "@typescript-eslint/explicit-function-return-type": "warn",
+
+    // React-specific rules
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "warn",
+
+    // React Hooks rules
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+
+    // Next.js-specific rules
+    "@next/next/no-img-element": "off" // Allow using <img> tags directly
+    // "@next/next/link-passhref": "error"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   }
 }
