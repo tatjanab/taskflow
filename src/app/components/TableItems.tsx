@@ -2,12 +2,14 @@ import { Tr, Td } from '@chakra-ui/react'
 import { format } from 'date-fns' // Optional, for better formatting
 import taskSchema from '@/models/zod_schema'
 import { z } from 'zod'
+import TableItemLoader from './loaders/TableItemLoader'
 
 type TaskLists = {
   taskList: z.infer<typeof taskSchema>[]
+  isLoading: boolean
 }
 
-function TableItems({ taskList }: TaskLists) {
+function TableItems({ taskList, isLoading }: TaskLists) {
   const taskListSorted = taskList.sort((a, b) => a._id - b._id)
   return (
     <>
@@ -16,7 +18,9 @@ function TableItems({ taskList }: TaskLists) {
           ? format(new Date(item.details.creationDate), 'yyyy-MM-dd')
           : 'N/A'
 
-        return (
+        return isLoading ? (
+          <TableItemLoader key={Math.random()} />
+        ) : (
           <Tr
             key={item._id}
             className='hover:bg-slate-100 hover:cursor-pointer'

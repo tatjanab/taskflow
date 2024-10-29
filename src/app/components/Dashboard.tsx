@@ -2,22 +2,11 @@
 
 import { Table, Thead, Tbody, Tr, Th, TableContainer } from '@chakra-ui/react'
 import TableItems from './TableItems'
-import { useQuery } from '@tanstack/react-query'
+import useFetchTasks from '@/hooks/useFetchTasks'
+import TableItemLoader from './loaders/TableItemLoader'
 
 function Dashboard() {
-  const fetchTasks = async () => {
-    console.log('Fetching tasks...')
-
-    const res = await fetch('/api/tasks')
-    const response = await res.json()
-
-    return response.data
-  }
-
-  const { data: taskList = [], isError } = useQuery({
-    queryKey: ['taskList'],
-    queryFn: fetchTasks,
-  })
+  const { taskList, isError, isLoading } = useFetchTasks()
 
   return (
     <TableContainer
@@ -27,7 +16,7 @@ function Dashboard() {
       overflowY='scroll'
     >
       <Table className='text-xs'>
-        <Thead position='sticky' top='0' className='bg-white'>
+        <Thead position='sticky' top='0' className='bg-white' zIndex='10'>
           <Tr className='text-sm'>
             <Th p='8px' width='40px'>
               ID #
@@ -41,7 +30,7 @@ function Dashboard() {
         </Thead>
         <Tbody>
           {isError && <h2>No tasks in the list</h2>}
-          {!isError && <TableItems taskList={taskList} />}
+          {!isError && <TableItems taskList={taskList} isLoading={isLoading} />}
         </Tbody>
       </Table>
     </TableContainer>
