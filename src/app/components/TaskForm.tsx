@@ -22,6 +22,7 @@ function TaskForm({ isOpen, onClose }: TaskProps) {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    reset,
   } = useForm<addTaskFields>({
     resolver: zodResolver(taskSchema),
     mode: 'onChange',
@@ -50,6 +51,7 @@ function TaskForm({ isOpen, onClose }: TaskProps) {
         isOpen={isOpen}
         onClose={onClose}
         blockScrollOnMount={true}
+        onCloseComplete={() => reset()}
         size='lg'
       >
         <ModalOverlay />

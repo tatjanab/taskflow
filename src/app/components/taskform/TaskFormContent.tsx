@@ -17,7 +17,6 @@ import { CloseIcon } from '@chakra-ui/icons'
 import { FieldErrors, UseFormRegister } from 'react-hook-form'
 import taskSchema from '@/models/zod_schema'
 import { z } from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
 
 type addTaskFields = z.infer<typeof taskSchema>
 type TaskFormContentProps = {
@@ -35,10 +34,6 @@ function TaskFormContent({
   register,
   isSubmitting,
 }: TaskFormContentProps) {
-  const onSubmit = (e: addTaskFields) => {
-    console.log('Submitting data:', e)
-    handleSubmit(e)
-  }
   return (
     <div>
       <ModalContent borderRadius='0' className='md:w-2/3 w-full'>
@@ -239,20 +234,20 @@ function TaskFormContent({
                 </p>
               )}
             </FormControl>
-
-            <Button
-              colorScheme='blue'
-              size='sm'
-              width='100px'
-              borderRadius='0'
-              type='submit'
-              isLoading={isSubmitting}
-            >
-              {isSubmitting ? 'Creating...' : 'Create'}
-            </Button>
+            <ModalFooter>
+              <Button
+                colorScheme='blue'
+                size='sm'
+                width='100px'
+                borderRadius='0'
+                type='submit'
+                isLoading={isSubmitting}
+              >
+                {isSubmitting ? 'Creating...' : 'Create'}
+              </Button>
+            </ModalFooter>
           </form>
         </ModalBody>
-        <ModalFooter></ModalFooter>
       </ModalContent>
     </div>
   )
