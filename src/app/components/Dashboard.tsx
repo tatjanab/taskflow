@@ -6,6 +6,8 @@ import { useQuery } from '@tanstack/react-query'
 
 function Dashboard() {
   const fetchTasks = async () => {
+    console.log('Fetching tasks...')
+
     const res = await fetch('/api/tasks')
     const response = await res.json()
 

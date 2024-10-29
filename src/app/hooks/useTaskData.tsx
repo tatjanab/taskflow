@@ -1,10 +1,12 @@
 import taskSchema from '@/models/zod_schema'
 import { z } from 'zod'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 type addTaskFields = z.infer<typeof taskSchema>
 
 function useTaskData() {
+  const queryClient = useQueryClient()
+
   const handleAddTask = async (data: addTaskFields) => {
     const res = await fetch('/api/tasks', {
       method: 'POST',
@@ -32,6 +34,15 @@ function useTaskData() {
   } = useMutation({
     mutationKey: ['new-task'],
     mutationFn: handleAddTask,
+    onSuccess: () => {
+      console.log('Mutation successful, invalidating tasks query...')
+
+      queryClient.invalidateQueries({
+        queryKey: ['taskList'],
+        exact: true,
+        refetchType: 'active',
+      })
+    },
   })
 
   return { addTask, isSuccess, isError, isPending }
