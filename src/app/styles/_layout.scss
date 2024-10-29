@@ -5,3 +5,20 @@
 .sidebar {
   font-size: 0.8rem;
 }
+
+// text and background colors for priority flags
+.bg-High {
+  background-color: #ff0000;
+}
+
+.text-High {
+  color: #fff;
+}
+
+.bg-Medium {
+  background-color: #ffa500;
+}
+
+.bg-Low {
+  background-color: #008000;
+}

@@ -3,6 +3,7 @@ import { format } from 'date-fns' // Optional, for better formatting
 import taskSchema from '@/models/zod_schema'
 import { z } from 'zod'
 import TableItemLoader from './loaders/TableItemLoader'
+import PriorityFlag from './PriorityFlag'
 
 type TaskLists = {
   taskList: z.infer<typeof taskSchema>[]
@@ -37,7 +38,7 @@ function TableItems({ taskList, isLoading }: TaskLists) {
                   </span>
                 </Td>
                 <Td p='8px'>{item.details.assignee}</Td>
-                <Td p='8px'>{item.details.priority}</Td>
+                <PriorityFlag priority={item.details.priority} />
                 <Td p='8px'>
                   <span className='rounded-sm bg-slate-100 p-1 font-medium text-slate-500'>
                     {formattedCreationDate}
