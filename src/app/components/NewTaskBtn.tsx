@@ -12,9 +12,10 @@ function NewTaskBtn() {
     <>
       <Button
         colorScheme='blue'
-        size='sm'
-        width='100px'
-        borderRadius='0'
+        size='xs'
+        width='80px'
+        borderRadius='3px'
+        paddingY='15px'
         onClick={onOpen}
       >
         New task

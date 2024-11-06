@@ -1,10 +1,17 @@
 'use client'
 
-import { Table, Thead, Tbody, Tr, Th, TableContainer } from '@chakra-ui/react'
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  TableContainer,
+  Td,
+} from '@chakra-ui/react'
 import TableItems from './TableItems'
 import useFetchTasks from '@/hooks/useFetchTasks'
 import TableItemLoader from './loaders/TableItemLoader'
-
 function Dashboard() {
   const { taskList, isError, isLoading } = useFetchTasks()
 
@@ -29,8 +36,13 @@ function Dashboard() {
           </Tr>
         </Thead>
         <Tbody>
-          {isError && <h2>No tasks in the list</h2>}
-          {!isError && <TableItems taskList={taskList} isLoading={isLoading} />}
+          {isError && <Td>No tasks in the list</Td>}
+          {!isError &&
+            (isLoading ? (
+              <TableItemLoader />
+            ) : (
+              <TableItems taskList={taskList} />
+            ))}
         </Tbody>
       </Table>
     </TableContainer>

@@ -239,7 +239,7 @@ function TaskFormContent({
                 colorScheme='blue'
                 size='sm'
                 width='100px'
-                borderRadius='0'
+                borderRadius='3px'
                 type='submit'
                 isLoading={isSubmitting}
               >

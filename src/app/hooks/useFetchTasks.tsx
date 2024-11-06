@@ -2,10 +2,18 @@ import { useQuery } from '@tanstack/react-query'
 
 function useFetchTasks() {
   const fetchTasks = async () => {
-    const res = await fetch('/api/tasks')
-    const response = await res.json()
+    try {
+      const res = await fetch('/api/tasks')
+      const response = await res.json()
 
-    return response.data
+      if (!res.ok) {
+        throw new Error('Failed to fetch tasks')
+      }
+
+      return response.data
+    } catch (error) {
+      console.error('Error fetching tasks:', error)
+    }
   }
 
   const {
@@ -15,6 +23,7 @@ function useFetchTasks() {
   } = useQuery({
     queryKey: ['taskList'],
     queryFn: fetchTasks,
+    refetchOnWindowFocus: false, // Disable refetching on window focus
   })
 
   return { taskList, isError, isLoading }

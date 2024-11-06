@@ -53,6 +53,7 @@ function TaskForm({ isOpen, onClose }: TaskProps) {
         blockScrollOnMount={true}
         onCloseComplete={() => reset()}
         size='lg'
+        variant='outline'
       >
         <ModalOverlay />
         <TaskFormContent
