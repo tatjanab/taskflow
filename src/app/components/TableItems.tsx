@@ -2,15 +2,16 @@ import { Tr, Td } from '@chakra-ui/react'
 import { format } from 'date-fns' // Optional, for better formatting
 import taskSchema from '@/models/zod_schema'
 import { z } from 'zod'
-// import TableItemLoader from './loaders/TableItemLoader'
 import PriorityFlag from './PriorityFlag'
 
 type TaskLists = {
   taskList: z.infer<typeof taskSchema>[]
+  handleOpenTask: (taskId: string) => void
 }
 
-function TableItems({ taskList }: TaskLists) {
+function TableItems({ taskList, handleOpenTask }: TaskLists) {
   const taskListSorted = taskList.sort((a, b) => a._id - b._id)
+
   return (
     <>
       {taskListSorted.map((item) => {
@@ -21,6 +22,7 @@ function TableItems({ taskList }: TaskLists) {
         return (
           <Tr
             key={item._id}
+            onClick={() => handleOpenTask(item._id)}
             className='hover:bg-slate-100 hover:cursor-pointer'
           >
             <Td p='8px' width='40px'>
