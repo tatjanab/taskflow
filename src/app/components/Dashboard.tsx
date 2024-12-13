@@ -9,23 +9,33 @@ import {
   TableContainer,
   Td,
 } from '@chakra-ui/react'
+import { useDisclosure } from '@chakra-ui/react'
 import useFetchTasks from '@/hooks/useFetchTasks'
-import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import TableItems from './TableItems'
 import TableItemLoader from './loaders/TableItemLoader'
-import TaskDetails from './taskDetails/TaskDetails'
+import TaskForm from './TaskForm'
+import { useCallback } from 'react'
 
 function Dashboard() {
   const { taskList, isError, isLoading } = useFetchTasks()
-  const [taskOpen, isTaskOpen] = useState(false)
   const router = useRouter()
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const handleOpenTask = (taskId: string): any => {
-    console.log(taskOpen)
-    isTaskOpen(!taskOpen)
-    router.push(`?selectedTask=${taskId}`)
-  }
+  // Memoize the handleOpenTask callback
+  const handleOpenTask = useCallback(
+    (taskId: string) => {
+      router.push(`?selectedTask=${taskId}`, { scroll: false }) // Add scroll: false to prevent unnecessary scrolling
+    },
+    [router],
+  )
+
+  const handleClose = useCallback(() => {
+    router.push('/', { scroll: false })
+    onClose()
+  }, [router, onClose])
+
+  console.log('isOpen ' + isOpen)
 
   return (
     <>
@@ -56,14 +66,14 @@ function Dashboard() {
               ) : (
                 <TableItems
                   taskList={taskList}
+                  onOpen={onOpen}
                   handleOpenTask={handleOpenTask}
                 />
               ))}
           </Tbody>
         </Table>
       </TableContainer>
-      {/* TODO: Change this to use the TaskForm Component, make that one reusable for new and editing of the task */}
-      {taskOpen && <TaskDetails />}
+      {isOpen && <TaskForm isOpen={isOpen} onClose={handleClose} />}
     </>
   )
 }

@@ -9,6 +9,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import useTaskData from '@/hooks/useTaskData'
 import { useEffect } from 'react'
 import TaskFormContent from './taskform/TaskFormContent'
+import useFetchTaskDetails from '@/hooks/useFetchTaskDetails'
+import { useSearchParams } from 'next/navigation'
 
 type TaskProps = {
   isOpen: boolean
@@ -23,12 +25,23 @@ function TaskForm({ isOpen, onClose }: TaskProps) {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
+    setValue,
   } = useForm<addTaskFields>({
     resolver: zodResolver(taskSchema),
     mode: 'onChange',
   })
 
   const { addTask, isSuccess, isError, isPending } = useTaskData()
+
+  const searchParams = useSearchParams()
+  const taskId = searchParams.get('selectedTask') || ''
+  // Only fetch when we have a taskId and the modal is open
+  const { taskDetails, isLoading } = useFetchTaskDetails(
+    isOpen && taskId ? taskId : null,
+    isOpen,
+  )
+
+  console.log('taskId ' + taskId)
 
   useEffect(() => {
     if (isSuccess) {
@@ -62,6 +75,10 @@ function TaskForm({ isOpen, onClose }: TaskProps) {
           errors={errors}
           register={register}
           isSubmitting={isSubmitting}
+          taskDetails={taskDetails || {}}
+          taskId={taskId}
+          setValue={setValue}
+          isLoading={isLoading}
         />
       </Modal>
     </>
