@@ -14,14 +14,6 @@ type TaskLists = {
 function TableItems({ taskList, onOpen, handleOpenTask }: TaskLists) {
   const taskListSorted = taskList.sort((a, b) => Number(a._id) - Number(b._id))
 
-  const handleClick = useCallback(
-    (taskId: string) => {
-      onOpen()
-      handleOpenTask(taskId)
-    },
-    [onOpen, handleOpenTask],
-  )
-
   return (
     <>
       {taskListSorted.map((item) => {

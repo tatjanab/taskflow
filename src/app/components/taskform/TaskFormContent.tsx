@@ -1,15 +1,5 @@
 'use client'
-import {
-  ModalContent,
-  ModalBody,
-  ModalFooter,
-  FormControl,
-  FormLabel,
-  Input,
-  Textarea,
-  Button,
-  ModalCloseButton,
-} from '@chakra-ui/react'
+import { ModalContent, ModalBody, ModalCloseButton } from '@chakra-ui/react'
 
 import { FieldErrors, UseFormRegister, UseFormSetValue } from 'react-hook-form'
 import taskSchema from '@/models/zod_schema'
@@ -21,6 +11,9 @@ import TaskFormHeader from './TaskFormHeader'
 import TaskIdentificationSection from './TaskIdentificationSection'
 import TaskSummarySection from './TaskSummarySection'
 import TaskTypeSection from './TaskTypeSection'
+import TaskDetailsSection from './TaskDetailsSection'
+import TaskDescriptionSection from './TaskDescriptionSection'
+import TaskFormFooter from './TaskFormFooter'
 
 type addTaskFields = z.infer<typeof taskSchema>
 type TaskFormContentProps = {
@@ -81,66 +74,10 @@ function TaskFormContent({
                   <div className='flex flex-row gap-4'>
                     <TaskTypeSection errors={errors} register={register} />
                   </div>
-                  <FormControl
-                    isInvalid={!!errors.details?.assignee}
-                    className='flex flex-col mb-4 w-1/2'
-                  >
-                    <FormLabel
-                      htmlFor='assignee'
-                      mb='5px'
-                      fontSize='xs'
-                      fontWeight='bold'
-                    >
-                      Assignee <span className='text-red-600'>*</span>
-                    </FormLabel>
-                    <Input
-                      id='assignee'
-                      type='text'
-                      borderColor={errors.summary ? 'red.500' : 'gray.300'}
-                      {...register('details.assignee')}
-                      size='sm'
-                    />
-                    {errors.details?.assignee && (
-                      <p className='text-xs text-red-600'>
-                        {errors.details?.assignee.message}
-                      </p>
-                    )}
-                  </FormControl>
+                  <TaskDetailsSection errors={errors} register={register} />
                 </div>
-
-                <FormControl className='flex flex-col mb-3'>
-                  <FormLabel
-                    htmlFor='description'
-                    mb='5px'
-                    fontSize='xs'
-                    fontWeight='bold'
-                  >
-                    Description
-                  </FormLabel>
-                  <Textarea
-                    id='description'
-                    {...register('description')}
-                    size='sm'
-                    resize='none'
-                  ></Textarea>
-                  {errors.description && (
-                    <p className='text-xs text-red-600'>
-                      {errors.description.message}
-                    </p>
-                  )}
-                </FormControl>
-                <ModalFooter>
-                  <Button
-                    colorScheme='blue'
-                    size='sm'
-                    width='100px'
-                    borderRadius='3px'
-                    type='submit'
-                    isLoading={isSubmitting}
-                  >
-                    {isSubmitting ? 'Creating...' : 'Create'}
-                  </Button>
-                </ModalFooter>
+                <TaskDescriptionSection errors={errors} register={register} />
+                <TaskFormFooter isSubmitting={isSubmitting} />
               </>
             )}
           </form>

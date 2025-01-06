@@ -24,6 +24,9 @@ function useFetchTasks() {
     queryKey: ['taskList'],
     queryFn: fetchTasks,
     refetchOnWindowFocus: false, // Disable refetching on window focus
+    staleTime: 0,
+    refetchOnMount: true,
+    retry: 2, // Retry failed requests up to 2 times
   })
 
   return { taskList, isError, isLoading }

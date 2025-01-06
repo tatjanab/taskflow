@@ -10,7 +10,9 @@ function TaskIdentificationSection({ errors, register }) {
         </FormLabel>
         <Input
           id='id'
-          {...register('_id')}
+          {...register('_id', {
+            setValueAs: (value) => (value ? value.toString() : ''),
+          })}
           type='number'
           size='sm'
           borderRadius='0'

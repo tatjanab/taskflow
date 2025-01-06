@@ -31,7 +31,7 @@ function TaskForm({ isOpen, onClose }: TaskProps) {
     mode: 'onChange',
   })
 
-  const { addTask, isSuccess, isError, isPending } = useTaskData()
+  const { addTask, isAddSuccess, updateTask, isUpdateSuccess } = useTaskData()
 
   const searchParams = useSearchParams()
   const taskId = searchParams.get('selectedTask') || ''
@@ -44,14 +44,24 @@ function TaskForm({ isOpen, onClose }: TaskProps) {
   console.log('taskId ' + taskId)
 
   useEffect(() => {
-    if (isSuccess) {
+    if (isAddSuccess) {
       onClose()
     }
-  }, [isSuccess, onClose])
+  }, [isAddSuccess, onClose])
+
+  useEffect(() => {
+    if (isUpdateSuccess) {
+      onClose()
+    }
+  }, [isUpdateSuccess, onClose])
 
   const handleAddTask: SubmitHandler<addTaskFields> = async (data) => {
     try {
-      await addTask(data) // Trigger mutation (POST request) using React Query
+      if (taskId) {
+        await updateTask(data)
+      } else {
+        await addTask(data)
+      }
       console.log('Task added successfully')
     } catch (error) {
       console.error('Error adding task:', error)
