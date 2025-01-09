@@ -1,13 +1,17 @@
 import { z } from 'zod'
 
 const taskSchema = z.object({
-  _id: z.string().min(1),
+  _id: z.string().min(1, { message: 'ID must contain at least 1 character' }),
   type: z.enum(['Feature', 'Improvement', 'Task', 'Bug']),
-  summary: z.string().min(1),
+  summary: z
+    .string()
+    .min(1, { message: 'Summary must contain at least 1 character' }),
   status: z.enum(['Open', 'In Progress', 'Done']),
   details: z.object({
-    assignee: z.string().min(1),
-    priority: z.string().optional(),
+    assignee: z
+      .string()
+      .min(1, { message: 'Name must contain at least 1 character' }),
+    priority: z.enum(['Low', 'Medium', 'High']),
     labels: z.array(z.string()).optional(),
     creationDate: z
       .string()
@@ -22,7 +26,7 @@ const taskSchema = z.object({
       })
       .optional(),
   }),
-  description: z.string(),
+  description: z.string().optional(),
 })
 
 export default taskSchema

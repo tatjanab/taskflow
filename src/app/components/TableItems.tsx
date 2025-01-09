@@ -2,13 +2,18 @@ import { Tr, Td } from '@chakra-ui/react'
 import { format } from 'date-fns' // Optional, for better formatting
 import taskSchema from '@/models/zod_schema'
 import { z } from 'zod'
+import PriorityFlag from './PriorityFlag'
+import { useCallback } from 'react'
 
 type TaskLists = {
   taskList: z.infer<typeof taskSchema>[]
+  onOpen: () => void
+  handleOpenTask: (taskId: string) => void
 }
 
-function TableItems({ taskList }: TaskLists) {
-  const taskListSorted = taskList.sort((a, b) => a._id - b._id)
+function TableItems({ taskList, onOpen, handleOpenTask }: TaskLists) {
+  const taskListSorted = taskList.sort((a, b) => Number(a._id) - Number(b._id))
+
   return (
     <>
       {taskListSorted.map((item) => {
@@ -19,6 +24,10 @@ function TableItems({ taskList }: TaskLists) {
         return (
           <Tr
             key={item._id}
+            onClick={() => {
+              onOpen()
+              handleOpenTask(item._id)
+            }}
             className='hover:bg-slate-100 hover:cursor-pointer'
           >
             <Td p='8px' width='40px'>
@@ -31,7 +40,7 @@ function TableItems({ taskList }: TaskLists) {
               </span>
             </Td>
             <Td p='8px'>{item.details.assignee}</Td>
-            <Td p='8px'>{item.details.priority}</Td>
+            <PriorityFlag priority={item.details.priority} />
             <Td p='8px'>
               <span className='rounded-sm bg-slate-100 p-1 font-medium text-slate-500'>
                 {formattedCreationDate}

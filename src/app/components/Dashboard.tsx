@@ -1,48 +1,80 @@
 'use client'
 
-import { Table, Thead, Tbody, Tr, Th, TableContainer } from '@chakra-ui/react'
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  TableContainer,
+  Td,
+} from '@chakra-ui/react'
+import { useDisclosure } from '@chakra-ui/react'
+import useFetchTasks from '@/hooks/useFetchTasks'
+import { useRouter } from 'next/navigation'
 import TableItems from './TableItems'
-import { useQuery } from '@tanstack/react-query'
+import TableItemLoader from './loaders/TableItemLoader'
+import TaskForm from './TaskForm'
+import { useCallback } from 'react'
 
 function Dashboard() {
-  const fetchTasks = async () => {
-    const res = await fetch('/api/tasks')
-    const response = await res.json()
+  const { taskList, isError, isLoading } = useFetchTasks()
+  const router = useRouter()
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
-    return response.data
-  }
+  // Memoize the handleOpenTask callback
+  const handleOpenTask = useCallback(
+    (taskId: string) => {
+      router.push(`?selectedTask=${taskId}`, { scroll: false }) // Add scroll: false to prevent unnecessary scrolling
+    },
+    [router],
+  )
 
-  const { data: taskList = [], isError } = useQuery({
-    queryKey: ['taskList'],
-    queryFn: fetchTasks,
-  })
+  const handleClose = useCallback(() => {
+    router.push('/', { scroll: false })
+    onClose()
+  }, [router, onClose])
+
+  console.log('isOpen ' + isOpen)
 
   return (
-    <TableContainer
-      width='100%'
-      className='px-4'
-      maxH='400px'
-      overflowY='scroll'
-    >
-      <Table className='text-xs'>
-        <Thead position='sticky' top='0' className='bg-white'>
-          <Tr className='text-sm'>
-            <Th p='8px' width='40px'>
-              ID #
-            </Th>
-            <Th p='8px'>Summary</Th>
-            <Th p='8px'>Status</Th>
-            <Th p='8px'>Assignee</Th>
-            <Th p='8px'>Priority</Th>
-            <Th p='8px'>Date</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {isError && <h2>No tasks in the list</h2>}
-          {!isError && <TableItems taskList={taskList} />}
-        </Tbody>
-      </Table>
-    </TableContainer>
+    <>
+      <TableContainer
+        width='100%'
+        className='px-4'
+        maxH='400px'
+        overflowY='scroll'
+      >
+        <Table className='text-xs'>
+          <Thead position='sticky' top='0' className='bg-white' zIndex='10'>
+            <Tr className='text-sm'>
+              <Th p='8px' width='40px'>
+                ID #
+              </Th>
+              <Th p='8px'>Summary</Th>
+              <Th p='8px'>Status</Th>
+              <Th p='8px'>Assignee</Th>
+              <Th p='8px'>Priority</Th>
+              <Th p='8px'>Date</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {isError && <Td>No tasks in the list</Td>}
+            {!isError &&
+              (isLoading ? (
+                <TableItemLoader />
+              ) : (
+                <TableItems
+                  taskList={taskList}
+                  onOpen={onOpen}
+                  handleOpenTask={handleOpenTask}
+                />
+              ))}
+          </Tbody>
+        </Table>
+      </TableContainer>
+      {isOpen && <TaskForm isOpen={isOpen} onClose={handleClose} />}
+    </>
   )
 }
 
