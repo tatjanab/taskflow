@@ -1,6 +1,7 @@
 import { Link } from '@chakra-ui/react'
 import { User } from 'react-feather'
 import NewTaskBtn from '@/components/NewTaskBtn'
+import SearchBar from '@/components/SearchBar'
 
 function TopBar() {
   return (
@@ -14,7 +15,10 @@ function TopBar() {
         <p className='text-xs text-gray-500'>
           Dashboard / Projects / First project
         </p>
-        <NewTaskBtn />
+        <div className='flex flex-row gap-4'>
+          <SearchBar />
+          <NewTaskBtn />
+        </div>
       </div>
     </>
   )
