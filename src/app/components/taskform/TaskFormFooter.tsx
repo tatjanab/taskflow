@@ -1,6 +1,6 @@
 import { Button, ModalFooter } from '@chakra-ui/react'
 
-function TaskFormFooter({ isSubmitting }) {
+function TaskFormFooter({ isSubmitting, isEditing }) {
   return (
     <>
       <ModalFooter>
@@ -12,7 +12,7 @@ function TaskFormFooter({ isSubmitting }) {
           type='submit'
           isLoading={isSubmitting}
         >
-          {isSubmitting ? 'Creating...' : 'Create'}
+          {isSubmitting ? 'Submitting...' : isEditing ? 'Update' : 'Create'}
         </Button>
       </ModalFooter>
     </>

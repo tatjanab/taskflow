@@ -4,7 +4,7 @@ import { ModalContent, ModalBody, ModalCloseButton } from '@chakra-ui/react'
 import { FieldErrors, UseFormRegister, UseFormSetValue } from 'react-hook-form'
 import taskSchema from '@/models/zod_schema'
 import { z } from 'zod'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import TaskFormLoader from '../loaders/TaskFormLoader'
 import { useMinimumLoadingTime } from '@/hooks/useMinimumLoadingTime'
 import TaskFormHeader from './TaskFormHeader'
@@ -39,12 +39,17 @@ function TaskFormContent({
   setValue,
   isLoading,
 }: TaskFormContentProps) {
+  const [isEditing, setIsEditing] = useState(false)
   // Add useEffect to set initial values when taskDetails changes
   useEffect(() => {
-    if (taskDetails) {
+    if (taskDetails && taskDetails._id) {
       Object.entries(taskDetails).forEach(([key, value]) => {
         setValue(key as keyof addTaskFields, value)
       })
+
+      setIsEditing(true)
+    } else {
+      setIsEditing(false)
     }
   }, [taskDetails, setValue])
 
@@ -77,7 +82,10 @@ function TaskFormContent({
                   <TaskDetailsSection errors={errors} register={register} />
                 </div>
                 <TaskDescriptionSection errors={errors} register={register} />
-                <TaskFormFooter isSubmitting={isSubmitting} />
+                <TaskFormFooter
+                  isSubmitting={isSubmitting}
+                  isEditing={isEditing}
+                />
               </>
             )}
           </form>
