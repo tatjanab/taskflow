@@ -16,6 +16,7 @@ import TableItems from './TableItems'
 import TableItemLoader from './loaders/TableItemLoader'
 import TaskForm from './TaskForm'
 import { useCallback } from 'react'
+import useSearchState from '@/hooks/useSearchState'
 
 function Dashboard() {
   const { taskList, isError, isLoading } = useFetchTasks()
@@ -34,8 +35,6 @@ function Dashboard() {
     router.push('/', { scroll: false })
     onClose()
   }, [router, onClose])
-
-  console.log('isOpen ' + isOpen)
 
   return (
     <>

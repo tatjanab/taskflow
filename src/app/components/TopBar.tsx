@@ -1,3 +1,5 @@
+'use client'
+
 import { Link } from '@chakra-ui/react'
 import { User } from 'react-feather'
 import NewTaskBtn from '@/components/NewTaskBtn'
