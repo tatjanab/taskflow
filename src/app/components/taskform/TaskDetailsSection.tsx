@@ -2,10 +2,10 @@ import { FormLabel, Input, FormControl } from '@chakra-ui/react'
 
 function TaskDetailsSection({ errors, register }) {
   return (
-    <>
+    <div className='mb-5'>
       <FormControl
         isInvalid={!!errors.details?.assignee}
-        className='flex flex-col mb-4 w-1/2'
+        className='flex flex-col w-1/2'
       >
         <FormLabel htmlFor='assignee' mb='5px' fontSize='xs' fontWeight='bold'>
           Assignee <span className='text-red-600'>*</span>
@@ -23,7 +23,7 @@ function TaskDetailsSection({ errors, register }) {
           </p>
         )}
       </FormControl>
-    </>
+    </div>
   )
 }
 

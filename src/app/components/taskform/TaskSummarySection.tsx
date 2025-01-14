@@ -4,7 +4,7 @@ function TaskSummarySection({ errors, register }) {
   return (
     <FormControl
       isInvalid={!!errors.summary}
-      className='flex flex-col mb-4 w-full'
+      className='flex flex-col mb-5 w-full'
     >
       <FormLabel htmlFor='summary' mb='5px' fontSize='xs' fontWeight='bold'>
         Summary <span className='text-red-600'>*</span>

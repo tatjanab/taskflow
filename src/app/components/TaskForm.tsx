@@ -1,6 +1,7 @@
 'use client'
 
 import { Modal, ModalOverlay } from '@chakra-ui/react'
+import { Suspense } from 'react'
 
 import { useForm, SubmitHandler } from 'react-hook-form'
 import taskSchema from '@/models/zod_schema'
@@ -19,7 +20,10 @@ type TaskProps = {
 
 type addTaskFields = z.infer<typeof taskSchema>
 
-function TaskForm({ isOpen, onClose }: TaskProps) {
+function TaskFormInner({ isOpen, onClose }: TaskProps) {
+  const searchParams = useSearchParams()
+  const taskId = searchParams.get('selectedTask') || ''
+
   const {
     register,
     handleSubmit,
@@ -32,12 +36,9 @@ function TaskForm({ isOpen, onClose }: TaskProps) {
   })
 
   const { addTask, isAddSuccess, updateTask, isUpdateSuccess } = useTaskData()
-
-  const searchParams = useSearchParams()
-  const taskId = searchParams.get('selectedTask') || ''
   // Only fetch when we have a taskId and the modal is open
   const { taskDetails, isLoading } = useFetchTaskDetails(
-    isOpen && taskId ? taskId : null,
+    isOpen && taskId ? taskId : '',
     isOpen,
   )
 
@@ -92,6 +93,14 @@ function TaskForm({ isOpen, onClose }: TaskProps) {
         />
       </Modal>
     </>
+  )
+}
+
+function TaskForm(props: TaskProps) {
+  return (
+    <Suspense fallback={null}>
+      <TaskFormInner {...props} />
+    </Suspense>
   )
 }
 

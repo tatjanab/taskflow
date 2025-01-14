@@ -9,11 +9,16 @@ function NewTaskBtn() {
   return (
     <>
       <Button
-        colorScheme='blue'
         size='xs'
         width='80px'
-        borderRadius='3px'
+        borderRadius='2px'
         paddingY='15px'
+        backgroundColor='blue.600'
+        color='white'
+        _hover={{
+          backgroundColor: 'blue.600',
+          cursor: 'pointer',
+        }}
         onClick={onOpen}
       >
         New task

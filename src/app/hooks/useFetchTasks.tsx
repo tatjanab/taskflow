@@ -1,6 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
+import { useSearchParams } from 'next/navigation'
 
 function useFetchTasks() {
+  const searchParams = useSearchParams()
+  const search = searchParams.get('search')
+
   const fetchTasks = async () => {
     try {
       const res = await fetch('/api/tasks')
@@ -8,6 +12,14 @@ function useFetchTasks() {
 
       if (!res.ok) {
         throw new Error('Failed to fetch tasks')
+      }
+
+      if (search) {
+        console.log('search', search)
+        // TODO: move the search to the backend, modify the API to accept search params
+        return response.data.filter((task) =>
+          task.summary.toLowerCase().trim().includes(search.toLowerCase()),
+        )
       }
 
       return response.data
@@ -21,7 +33,7 @@ function useFetchTasks() {
     isError,
     isLoading,
   } = useQuery({
-    queryKey: ['taskList'],
+    queryKey: ['taskList', search],
     queryFn: fetchTasks,
     refetchOnWindowFocus: false, // Disable refetching on window focus
     staleTime: 0,

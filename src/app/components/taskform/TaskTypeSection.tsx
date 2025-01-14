@@ -3,10 +3,7 @@ import { Input, FormControl, FormLabel, Select } from '@chakra-ui/react'
 function TaskTypeSection({ errors, register }) {
   return (
     <>
-      <FormControl
-        isInvalid={!!errors.type}
-        className='flex flex-col mb-4 w-1/2'
-      >
+      <FormControl isInvalid={!!errors.type} className='flex flex-col w-1/2'>
         <FormLabel htmlFor='type' mb='5px' fontSize='xs' fontWeight='bold'>
           Type <span className='text-red-600'>*</span>
         </FormLabel>
@@ -20,7 +17,7 @@ function TaskTypeSection({ errors, register }) {
           <p className='text-xs text-red-600'>{errors.type.message}</p>
         )}
       </FormControl>
-      <FormControl className='flex flex-col mb-4 w-1/2'>
+      <FormControl className='flex flex-col w-1/2'>
         <FormLabel htmlFor='priority' mb='5px' fontSize='xs' fontWeight='bold'>
           Priority
         </FormLabel>

@@ -76,7 +76,7 @@ function TaskFormContent({
                     register={register}
                   />
                   <TaskSummarySection errors={errors} register={register} />
-                  <div className='flex flex-row gap-4'>
+                  <div className='flex flex-row gap-4 mb-5'>
                     <TaskTypeSection errors={errors} register={register} />
                   </div>
                   <TaskDetailsSection errors={errors} register={register} />
@@ -85,6 +85,7 @@ function TaskFormContent({
                 <TaskFormFooter
                   isSubmitting={isSubmitting}
                   isEditing={isEditing}
+                  onClose={onClose}
                 />
               </>
             )}
