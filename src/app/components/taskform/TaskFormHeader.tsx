@@ -14,7 +14,7 @@ function TaskFormHeader({ onClose, taskId, taskSummary }: TaskFormHeaderProps) {
       top='0'
       bg='white'
       zIndex={1}
-      className='border-b-2 flex flex-row justify-between items-center'
+      className='border-b-2 flex flex-row justify-between items-center mb-3'
     >
       <div>
         {taskId && (
@@ -23,14 +23,14 @@ function TaskFormHeader({ onClose, taskId, taskSummary }: TaskFormHeaderProps) {
             <h3 className='text-md font-bold'>{taskSummary}</h3>
           </>
         )}
-        {!taskId && <h3>Create a new task</h3>}
+        {!taskId && <h6 className='mb-3 text-sm'>Create a new task</h6>}
         <p className='text-xs font-normal'>
           Fields marked with an asterisk are mandatory{' '}
           <span className='text-red-600'>*</span>
         </p>
       </div>
       <Button variant='transparent' size='sm' onClick={onClose}>
-        <CloseIcon />
+        <CloseIcon height='10px' width='10px' />
       </Button>
     </ModalHeader>
   )

@@ -3,7 +3,7 @@ import { FieldErrors, UseFormRegister } from 'react-hook-form'
 
 function TaskIdentificationSection({ errors, register }) {
   return (
-    <div className='flex flex-row gap-4'>
+    <div className='flex flex-row gap-4 mb-5'>
       <FormControl isInvalid={!!errors._id} className='flex flex-col w-1/2'>
         <FormLabel htmlFor='id' mb='5px' fontSize='xs' fontWeight='bold'>
           Task ID <span className='text-red-600'>*</span>
@@ -23,7 +23,7 @@ function TaskIdentificationSection({ errors, register }) {
         )}
       </FormControl>
 
-      <FormControl className='flex flex-col mb-4 w-1/2'>
+      <FormControl className='flex flex-col w-1/2'>
         <FormLabel htmlFor='status' mb='5px' fontSize='xs' fontWeight='bold'>
           Status
         </FormLabel>

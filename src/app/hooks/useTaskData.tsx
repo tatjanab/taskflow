@@ -65,11 +65,15 @@ function useTaskData() {
     onSuccess: () => {
       console.log('Mutation successful, invalidating tasks query...')
 
+      // Force a fresh refetch of the task list
       queryClient.invalidateQueries({
         queryKey: ['taskList'],
         exact: true,
         refetchType: 'active',
       })
+
+      // Optionally, you can also remove any stale data
+      queryClient.resetQueries({ queryKey: ['taskList'] })
     },
   })
 

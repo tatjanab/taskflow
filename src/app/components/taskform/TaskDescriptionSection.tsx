@@ -3,7 +3,7 @@ import { Textarea, FormLabel, FormControl } from '@chakra-ui/react'
 function TaskDescriptionSection({ errors, register }) {
   return (
     <>
-      <FormControl className='flex flex-col mb-3'>
+      <FormControl className='flex flex-col mb-5'>
         <FormLabel
           htmlFor='description'
           mb='5px'

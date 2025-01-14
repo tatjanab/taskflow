@@ -41,7 +41,7 @@ function Dashboard() {
       <TableContainer
         width='100%'
         className='px-4'
-        maxH='400px'
+        maxH='400vh'
         overflowY='scroll'
       >
         <Table className='text-xs'>
