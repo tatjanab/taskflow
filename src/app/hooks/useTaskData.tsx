@@ -8,7 +8,8 @@ function useTaskData() {
   const queryClient = useQueryClient()
 
   const handleAddTask = async (data: addTaskFields) => {
-    const res = await fetch('/api/tasks', {
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || ''
+    const res = await fetch(`${baseUrl}/api/tasks`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
