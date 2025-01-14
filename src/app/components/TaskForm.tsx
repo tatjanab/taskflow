@@ -37,7 +37,7 @@ function TaskForm({ isOpen, onClose }: TaskProps) {
   const taskId = searchParams.get('selectedTask') || ''
   // Only fetch when we have a taskId and the modal is open
   const { taskDetails, isLoading } = useFetchTaskDetails(
-    isOpen && taskId ? taskId : null,
+    isOpen && taskId ? taskId : '',
     isOpen,
   )
 
