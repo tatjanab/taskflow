@@ -1,12 +1,11 @@
 'use client'
 
+import { Suspense } from 'react'
 import useSearchState from '@/hooks/useSearchState'
 import { Input, InputGroup, InputLeftElement } from '@chakra-ui/react'
 import { SearchIcon } from '@chakra-ui/icons'
-import { useSearchParams } from 'next/navigation'
-import { useState } from 'react'
 
-function SearchBar() {
+function SearchBarInner() {
   const { handleSearch, search } = useSearchState()
 
   console.log('searchPARAM', search)
@@ -31,6 +30,14 @@ function SearchBar() {
         </InputGroup>
       </form>
     </div>
+  )
+}
+
+function SearchBar() {
+  return (
+    <Suspense fallback={null}>
+      <SearchBarInner />
+    </Suspense>
   )
 }
 

@@ -1,5 +1,6 @@
 'use client'
 
+import { Suspense } from 'react'
 import {
   Table,
   Thead,
@@ -16,9 +17,8 @@ import TableItems from './TableItems'
 import TableItemLoader from './loaders/TableItemLoader'
 import TaskForm from './TaskForm'
 import { useCallback } from 'react'
-import useSearchState from '@/hooks/useSearchState'
 
-function Dashboard() {
+function DashboardInner() {
   const { taskList, isError, isLoading } = useFetchTasks()
   const router = useRouter()
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -74,6 +74,14 @@ function Dashboard() {
       </TableContainer>
       {isOpen && <TaskForm isOpen={isOpen} onClose={handleClose} />}
     </>
+  )
+}
+
+function Dashboard() {
+  return (
+    <Suspense fallback={null}>
+      <DashboardInner />
+    </Suspense>
   )
 }
 
