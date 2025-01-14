@@ -8,7 +8,8 @@ function useFetchTaskDetails(taskId: string, isOpen) {
     }
 
     try {
-      const res = await fetch(`/api/tasks/${taskId}`)
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || ''
+      const res = await fetch(`${baseUrl}/api/tasks/${taskId}`)
       const response = await res.json()
 
       if (!res.ok) {
