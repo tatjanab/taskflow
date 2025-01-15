@@ -8,15 +8,12 @@ function useFetchTaskDetails(taskId: string, isOpen) {
     }
 
     try {
-      const baseUrl = process.env.NEXT_PUBLIC_API_URL || ''
-      const res = await fetch(`${baseUrl}/api/tasks/${taskId}`)
+      const res = await fetch(`/api/tasks/${taskId}`)
       const response = await res.json()
 
       if (!res.ok) {
         throw new Error('Error getting task details' + response.status)
       }
-
-      console.log(response.data)
 
       return response.data
     } catch (error) {

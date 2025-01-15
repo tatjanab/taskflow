@@ -7,8 +7,7 @@ function useFetchTasks() {
 
   const fetchTasks = async () => {
     try {
-      const baseUrl = process.env.NEXT_PUBLIC_API_URL || ''
-      const res = await fetch(`${baseUrl}/api/tasks`)
+      const res = await fetch('/api/tasks')
       const response = await res.json()
 
       if (!res.ok) {
@@ -16,8 +15,6 @@ function useFetchTasks() {
       }
 
       if (search) {
-        console.log('search', search)
-        // TODO: move the search to the backend, modify the API to accept search params
         return response.data.filter((task) =>
           task.summary.toLowerCase().trim().includes(search.toLowerCase()),
         )
