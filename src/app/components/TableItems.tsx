@@ -26,7 +26,7 @@ function TableItems({ taskList, onOpen, handleOpenTask }: TaskLists) {
             key={item._id}
             onClick={() => {
               onOpen()
-              handleOpenTask(item._id)
+              handleOpenTask(item._id?.toString() || '')
             }}
             className='hover:bg-slate-100 hover:cursor-pointer'
           >
