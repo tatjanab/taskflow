@@ -72,7 +72,7 @@ function DashboardInner() {
           </Tbody>
         </Table>
       </TableContainer>
-      {isOpen && <TaskForm isOpen={isOpen} onClose={handleClose} />}
+      {isOpen && <TaskForm isOpen={isOpen} onCloseModal={handleClose} />}
     </>
   )
 }
