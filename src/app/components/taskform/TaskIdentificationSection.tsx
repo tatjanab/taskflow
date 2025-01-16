@@ -1,6 +1,6 @@
 import { FormControl, FormLabel, Select } from '@chakra-ui/react'
 
-function TaskIdentificationSection({ register }) {
+function TaskIdentificationSection({ register, errors }) {
   return (
     <div className='flex flex-row gap-4 mb-5'>
       <FormControl className='flex flex-col w-1/2'>
