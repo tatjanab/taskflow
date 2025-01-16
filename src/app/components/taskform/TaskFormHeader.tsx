@@ -29,6 +29,7 @@ function TaskFormHeader({ onClose, taskId, taskSummary }: TaskFormHeaderProps) {
           <span className='text-red-600'>*</span>
         </p>
       </div>
+
       <Button variant='transparent' size='sm' onClick={onClose}>
         <CloseIcon height='10px' width='10px' />
       </Button>

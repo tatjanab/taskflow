@@ -64,7 +64,7 @@ function TaskFormContent({
           taskSummary={taskDetails.summary}
         />
         <ModalCloseButton />
-        <ModalBody>
+        <ModalBody paddingBottom='0'>
           <form onSubmit={handleSubmit}>
             {isLoadingDelayed ? (
               <TaskFormLoader />
