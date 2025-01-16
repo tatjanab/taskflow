@@ -1,8 +1,7 @@
 import { Button, ModalFooter } from '@chakra-ui/react'
 import useTaskData from '@/hooks/useTaskData'
-
 import { useSearchParams } from 'next/navigation'
-import TaskDelete from './TaskDelete'
+
 function TaskFormFooter({ isSubmitting, isEditing, onClose }) {
   const { deleteTask } = useTaskData()
   const searchParams = useSearchParams()
@@ -25,7 +24,15 @@ function TaskFormFooter({ isSubmitting, isEditing, onClose }) {
           justifyContent: 'space-between !important',
         }}
       >
-        <TaskDelete />
+        <Button
+          colorScheme='red'
+          size='xs'
+          minWidth='80px'
+          borderRadius='2px'
+          onClick={handleDelete}
+        >
+          Delete
+        </Button>
         <div className='flex gap-2'>
           <Button
             variant='ghost'
