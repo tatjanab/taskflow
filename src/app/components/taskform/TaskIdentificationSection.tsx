@@ -1,28 +1,8 @@
-import { FormControl, FormLabel, Input, Select } from '@chakra-ui/react'
-import { FieldErrors, UseFormRegister } from 'react-hook-form'
+import { FormControl, FormLabel, Select } from '@chakra-ui/react'
 
-function TaskIdentificationSection({ errors, register }) {
+function TaskIdentificationSection({ register, errors }) {
   return (
     <div className='flex flex-row gap-4 mb-5'>
-      {/* <FormControl isInvalid={!!errors._id} className='flex flex-col w-1/2'>
-        <FormLabel htmlFor='id' mb='5px' fontSize='xs' fontWeight='bold'>
-          Task ID <span className='text-red-600'>*</span>
-        </FormLabel>
-        <Input
-          id='id'
-          {...register('_id', {
-            setValueAs: (value) => (value ? value.toString() : ''),
-          })}
-          type='number'
-          size='sm'
-          borderRadius='0'
-          borderColor={errors._id ? 'red.500' : 'gray.300'}
-        />
-        {errors._id && (
-          <p className='text-xs text-red-600'>{errors._id.message}</p>
-        )}
-      </FormControl> */}
-
       <FormControl className='flex flex-col w-1/2'>
         <FormLabel htmlFor='status' mb='5px' fontSize='xs' fontWeight='bold'>
           Status

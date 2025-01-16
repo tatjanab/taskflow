@@ -4,7 +4,7 @@ import { Button, useDisclosure } from '@chakra-ui/react'
 import TaskForm from './TaskForm'
 
 function NewTaskBtn() {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose: onCloseModal } = useDisclosure()
 
   return (
     <>
@@ -24,7 +24,7 @@ function NewTaskBtn() {
         New task
       </Button>
 
-      <TaskForm isOpen={isOpen} onClose={onClose} />
+      <TaskForm isOpen={isOpen} onCloseModal={onCloseModal} />
     </>
   )
 }

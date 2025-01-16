@@ -49,6 +49,16 @@ function useTaskData() {
     return response
   }
 
+  const handleDeleteTask = async (taskId: string) => {
+    const res = await fetch(`/api/tasks/${taskId}`, {
+      method: 'DELETE',
+    })
+
+    if (!res.ok) {
+      throw new Error('Failed to delete a task')
+    }
+  }
+
   const addTaskMutation = useMutation({
     mutationFn: handleAddTask,
     onSuccess: () => {
@@ -79,13 +89,27 @@ function useTaskData() {
     },
   })
 
+  const deleteTaskMutation = useMutation({
+    mutationFn: handleDeleteTask,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['taskList', search],
+        exact: true,
+        refetchType: 'active',
+      })
+    },
+  })
+
   return {
     addTask: addTaskMutation.mutateAsync,
     updateTask: updateTaskMutation.mutateAsync,
+    deleteTask: deleteTaskMutation.mutateAsync,
     isUpdateSuccess: updateTaskMutation.isSuccess,
     isUpdateError: updateTaskMutation.isError,
     isAddSuccess: addTaskMutation.isSuccess,
     isAddError: addTaskMutation.isError,
+    isDeleteSuccess: deleteTaskMutation.isSuccess,
+    isDeleteError: deleteTaskMutation.isError,
   }
 }
 

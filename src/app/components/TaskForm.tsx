@@ -15,12 +15,12 @@ import { useSearchParams } from 'next/navigation'
 
 type TaskProps = {
   isOpen: boolean
-  onClose: () => void
+  onCloseModal: () => void
 }
 
 type addTaskFields = z.infer<typeof taskSchema>
 
-function TaskFormInner({ isOpen, onClose }: TaskProps) {
+function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
   const searchParams = useSearchParams()
   const taskId = searchParams.get('selectedTask') || ''
 
@@ -42,19 +42,17 @@ function TaskFormInner({ isOpen, onClose }: TaskProps) {
     isOpen,
   )
 
-  console.log('taskId ' + taskId)
-
   useEffect(() => {
     if (isAddSuccess) {
-      onClose()
+      onCloseModal()
     }
-  }, [isAddSuccess, onClose])
+  }, [isAddSuccess, onCloseModal])
 
   useEffect(() => {
     if (isUpdateSuccess) {
-      onClose()
+      onCloseModal()
     }
-  }, [isUpdateSuccess, onClose])
+  }, [isUpdateSuccess, onCloseModal])
 
   const handleAddTask: SubmitHandler<addTaskFields> = async (data) => {
     try {
@@ -73,7 +71,7 @@ function TaskFormInner({ isOpen, onClose }: TaskProps) {
     <>
       <Modal
         isOpen={isOpen}
-        onClose={onClose}
+        onClose={onCloseModal}
         blockScrollOnMount={true}
         onCloseComplete={() => reset()}
         size='lg'
@@ -81,7 +79,7 @@ function TaskFormInner({ isOpen, onClose }: TaskProps) {
       >
         <ModalOverlay />
         <TaskFormContent
-          onClose={onClose}
+          onCloseModal={onCloseModal}
           handleSubmit={handleSubmit(handleAddTask)}
           errors={errors}
           register={register}

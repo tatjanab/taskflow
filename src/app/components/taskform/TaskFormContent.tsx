@@ -17,7 +17,7 @@ import TaskFormFooter from './TaskFormFooter'
 
 type addTaskFields = z.infer<typeof taskSchema>
 type TaskFormContentProps = {
-  onClose: () => void
+  onCloseModal: () => void
   handleSubmit: () => void
   errors: FieldErrors<addTaskFields>
   register: UseFormRegister<addTaskFields>
@@ -29,7 +29,7 @@ type TaskFormContentProps = {
 }
 
 function TaskFormContent({
-  onClose,
+  onCloseModal,
   handleSubmit,
   errors,
   register,
@@ -59,12 +59,12 @@ function TaskFormContent({
     <div>
       <ModalContent borderRadius='0' className='md:w-2/3 w-full'>
         <TaskFormHeader
-          onClose={onClose}
+          onClose={onCloseModal}
           taskId={taskId}
           taskSummary={taskDetails.summary}
         />
         <ModalCloseButton />
-        <ModalBody>
+        <ModalBody paddingBottom='0'>
           <form onSubmit={handleSubmit}>
             {isLoadingDelayed ? (
               <TaskFormLoader />
@@ -85,7 +85,7 @@ function TaskFormContent({
                 <TaskFormFooter
                   isSubmitting={isSubmitting}
                   isEditing={isEditing}
-                  onClose={onClose}
+                  onCloseModal={onCloseModal}
                 />
               </>
             )}
