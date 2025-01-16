@@ -1,11 +1,14 @@
 import taskSchema from '@/models/zod_schema'
 import { z } from 'zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useSearchParams } from 'next/navigation'
 
 type addTaskFields = z.infer<typeof taskSchema>
 
 function useTaskData() {
   const queryClient = useQueryClient()
+  const searchParams = useSearchParams()
+  const search = searchParams.get('search')
 
   const handleAddTask = async (data: addTaskFields) => {
     const baseUrl = process.env.NEXT_PUBLIC_API_URL || ''
@@ -47,13 +50,12 @@ function useTaskData() {
   }
 
   const addTaskMutation = useMutation({
-    mutationKey: ['new-task'],
     mutationFn: handleAddTask,
     onSuccess: () => {
       console.log('Mutation successful, invalidating tasks query...')
 
       queryClient.invalidateQueries({
-        queryKey: ['taskList'],
+        queryKey: ['taskList', search],
         exact: true,
         refetchType: 'active',
       })
@@ -61,14 +63,13 @@ function useTaskData() {
   })
 
   const updateTaskMutation = useMutation({
-    mutationKey: ['update-task'],
     mutationFn: handleUpdateTask,
     onSuccess: () => {
       console.log('Mutation successful, invalidating tasks query...')
 
       // Force a fresh refetch of the task list
       queryClient.invalidateQueries({
-        queryKey: ['taskList'],
+        queryKey: ['taskList', search],
         exact: true,
         refetchType: 'active',
       })

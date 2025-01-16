@@ -1,5 +1,6 @@
 import { connectToDB } from '@/utils/database'
 import Task from '@/models/task'
+import Counter from '@/models/counter'
 
 export const GET = async () => {
   try {
@@ -23,9 +24,27 @@ export const POST = async (request) => {
     const body = await request.json()
 
     await connectToDB()
+
+    // Find the highest existing task ID
+    const highestTask = await Task.findOne({}).sort({ _id: -1 }).lean()
+    const startValue = highestTask ? highestTask._id : 0
+
+    // Initialize or update counter if needed
+    await Counter.findByIdAndUpdate(
+      'taskId',
+      { $max: { seq: startValue } },
+      { upsert: true },
+    )
+    // Get next sequence value
+    const counter = await Counter.findByIdAndUpdate(
+      'taskId',
+      { $inc: { seq: 1 } },
+      { new: true, upsert: true },
+    )
+
     // create a new task using the data from the request
     const newTask = new Task({
-      _id: body._id,
+      _id: counter.seq, // Use the sequence number as _id
       type: body.type,
       summary: body.summary,
       status: body.status,
