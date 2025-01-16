@@ -4,8 +4,8 @@ import '@/globals.scss'
 import TopBar from '@/components/TopBar'
 
 export const metadata = {
-  title: 'Taskflow',
-  description: 'Tasks managed easy',
+  title: 'Taskasaurus',
+  description: 'The rawr power of task management',
 }
 
 export default function RootLayout({

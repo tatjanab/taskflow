@@ -15,6 +15,7 @@ function TaskFormFooter({ isSubmitting, isEditing, onCloseModal }) {
 
   const handleDelete = async () => {
     try {
+      //TODO: use taskId instead of id from params
       await deleteTask(taskId)
       onClose()
       onCloseModal()
