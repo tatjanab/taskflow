@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 const taskSchema = z.object({
-  _id: z.string().min(1, { message: 'ID must contain at least 1 character' }),
+  _id: z.number().optional(),
   type: z.enum(['Feature', 'Improvement', 'Task', 'Bug']),
   summary: z
     .string()
