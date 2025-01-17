@@ -11,7 +11,12 @@ function SearchBarInner() {
   return (
     <div>
       <form>
-        <InputGroup size='sm' backgroundColor='white' width='400px'>
+        <InputGroup
+          size='sm'
+          backgroundColor='gray.50'
+          borderColor='gray.200'
+          width='400px'
+        >
           <InputLeftElement pointerEvents='none'>
             <SearchIcon color='gray.500' />
           </InputLeftElement>
@@ -20,9 +25,8 @@ function SearchBarInner() {
             placeholder='Search tasks'
             size='sm'
             value={search}
-            border='none'
             borderRadius='md'
-            boxShadow='0 2px 4px rgba(0, 0, 0, 0.05)'
+            // boxShadow='0 2px 4px rgba(0, 0, 0, 0.05)'
             _placeholder={{
               color: 'gray.600',
               fontSize: '12px',
