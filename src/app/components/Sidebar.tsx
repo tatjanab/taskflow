@@ -5,8 +5,12 @@ import { Table, Settings, User, Columns } from 'react-feather'
 import Image from 'next/image'
 function Sidebar() {
   return (
-    <Box height='100vh' className='bg-gray-primary sidebar flex w-1/5 flex-col'>
-      <Link className='text-md flex flex-row items-center px-6 py-5 font-bold '>
+    <Box
+      height='100vh'
+      className='sidebar flex w-1/6 flex-col'
+      bgGradient='linear(to-b, gray.50, gray.100)'
+    >
+      <Link className='flex flex-row items-center px-6 py-5'>
         <Image
           src='/images/logo.svg'
           alt='Taskasaurus'
@@ -14,7 +18,7 @@ function Sidebar() {
           height={24}
         />
 
-        <span className='ml-1'>Taskasaurus</span>
+        <h3 className='ml-1 text-md font-medium'>Taskasaurus</h3>
       </Link>
       <div className='flex h-full flex-col justify-between pb-4'>
         <div className='main-nav mt-6 flex flex-col text-xs'>
