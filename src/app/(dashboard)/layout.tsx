@@ -6,6 +6,9 @@ import TopBar from '@/components/TopBar'
 export const metadata = {
   title: 'Taskasaurus',
   description: 'The rawr power of task management',
+  icons: {
+    icon: '/favicon.ico',
+  },
 }
 
 export default function RootLayout({
