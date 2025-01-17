@@ -7,7 +7,7 @@ function Sidebar() {
   return (
     <Box
       height='100vh'
-      className='sidebar flex w-1/5 flex-col'
+      className='sidebar flex w-1/6 flex-col'
       bgGradient='linear(to-b, gray.50, gray.100)'
     >
       <Link className='flex flex-row items-center px-6 py-5'>
