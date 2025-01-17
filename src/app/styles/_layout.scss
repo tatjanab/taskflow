@@ -4,6 +4,7 @@
 
 .sidebar {
   font-size: 0.8rem;
+  @apply border-r border-gray-200;
 }
 
 // text and background colors for priority flags

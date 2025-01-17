@@ -13,10 +13,10 @@ function NewTaskBtn() {
         width='80px'
         borderRadius='2px'
         paddingY='15px'
-        backgroundColor='blue.600'
+        backgroundColor='green.600'
         color='white'
         _hover={{
-          backgroundColor: 'blue.600',
+          backgroundColor: 'green.600',
           cursor: 'pointer',
         }}
         onClick={onOpen}

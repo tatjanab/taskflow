@@ -8,24 +8,29 @@ import { SearchIcon } from '@chakra-ui/icons'
 function SearchBarInner() {
   const { handleSearch, search } = useSearchState()
 
-  console.log('searchPARAM', search)
   return (
     <div>
       <form>
-        <InputGroup size='sm'>
+        <InputGroup size='sm' backgroundColor='white' width='400px'>
           <InputLeftElement pointerEvents='none'>
-            <SearchIcon color='gray.300' />
+            <SearchIcon color='gray.500' />
           </InputLeftElement>
           <Input
             type='text'
             placeholder='Search tasks'
             size='sm'
             value={search}
+            border='none'
+            borderRadius='md'
+            boxShadow='0 2px 4px rgba(0, 0, 0, 0.05)'
+            _placeholder={{
+              color: 'gray.600',
+              fontSize: '12px',
+            }}
             onChange={(e) => {
               handleSearch(e.target.value)
             }}
             pl='8'
-            className='border-gray-300'
           />
         </InputGroup>
       </form>
