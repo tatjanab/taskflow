@@ -1,5 +1,12 @@
 'use client'
-import { ModalContent, ModalBody, ModalCloseButton } from '@chakra-ui/react'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
 
 import { FieldErrors, UseFormRegister, UseFormSetValue } from 'react-hook-form'
 import taskSchema from '@/models/zod_schema'
@@ -57,14 +64,14 @@ function TaskFormContent({
 
   return (
     <div>
-      <ModalContent borderRadius='0' className='md:w-2/3 w-full'>
+      <div className='md:w-2/3 w-full rounded-none'>
         <TaskFormHeader
           onClose={onCloseModal}
           taskId={taskId}
           taskSummary={taskDetails.summary}
         />
-        <ModalCloseButton />
-        <ModalBody paddingBottom='0'>
+        <DialogTrigger />
+        <DialogContent className='p-0'>
           <form onSubmit={handleSubmit}>
             {isLoadingDelayed ? (
               <TaskFormLoader />
@@ -90,8 +97,8 @@ function TaskFormContent({
               </>
             )}
           </form>
-        </ModalBody>
-      </ModalContent>
+        </DialogContent>
+      </div>
     </div>
   )
 }

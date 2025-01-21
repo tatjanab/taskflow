@@ -1,5 +1,6 @@
-import { CloseIcon } from '@chakra-ui/icons'
-import { ModalHeader, Button } from '@chakra-ui/react'
+import { XCircle } from 'react-feather'
+import { DialogHeader } from '@/components/ui/dialog'
+import { Button } from '@/components/ui/button'
 
 type TaskFormHeaderProps = {
   onClose: () => void
@@ -9,31 +10,25 @@ type TaskFormHeaderProps = {
 
 function TaskFormHeader({ onClose, taskId, taskSummary }: TaskFormHeaderProps) {
   return (
-    <ModalHeader
-      position='sticky'
-      top='0'
-      bg='white'
-      zIndex={1}
-      className='border-b-2 flex flex-row justify-between items-center mb-3'
-    >
+    <DialogHeader className='sticky bg-white top-0 border-b-2 flex flex-row justify-between items-center mb-3'>
       <div>
         {taskId && (
           <>
-            <p className='text-xs uppercase text-gray-400'>Edit task</p>
+            <p className='text-sm uppercase text-gray-400'>Edit task</p>
             <h3 className='text-md font-bold'>{taskSummary}</h3>
           </>
         )}
         {!taskId && <h6 className='mb-3 text-sm'>Create a new task</h6>}
-        <p className='text-xs font-normal'>
+        <p className='text-sm font-normal'>
           Fields marked with an asterisk are mandatory{' '}
           <span className='text-red-600'>*</span>
         </p>
       </div>
 
-      <Button variant='transparent' size='sm' onClick={onClose}>
-        <CloseIcon height='10px' width='10px' />
+      <Button variant='ghost' size='sm' onClick={onClose}>
+        <XCircle height='10px' width='10px' />
       </Button>
-    </ModalHeader>
+    </DialogHeader>
   )
 }
 

@@ -1,27 +1,25 @@
-import { Textarea, FormLabel, FormControl } from '@chakra-ui/react'
+import { FormLabel, FormControl, FormItem } from '@/components/ui/form'
+import { Textarea } from '@/components/ui/textarea'
 
 function TaskDescriptionSection({ errors, register }) {
   return (
     <>
-      <FormControl className='flex flex-col mb-5'>
-        <FormLabel
-          htmlFor='description'
-          mb='5px'
-          fontSize='xs'
-          fontWeight='bold'
-        >
+      <FormItem className='flex flex-col mb-5'>
+        <FormLabel htmlFor='description' className='mb-2 text-sm font-bold'>
           Description
         </FormLabel>
-        <Textarea
-          id='description'
-          {...register('description')}
-          size='sm'
-          resize='none'
-        ></Textarea>
-        {errors.description && (
-          <p className='text-xs text-red-600'>{errors.description.message}</p>
-        )}
-      </FormControl>
+        <FormControl>
+          <Textarea
+            id='description'
+            {...register('description')}
+            size='sm'
+            resize='none'
+          ></Textarea>
+          {errors.description && (
+            <p className='text-sm text-red-600'>{errors.description.message}</p>
+          )}
+        </FormControl>
+      </FormItem>
     </>
   )
 }

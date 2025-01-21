@@ -1,16 +1,16 @@
 'use client'
 
-import { Suspense } from 'react'
+import { Suspense, useState } from 'react'
 import {
   Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  TableContainer,
-  Td,
-} from '@chakra-ui/react'
-import { useDisclosure } from '@chakra-ui/react'
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
 import useFetchTasks from '@/hooks/useFetchTasks'
 import { useRouter } from 'next/navigation'
 import TableItems from './TableItems'
@@ -21,7 +21,7 @@ import { useCallback } from 'react'
 function DashboardInner() {
   const { taskList, isError, isLoading } = useFetchTasks()
   const router = useRouter()
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [isOpen, setIsOpen] = useState(false)
 
   // Memoize the handleOpenTask callback
   const handleOpenTask = useCallback(
@@ -33,45 +33,36 @@ function DashboardInner() {
 
   const handleClose = useCallback(() => {
     router.push('/', { scroll: false })
-    onClose()
-  }, [router, onClose])
+    setIsOpen(false)
+  }, [router, setIsOpen])
 
   return (
     <>
-      <TableContainer
-        width='100%'
-        className='px-4'
-        maxH='400vh'
-        overflowY='scroll'
-      >
-        <Table className='text-xs'>
-          <Thead position='sticky' top='0' className='bg-white' zIndex='10'>
-            <Tr className='text-sm'>
-              <Th p='8px' width='40px'>
-                ID #
-              </Th>
-              <Th p='8px'>Summary</Th>
-              <Th p='8px'>Status</Th>
-              <Th p='8px'>Assignee</Th>
-              <Th p='8px'>Priority</Th>
-              <Th p='8px'>Date</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {isError && <Td>No tasks in the list</Td>}
-            {!isError &&
-              (isLoading ? (
-                <TableItemLoader />
-              ) : (
-                <TableItems
-                  taskList={taskList}
-                  onOpen={onOpen}
-                  handleOpenTask={handleOpenTask}
-                />
-              ))}
-          </Tbody>
-        </Table>
-      </TableContainer>
+      <Table className='px-4 text-sm w-full max-h-[100vh] overflow-y-scroll'>
+        <TableHeader className='bg-white'>
+          <TableRow className='text-sm'>
+            <TableHead className='px-8 py-4 w-40'>ID #</TableHead>
+            <TableHead className='px-8 py-4'>Summary</TableHead>
+            <TableHead className='px-8 py-4'>Status</TableHead>
+            <TableHead className='px-8 py-4'>Assignee</TableHead>
+            <TableHead className='px-8 py-4'>Priority</TableHead>
+            <TableHead className='px-8 py-4'>Date</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {isError && <TableCell>No tasks in the list</TableCell>}
+          {!isError &&
+            (isLoading ? (
+              <TableItemLoader />
+            ) : (
+              <TableItems
+                taskList={taskList}
+                onOpen={setIsOpen}
+                handleOpenTask={handleOpenTask}
+              />
+            ))}
+        </TableBody>
+      </Table>
       {isOpen && <TaskForm isOpen={isOpen} onCloseModal={handleClose} />}
     </>
   )

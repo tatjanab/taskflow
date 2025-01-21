@@ -1,25 +1,21 @@
-import { Input, FormControl, FormLabel } from '@chakra-ui/react'
+import { FormControl, FormLabel } from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
 
 function TaskSummarySection({ errors, register }) {
   return (
-    <FormControl
-      isInvalid={!!errors.summary}
-      className='flex flex-col mb-5 w-full'
-    >
-      <FormLabel htmlFor='summary' mb='5px' fontSize='xs' fontWeight='bold'>
+    <FormControl className='flex flex-col mb-5 w-full'>
+      <FormLabel htmlFor='summary' className='mb-2 text-sm font-bold'>
         Summary <span className='text-red-600'>*</span>
       </FormLabel>
       <Input
         id='summary'
         type='text'
-        borderWidth='1'
-        borderRadius='0'
-        borderColor={errors.summary ? 'red.500' : 'gray.300'}
+        className={errors.summary ? 'border-red-500' : 'border-gray-300'}
         {...register('summary')}
         size='sm'
       />
       {errors.summary && (
-        <p className='text-xs text-red-600'>{errors.summary.message}</p>
+        <p className='text-sm text-red-600'>{errors.summary.message}</p>
       )}
     </FormControl>
   )

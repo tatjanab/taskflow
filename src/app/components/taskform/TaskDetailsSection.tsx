@@ -1,28 +1,28 @@
-import { FormLabel, Input, FormControl } from '@chakra-ui/react'
+import { FormLabel, FormItem, FormControl } from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
 
 function TaskDetailsSection({ errors, register }) {
   return (
-    <div className='mb-5'>
-      <FormControl
-        isInvalid={!!errors.details?.assignee}
-        className='flex flex-col w-1/2'
-      >
-        <FormLabel htmlFor='assignee' mb='5px' fontSize='xs' fontWeight='bold'>
+    <div className='mb-5 flex flex-col w-1/2'>
+      <FormItem className='flex flex-col w-1/2'>
+        <FormLabel htmlFor='assignee' className='mb-2 text-sm font-bold'>
           Assignee <span className='text-red-600'>*</span>
         </FormLabel>
-        <Input
-          id='assignee'
-          type='text'
-          borderColor={errors.summary ? 'red.500' : 'gray.300'}
-          {...register('details.assignee')}
-          size='sm'
-        />
-        {errors.details?.assignee && (
-          <p className='text-xs text-red-600'>
-            {errors.details?.assignee.message}
-          </p>
-        )}
-      </FormControl>
+        <FormControl>
+          <Input
+            id='assignee'
+            type='text'
+            className={errors.summary ? 'border-red-500' : 'border-gray-300'}
+            {...register('details.assignee')}
+            size='sm'
+          />
+          {errors.details?.assignee && (
+            <p className='text-sm text-red-600'>
+              {errors.details?.assignee.message}
+            </p>
+          )}
+        </FormControl>
+      </FormItem>
     </div>
   )
 }

@@ -45,7 +45,7 @@ function SignupForm() {
   return (
     <form className='mt-6' onSubmit={handleSubmit(onSubmit)}>
       <div className='input-row mb-4 flex flex-col'>
-        <label htmlFor='email' className='mb-1 text-xs'>
+        <label htmlFor='email' className='mb-1 text-sm'>
           First name
         </label>
         <Input
@@ -53,14 +53,14 @@ function SignupForm() {
           name='firstName'
           type='text'
           height='30px'
-          className='w-full p-2 text-xs'
+          className='w-full p-2 text-sm'
         />
         {errors.firstName && (
-          <div className='text-red-500 text-xs'>{errors.firstName.message}</div>
+          <div className='text-red-500 text-sm'>{errors.firstName.message}</div>
         )}
       </div>
       <div className='input-row mb-4 flex flex-col'>
-        <label htmlFor='email' className='mb-1 text-xs'>
+        <label htmlFor='email' className='mb-1 text-sm'>
           Last name
         </label>
         <Input
@@ -68,14 +68,14 @@ function SignupForm() {
           name='lastName'
           type='text'
           height='30px'
-          className='w-full p-2 text-xs'
+          className='w-full p-2 text-sm'
         />
         {errors.lastName && (
-          <div className='text-red-500 text-xs'>{errors.lastName.message}</div>
+          <div className='text-red-500 text-sm'>{errors.lastName.message}</div>
         )}
       </div>
       <div className='input-row mb-4 flex flex-col'>
-        <label htmlFor='email' className='mb-1 text-xs'>
+        <label htmlFor='email' className='mb-1 text-sm'>
           Email address
         </label>
         <Input
@@ -83,14 +83,14 @@ function SignupForm() {
           name='email'
           type='text'
           height='30px'
-          className='w-full p-2 text-xs'
+          className='w-full p-2 text-sm'
         />
         {errors.email && (
-          <div className='text-red-500 text-xs'>{errors.email.message}</div>
+          <div className='text-red-500 text-sm'>{errors.email.message}</div>
         )}
       </div>
       <div className='input-row mb-4 flex flex-col'>
-        <label htmlFor='password' className='mb-1 text-xs'>
+        <label htmlFor='password' className='mb-1 text-sm'>
           Password
         </label>
         <Input
@@ -98,14 +98,14 @@ function SignupForm() {
           name='password'
           type='password'
           height='30px'
-          className='w-full p-2 text-xs'
+          className='w-full p-2 text-sm'
         />
         {errors.password && (
-          <div className='text-red-500 text-xs'>{errors.password.message}</div>
+          <div className='text-red-500 text-sm'>{errors.password.message}</div>
         )}
       </div>
       <div className='input-row mb-4 flex flex-col'>
-        <label htmlFor='password' className='mb-1 text-xs'>
+        <label htmlFor='password' className='mb-1 text-sm'>
           Confirm Password
         </label>
         <Input
@@ -113,10 +113,10 @@ function SignupForm() {
           name='password'
           type='password'
           height='30px'
-          className='w-full p-2 text-xs'
+          className='w-full p-2 text-sm'
         />
         {errors.confirmPassword && (
-          <div className='text-red-500 text-xs'>
+          <div className='text-red-500 text-sm'>
             {errors.confirmPassword.message}
           </div>
         )}
@@ -124,12 +124,12 @@ function SignupForm() {
       <button
         type='submit'
         disabled={isSubmitting}
-        className='btn-main w-full rounded-md bg-blue-600 px-5 py-2 text-xs uppercase text-white'
+        className='btn-main w-full rounded-md bg-blue-600 px-5 py-2 text-sm uppercase text-white'
       >
         {isSubmitting ? 'Loading...' : 'Create account'}
       </button>
       {errors.root && (
-        <div className='text-red-500 text-xs'>{errors.root.message}</div>
+        <div className='text-red-500 text-sm'>{errors.root.message}</div>
       )}
     </form>
   )

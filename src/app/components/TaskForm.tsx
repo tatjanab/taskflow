@@ -1,8 +1,7 @@
 'use client'
 
-import { Modal, ModalOverlay } from '@chakra-ui/react'
+import { Dialog } from '@/components/ui/dialog'
 import { Suspense } from 'react'
-
 import { useForm, SubmitHandler } from 'react-hook-form'
 import taskSchema from '@/models/zod_schema'
 import { z } from 'zod'
@@ -69,15 +68,7 @@ function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
 
   return (
     <>
-      <Modal
-        isOpen={isOpen}
-        onClose={onCloseModal}
-        blockScrollOnMount={true}
-        onCloseComplete={() => reset()}
-        size='lg'
-        variant='outline'
-      >
-        <ModalOverlay />
+      <Dialog open={isOpen} onOpenChange={onCloseModal}>
         <TaskFormContent
           onCloseModal={onCloseModal}
           handleSubmit={handleSubmit(handleAddTask)}
@@ -89,7 +80,7 @@ function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
           setValue={setValue}
           isLoading={isLoading}
         />
-      </Modal>
+      </Dialog>
     </>
   )
 }

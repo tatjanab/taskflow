@@ -2,8 +2,8 @@
 
 import { Suspense } from 'react'
 import useSearchState from '@/hooks/useSearchState'
-import { Input, InputGroup, InputLeftElement } from '@chakra-ui/react'
-import { SearchIcon } from '@chakra-ui/icons'
+import { Input } from '@/components/ui/input'
+import { Search } from 'react-feather'
 
 function SearchBarInner() {
   const { handleSearch, search } = useSearchState()
@@ -11,32 +11,19 @@ function SearchBarInner() {
   return (
     <div>
       <form>
-        <InputGroup
-          size='sm'
-          backgroundColor='gray.50'
-          borderColor='gray.200'
-          width='400px'
-        >
-          <InputLeftElement pointerEvents='none'>
-            <SearchIcon color='gray.500' />
-          </InputLeftElement>
+        <div className='flex flex-row items-center gap-2 w-[400px]'>
+          <Search color='gray.500' />
+
           <Input
             type='text'
             placeholder='Search tasks'
-            size='sm'
             value={search}
-            borderRadius='md'
-            // boxShadow='0 2px 4px rgba(0, 0, 0, 0.05)'
-            _placeholder={{
-              color: 'gray.600',
-              fontSize: '12px',
-            }}
+            className='h-8 w-full rounded-md border-gray-200 bg-gray-50 pl-8 text-sm placeholder:text-gray-600'
             onChange={(e) => {
               handleSearch(e.target.value)
             }}
-            pl='8'
           />
-        </InputGroup>
+        </div>
       </form>
     </div>
   )

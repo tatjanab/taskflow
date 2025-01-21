@@ -1,30 +1,47 @@
-import { Input, FormControl, FormLabel, Select } from '@chakra-ui/react'
+import { FormControl, FormLabel } from '@/components/ui/form'
+import {
+  Select,
+  SelectItem,
+  SelectValue,
+  SelectTrigger,
+  SelectContent,
+} from '@/components/ui/select'
 
 function TaskTypeSection({ errors, register }) {
   return (
     <>
-      <FormControl isInvalid={!!errors.type} className='flex flex-col w-1/2'>
-        <FormLabel htmlFor='type' mb='5px' fontSize='xs' fontWeight='bold'>
+      <FormControl className='flex flex-col w-1/2'>
+        <FormLabel htmlFor='type' className='mb-2 text-sm font-bold'>
           Type <span className='text-red-600'>*</span>
         </FormLabel>
-        <Select id='type' borderRadius='0' size='sm' {...register('type')}>
-          <option value='Feature'>Feature</option>
-          <option value='Improvement'>Improvement</option>
-          <option value='Task'>Task</option>
-          <option value='Bug'>Bug</option>
+        <Select id='type' size='sm' {...register('type')}>
+          <SelectTrigger className='w-[180px]'>
+            <SelectValue placeholder='Type' />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value='Feature'>Feature</SelectItem>
+            <SelectItem value='Improvement'>Improvement</SelectItem>
+            <SelectItem value='Task'>Task</SelectItem>
+            <SelectItem value='Bug'>Bug</SelectItem>
+          </SelectContent>
         </Select>
         {errors.type && (
-          <p className='text-xs text-red-600'>{errors.type.message}</p>
+          <p className='text-sm text-red-600'>{errors.type.message}</p>
         )}
       </FormControl>
       <FormControl className='flex flex-col w-1/2'>
-        <FormLabel htmlFor='priority' mb='5px' fontSize='xs' fontWeight='bold'>
+        <FormLabel htmlFor='priority' className='mb-2 text-sm font-bold'>
           Priority
         </FormLabel>
         <Select id='priority' size='sm' {...register('details.priority')}>
-          <option value='High'>High</option>
-          <option value='Medium'>Medium</option>
-          <option value='Low'>Low</option>
+          <SelectTrigger className='w-[180px]'>
+            <SelectValue placeholder='Priority' />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value='High'>High</SelectItem>
+            <SelectItem value='Medium'>Medium</SelectItem>
+            <SelectItem value='Low'>Low</SelectItem>
+          </SelectContent>
         </Select>
       </FormControl>
     </>

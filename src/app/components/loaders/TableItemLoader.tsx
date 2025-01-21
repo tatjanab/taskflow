@@ -1,30 +1,30 @@
-import { Tr, Td } from '@chakra-ui/react'
+import { TableRow, TableCell } from '@/components/ui/table'
 
 function TableItemLoader() {
   // Create an array of 5 items to show multiple loading rows
   return (
     <>
       {[...Array(10)].map((_, index) => (
-        <Tr key={index} border='none'>
-          <Td p='8px' width='40px' border='none'>
+        <TableRow key={index} className='border-none'>
+          <TableCell className='p-8 w-40'>
             <div className='form-item' />
-          </Td>
-          <Td p='8px' border='none'>
+          </TableCell>
+          <TableCell className='p-8'>
             <div className='form-item' />
-          </Td>
-          <Td p='8px' border='none'>
+          </TableCell>
+          <TableCell className='p-8'>
             <div className='form-item' />
-          </Td>
-          <Td p='8px' border='none'>
+          </TableCell>
+          <TableCell className='p-8'>
             <div className='form-item' />
-          </Td>
-          <Td p='8px' border='none'>
+          </TableCell>
+          <TableCell className='p-8'>
             <div className='form-item' />
-          </Td>
-          <Td p='8px' border='none'>
+          </TableCell>
+          <TableCell className='p-8'>
             <div className='form-item' />
-          </Td>
-        </Tr>
+          </TableCell>
+        </TableRow>
       ))}
     </>
   )

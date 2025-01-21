@@ -1,30 +1,22 @@
 'use client'
 
-import { Button, useDisclosure } from '@chakra-ui/react'
+import { Button } from '@/components/ui/button'
 import TaskForm from './TaskForm'
+import { useState } from 'react'
 
 function NewTaskBtn() {
-  const { isOpen, onOpen, onClose: onCloseModal } = useDisclosure()
+  const [isOpen, setIsOpen] = useState(false)
 
   return (
     <>
       <Button
-        size='xs'
-        width='80px'
-        borderRadius='2px'
-        paddingY='15px'
-        backgroundColor='green.600'
-        color='white'
-        _hover={{
-          backgroundColor: 'green.600',
-          cursor: 'pointer',
-        }}
-        onClick={onOpen}
+        className='h-7 w-[80px] rounded-[2px] bg-green-600 text-white hover:bg-green-700'
+        onClick={() => setIsOpen(true)}
       >
         New task
       </Button>
 
-      <TaskForm isOpen={isOpen} onCloseModal={onCloseModal} />
+      <TaskForm isOpen={isOpen} onCloseModal={() => setIsOpen(false)} />
     </>
   )
 }

@@ -1,24 +1,29 @@
-import { FormControl, FormLabel, Select } from '@chakra-ui/react'
+import { FormControl, FormLabel } from '@/components/ui/form'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 function TaskIdentificationSection({ register, errors }) {
   return (
-    <div className='flex flex-row gap-4 mb-5'>
-      <FormControl className='flex flex-col w-1/2'>
-        <FormLabel htmlFor='status' mb='5px' fontSize='xs' fontWeight='bold'>
-          Status
-        </FormLabel>
-        <Select
+    <div className='flex flex-col gap-4 mb-5 w-1/2'>
+      <Select>
+        <SelectTrigger className='w-[180px]'>
+          <SelectValue placeholder='Status' />
+        </SelectTrigger>
+        <SelectContent
           id='status'
-          size='sm'
           {...register('status')}
-          borderRadius='0'
-          backgroundColor='gray.100'
+          className='border-gray-300 rounded-none bg-gray-100'
         >
-          <option value='Open'>Open</option>
-          <option value='In Progress'>In Progress</option>
-          <option value='Done'>Done</option>
-        </Select>
-      </FormControl>
+          <SelectItem value='Open'>Open</SelectItem>
+          <SelectItem value='In Progress'>In Progress</SelectItem>
+          <SelectItem value='Done'>Done</SelectItem>
+        </SelectContent>
+      </Select>
     </div>
   )
 }
