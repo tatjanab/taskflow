@@ -10,7 +10,7 @@ function NewTaskBtn() {
   return (
     <>
       <Button
-        className='h-7 w-[80px] rounded-[2px] bg-green-600 text-white hover:bg-green-700'
+        className='px-6 py-4 rounded-[2px] bg-teal-600 text-white hover:bg-teal-700'
         onClick={() => setIsOpen(true)}
       >
         New task

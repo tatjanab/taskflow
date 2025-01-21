@@ -12,17 +12,16 @@ function SearchBarInner() {
     <div>
       <form>
         <div className='flex flex-row items-center gap-2 w-[400px]'>
-          <Search color='gray.500' />
-
           <Input
             type='text'
             placeholder='Search tasks'
             value={search}
-            className='h-8 w-full rounded-md border-gray-200 bg-gray-50 pl-8 text-sm placeholder:text-gray-600'
+            className='w-full rounded-sm border-gray-100 bg-gray-50 pl-8 py-4 text-sm placeholder:text-gray-500'
             onChange={(e) => {
               handleSearch(e.target.value)
             }}
           />
+          <Search className='text-gray-500' />
         </div>
       </form>
     </div>

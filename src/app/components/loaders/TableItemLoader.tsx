@@ -6,7 +6,7 @@ function TableItemLoader() {
     <>
       {[...Array(10)].map((_, index) => (
         <TableRow key={index} className='border-none'>
-          <TableCell className='p-8 w-40'>
+          <TableCell className='p-8 w-20'>
             <div className='form-item' />
           </TableCell>
           <TableCell className='p-8'>
