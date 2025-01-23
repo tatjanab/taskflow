@@ -1,7 +1,12 @@
 'use client'
 import { DialogContent } from '@/components/ui/dialog'
 
-import { UseFormReturn, FieldErrors, UseFormRegister } from 'react-hook-form'
+import {
+  UseFormReturn,
+  FieldErrors,
+  UseFormRegister,
+  Control,
+} from 'react-hook-form'
 import taskSchema from '@/models/zod_schema'
 import { z } from 'zod'
 import { useEffect, useState } from 'react'
@@ -27,6 +32,7 @@ type TaskFormContentProps = {
   taskId: string
   isLoading: boolean
   setValue: any
+  control: Control<addTaskFields>
 }
 
 function TaskFormContent({
@@ -39,6 +45,7 @@ function TaskFormContent({
   taskId,
   isLoading,
   setValue,
+  control,
 }: TaskFormContentProps) {
   const [isEditing, setIsEditing] = useState(false)
   // Add useEffect to set initial values when taskDetails changes
@@ -59,31 +66,34 @@ function TaskFormContent({
   return (
     <>
       <div className='md:w-2/3 w-full rounded-none p-0'>
-        <TaskFormHeader
-          onClose={onCloseModal}
-          taskId={taskId}
-          taskSummary={taskDetails.summary}
-        />
-        <div className='p-0'>
-          {isLoadingDelayed ? (
-            <TaskFormLoader />
-          ) : (
-            <>
-              <div className='p-4'>
-                <TaskIdentificationSection
-                  register={register}
-                  errors={errors}
-                />
-                <TaskSummarySection register={register} errors={errors} />
-                <div className='flex flex-row gap-4 mb-5'>
-                  <TaskTypeSection register={register} errors={errors} />
+        <Form>
+          <TaskFormHeader
+            onClose={onCloseModal}
+            taskId={taskId}
+            taskSummary={taskDetails.summary}
+          />
+          <div className='p-0'>
+            {isLoadingDelayed ? (
+              <TaskFormLoader />
+            ) : (
+              <>
+                <div className='p-4'>
+                  <TaskIdentificationSection
+                    register={register}
+                    errors={errors}
+                    control={control}
+                  />
+                  <TaskSummarySection register={register} errors={errors} />
+                  <div className='flex flex-row gap-4 mb-5'>
+                    <TaskTypeSection register={register} errors={errors} />
+                  </div>
+                  <TaskDetailsSection register={register} errors={errors} />
+                  <TaskDescriptionSection register={register} errors={errors} />
                 </div>
-                <TaskDetailsSection register={register} errors={errors} />
-                <TaskDescriptionSection register={register} errors={errors} />
-              </div>
-            </>
-          )}
-        </div>
+              </>
+            )}
+          </div>
+        </Form>
       </div>
     </>
   )

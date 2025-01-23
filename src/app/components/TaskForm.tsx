@@ -47,6 +47,7 @@ function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
     formState: { errors, isSubmitting },
     reset,
     setValue,
+    control,
   } = form // destructure after creating form instance
 
   const { addTask, isAddSuccess, updateTask, isUpdateSuccess } = useTaskData()
@@ -72,6 +73,7 @@ function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
       isLoading={isLoading}
       setValue={setValue}
       handleSubmit={handleSubmit(handleAddTask)}
+      control={control}
     />
   )
 }
