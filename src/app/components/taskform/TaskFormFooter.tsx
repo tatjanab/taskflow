@@ -9,7 +9,6 @@ function TaskFormFooter({ isSubmitting, isEditing, onCloseModal }) {
   const { deleteTask } = useTaskData()
   const searchParams = useSearchParams()
   const taskId = searchParams.get('selectedTask') || ''
-  const cancelRef = useRef(null)
   const [isOpen, setIsOpen] = useState(true)
 
   const handleDelete = async () => {

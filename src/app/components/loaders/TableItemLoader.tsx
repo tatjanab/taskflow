@@ -6,22 +6,22 @@ function TableItemLoader() {
     <>
       {[...Array(10)].map((_, index) => (
         <TableRow key={index} className='border-none'>
-          <TableCell className='p-8 w-20'>
+          <TableCell className='px-8 py-4 w-25'>
             <div className='form-item' />
           </TableCell>
-          <TableCell className='p-8'>
+          <TableCell className='px-8 py-4'>
             <div className='form-item' />
           </TableCell>
-          <TableCell className='p-8'>
+          <TableCell className='px-8 py-4'>
             <div className='form-item' />
           </TableCell>
-          <TableCell className='p-8'>
+          <TableCell className='px-8 py-4'>
             <div className='form-item' />
           </TableCell>
-          <TableCell className='p-8'>
+          <TableCell className='px-8 py-4'>
             <div className='form-item' />
           </TableCell>
-          <TableCell className='p-8'>
+          <TableCell className='px-8 py-4'>
             <div className='form-item' />
           </TableCell>
         </TableRow>

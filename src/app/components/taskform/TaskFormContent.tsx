@@ -1,14 +1,7 @@
 'use client'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog'
+import { DialogContent } from '@/components/ui/dialog'
 
-import { FieldErrors, UseFormRegister, UseFormSetValue } from 'react-hook-form'
+import { UseFormReturn, FieldErrors, UseFormRegister } from 'react-hook-form'
 import taskSchema from '@/models/zod_schema'
 import { z } from 'zod'
 import { useEffect, useState } from 'react'
@@ -21,30 +14,31 @@ import TaskTypeSection from './TaskTypeSection'
 import TaskDetailsSection from './TaskDetailsSection'
 import TaskDescriptionSection from './TaskDescriptionSection'
 import TaskFormFooter from './TaskFormFooter'
+import { Form } from '../ui/form'
 
 type addTaskFields = z.infer<typeof taskSchema>
 type TaskFormContentProps = {
   onCloseModal: () => void
-  handleSubmit: () => void
-  errors: FieldErrors<addTaskFields>
   register: UseFormRegister<addTaskFields>
+  errors: FieldErrors<addTaskFields>
+  handleSubmit: () => void
   isSubmitting: boolean
   taskDetails: addTaskFields
   taskId: string
-  setValue: UseFormSetValue<addTaskFields>
   isLoading: boolean
+  setValue: any
 }
 
 function TaskFormContent({
   onCloseModal,
-  handleSubmit,
-  errors,
   register,
+  errors,
+  handleSubmit,
   isSubmitting,
   taskDetails,
   taskId,
-  setValue,
   isLoading,
+  setValue,
 }: TaskFormContentProps) {
   const [isEditing, setIsEditing] = useState(false)
   // Add useEffect to set initial values when taskDetails changes
@@ -63,43 +57,35 @@ function TaskFormContent({
   const isLoadingDelayed = useMinimumLoadingTime(isLoading)
 
   return (
-    <div>
-      <div className='md:w-2/3 w-full rounded-none'>
+    <>
+      <div className='md:w-2/3 w-full rounded-none p-0'>
         <TaskFormHeader
           onClose={onCloseModal}
           taskId={taskId}
           taskSummary={taskDetails.summary}
         />
-        <DialogTrigger />
-        <DialogContent className='p-0'>
-          <form onSubmit={handleSubmit}>
-            {isLoadingDelayed ? (
-              <TaskFormLoader />
-            ) : (
-              <>
-                <div>
-                  <TaskIdentificationSection
-                    errors={errors}
-                    register={register}
-                  />
-                  <TaskSummarySection errors={errors} register={register} />
-                  <div className='flex flex-row gap-4 mb-5'>
-                    <TaskTypeSection errors={errors} register={register} />
-                  </div>
-                  <TaskDetailsSection errors={errors} register={register} />
-                </div>
-                <TaskDescriptionSection errors={errors} register={register} />
-                <TaskFormFooter
-                  isSubmitting={isSubmitting}
-                  isEditing={isEditing}
-                  onCloseModal={onCloseModal}
+        <div className='p-0'>
+          {isLoadingDelayed ? (
+            <TaskFormLoader />
+          ) : (
+            <>
+              <div className='p-4'>
+                <TaskIdentificationSection
+                  register={register}
+                  errors={errors}
                 />
-              </>
-            )}
-          </form>
-        </DialogContent>
+                <TaskSummarySection register={register} errors={errors} />
+                <div className='flex flex-row gap-4 mb-5'>
+                  <TaskTypeSection register={register} errors={errors} />
+                </div>
+                <TaskDetailsSection register={register} errors={errors} />
+                <TaskDescriptionSection register={register} errors={errors} />
+              </div>
+            </>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 

@@ -1,28 +1,33 @@
-import { FormLabel, FormItem, FormControl } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
+import { UseFormRegister, FieldErrors } from 'react-hook-form'
+import { z } from 'zod'
+import taskSchema from '@/models/zod_schema'
 
-function TaskDetailsSection({ errors, register }) {
+type TaskFormProps = {
+  register: UseFormRegister<z.infer<typeof taskSchema>>
+  errors: FieldErrors<z.infer<typeof taskSchema>>
+}
+
+function TaskDetailsSection({ register, errors }: TaskFormProps) {
   return (
     <div className='mb-5 flex flex-col w-1/2'>
-      <FormItem className='flex flex-col w-1/2'>
-        <FormLabel htmlFor='assignee' className='mb-2 text-sm font-bold'>
+      <div className='flex flex-col w-1/2'>
+        <label htmlFor='assignee' className='mb-2 text-sm font-bold'>
           Assignee <span className='text-red-600'>*</span>
-        </FormLabel>
-        <FormControl>
-          <Input
-            id='assignee'
-            type='text'
-            className={errors.summary ? 'border-red-500' : 'border-gray-300'}
-            {...register('details.assignee')}
-            size='sm'
-          />
-          {errors.details?.assignee && (
-            <p className='text-sm text-red-600'>
-              {errors.details?.assignee.message}
-            </p>
-          )}
-        </FormControl>
-      </FormItem>
+        </label>
+        <input
+          id='assignee'
+          type='text'
+          className={`h-10 border rounded-md px-3 ${
+            errors.details?.assignee ? 'border-red-500' : 'border-gray-300'
+          }`}
+          {...register('details.assignee')}
+        />
+        {errors.details?.assignee && (
+          <p className='text-sm text-red-600'>
+            {errors.details?.assignee.message}
+          </p>
+        )}
+      </div>
     </div>
   )
 }

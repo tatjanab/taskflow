@@ -41,7 +41,7 @@ function DashboardInner() {
       <Table className='px-4 text-sm w-full max-h-[100vh] overflow-y-scroll'>
         <TableHeader className='bg-white'>
           <TableRow className='text-sm'>
-            <TableHead className='px-8 py-4 w-20'>ID #</TableHead>
+            <TableHead className='px-8 py-4 5'>ID #</TableHead>
             <TableHead className='px-8 py-4'>Summary</TableHead>
             <TableHead className='px-8 py-4'>Status</TableHead>
             <TableHead className='px-8 py-4'>Assignee</TableHead>

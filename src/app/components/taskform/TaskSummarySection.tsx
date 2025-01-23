@@ -1,23 +1,30 @@
-import { FormControl, FormLabel } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
+import { UseFormRegister, FieldErrors } from 'react-hook-form'
+import { z } from 'zod'
+import taskSchema from '@/models/zod_schema'
 
-function TaskSummarySection({ errors, register }) {
+type TaskFormProps = {
+  register: UseFormRegister<z.infer<typeof taskSchema>>
+  errors: FieldErrors<z.infer<typeof taskSchema>>
+}
+
+function TaskSummarySection({ register, errors }: TaskFormProps) {
   return (
-    <FormControl className='flex flex-col mb-5 w-full'>
-      <FormLabel htmlFor='summary' className='mb-2 text-sm font-bold'>
+    <div className='flex flex-col mb-5 w-full'>
+      <label htmlFor='summary' className='mb-2 text-sm font-bold'>
         Summary <span className='text-red-600'>*</span>
-      </FormLabel>
-      <Input
+      </label>
+      <input
         id='summary'
         type='text'
-        className={errors.summary ? 'border-red-500' : 'border-gray-300'}
+        className={`h-10 border rounded-md px-3 ${
+          errors.summary ? 'border-red-500' : 'border-gray-300'
+        }`}
         {...register('summary')}
-        size='sm'
       />
       {errors.summary && (
         <p className='text-sm text-red-600'>{errors.summary.message}</p>
       )}
-    </FormControl>
+    </div>
   )
 }
 

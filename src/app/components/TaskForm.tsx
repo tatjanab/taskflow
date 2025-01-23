@@ -1,8 +1,8 @@
 'use client'
 
-import { Dialog } from '@/components/ui/dialog'
+import { Form } from '@/components/ui/form'
 import { Suspense } from 'react'
-import { useForm, SubmitHandler } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import taskSchema from '@/models/zod_schema'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -23,36 +23,6 @@ function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
   const searchParams = useSearchParams()
   const taskId = searchParams.get('selectedTask') || ''
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    reset,
-    setValue,
-  } = useForm<addTaskFields>({
-    resolver: zodResolver(taskSchema),
-    mode: 'onChange',
-  })
-
-  const { addTask, isAddSuccess, updateTask, isUpdateSuccess } = useTaskData()
-  // Only fetch when we have a taskId and the modal is open
-  const { taskDetails, isLoading } = useFetchTaskDetails(
-    isOpen && taskId ? taskId : '',
-    isOpen,
-  )
-
-  useEffect(() => {
-    if (isAddSuccess) {
-      onCloseModal()
-    }
-  }, [isAddSuccess, onCloseModal])
-
-  useEffect(() => {
-    if (isUpdateSuccess) {
-      onCloseModal()
-    }
-  }, [isUpdateSuccess, onCloseModal])
-
   const handleAddTask: SubmitHandler<addTaskFields> = async (data) => {
     try {
       if (taskId) {
@@ -66,22 +36,43 @@ function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
     }
   }
 
+  const form = useForm<addTaskFields>({
+    resolver: zodResolver(taskSchema),
+    mode: 'onChange',
+  })
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+    setValue,
+  } = form // destructure after creating form instance
+
+  const { addTask, isAddSuccess, updateTask, isUpdateSuccess } = useTaskData()
+  const { taskDetails, isLoading } = useFetchTaskDetails(
+    isOpen && taskId ? taskId : '',
+    isOpen,
+  )
+
+  useEffect(() => {
+    if (isAddSuccess || isUpdateSuccess) {
+      onCloseModal()
+    }
+  }, [isAddSuccess, isUpdateSuccess, onCloseModal])
+
   return (
-    <>
-      <Dialog open={isOpen} onOpenChange={onCloseModal}>
-        <TaskFormContent
-          onCloseModal={onCloseModal}
-          handleSubmit={handleSubmit(handleAddTask)}
-          errors={errors}
-          register={register}
-          isSubmitting={isSubmitting}
-          taskDetails={taskDetails || {}}
-          taskId={taskId}
-          setValue={setValue}
-          isLoading={isLoading}
-        />
-      </Dialog>
-    </>
+    <TaskFormContent
+      onCloseModal={onCloseModal}
+      register={register}
+      errors={errors}
+      isSubmitting={isSubmitting}
+      taskDetails={taskDetails || {}}
+      taskId={taskId}
+      isLoading={isLoading}
+      setValue={setValue}
+      handleSubmit={handleSubmit(handleAddTask)}
+    />
   )
 }
 

@@ -29,7 +29,7 @@ function TableItems({ taskList, onOpen, handleOpenTask }: TaskLists) {
             }}
             className='hover:bg-slate-100 hover:cursor-pointer'
           >
-            <TableCell className='px-8 py-4 w-20'>{item._id}</TableCell>
+            <TableCell className='px-8 py-4 w-25'>{item._id}</TableCell>
             <TableCell className='px-8 py-4'>{item.summary}</TableCell>
             <TableCell className='px-8 py-4'>
               <span className='rounded-sm bg-green-100 p-1 font-medium text-green-700'>

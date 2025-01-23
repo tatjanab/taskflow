@@ -1,5 +1,5 @@
 import { XCircle } from 'react-feather'
-import { DialogHeader } from '@/components/ui/dialog'
+import { DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 
 type TaskFormHeaderProps = {
@@ -10,12 +10,12 @@ type TaskFormHeaderProps = {
 
 function TaskFormHeader({ onClose, taskId, taskSummary }: TaskFormHeaderProps) {
   return (
-    <DialogHeader className='sticky bg-white top-0 border-b-2 flex flex-row justify-between items-center mb-3'>
+    <div className='sticky bg-white top-0 border-b-2 flex flex-row justify-between items-center mb-3 p-4'>
       <div>
         {taskId && (
           <>
             <p className='text-sm uppercase text-gray-400'>Edit task</p>
-            <h3 className='text-md font-bold'>{taskSummary}</h3>
+            <h2 className='text-md font-bold'>{taskSummary}</h2>
           </>
         )}
         {!taskId && <h6 className='mb-3 text-sm'>Create a new task</h6>}
@@ -25,10 +25,10 @@ function TaskFormHeader({ onClose, taskId, taskSummary }: TaskFormHeaderProps) {
         </p>
       </div>
 
-      <Button variant='ghost' size='sm' onClick={onClose}>
-        <XCircle height='10px' width='10px' />
-      </Button>
-    </DialogHeader>
+      <button className='p-2 hover:bg-gray-100 rounded-md' onClick={onClose}>
+        <XCircle height='16px' width='16px' />
+      </button>
+    </div>
   )
 }
 
