@@ -15,7 +15,7 @@ function NewTaskBtn() {
           New task
         </span>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className='w-[600px]'>
         <TaskForm isOpen={isOpen} onCloseModal={() => setIsOpen(false)} />
       </DialogContent>
     </Dialog>
