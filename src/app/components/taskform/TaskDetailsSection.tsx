@@ -22,7 +22,9 @@ function TaskDetailsSection({ control }: TaskFormProps) {
         name='details.assignee'
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Assignee</FormLabel>
+            <FormLabel>
+              Assignee <span className='text-red-500'>*</span>
+            </FormLabel>
             <FormControl>
               <Input {...field} />
             </FormControl>

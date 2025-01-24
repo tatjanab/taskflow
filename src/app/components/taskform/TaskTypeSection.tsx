@@ -30,7 +30,9 @@ function TaskTypeSection({ control }: TaskFormProps) {
           name='type'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Type</FormLabel>
+              <FormLabel>
+                Type <span className='text-red-500'>*</span>
+              </FormLabel>
               <FormControl>
                 <Select
                   {...field}
@@ -62,7 +64,9 @@ function TaskTypeSection({ control }: TaskFormProps) {
           name='details.priority'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Priority</FormLabel>
+              <FormLabel>
+                Priority <span className='text-red-500'>*</span>
+              </FormLabel>
               <FormControl>
                 <Select
                   {...field}

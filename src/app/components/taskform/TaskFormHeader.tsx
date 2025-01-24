@@ -10,18 +10,18 @@ type TaskFormHeaderProps = {
 
 function TaskFormHeader({ onClose, taskId, taskSummary }: TaskFormHeaderProps) {
   return (
-    <DialogHeader className='sticky bg-white top-0 border-b-2 flex flex-row justify-between items-center mb-3 p-4'>
+    <DialogHeader className='sticky top-0 flex flex-row justify-between items-center mb-3 p-2'>
       <div>
         {taskId && (
           <>
-            <DialogTitle className='text-sm uppercase text-gray-400'>
+            <DialogTitle className='uppercase text-gray-400'>
               Edit task
             </DialogTitle>
             <h2 className='text-md font-bold'>{taskSummary}</h2>
           </>
         )}
         {!taskId && (
-          <DialogTitle className='mb-3 text-sm'>Create a new task</DialogTitle>
+          <DialogTitle className='mb-3'>Create a new task</DialogTitle>
         )}
         <p className='text-sm font-normal'>
           Fields marked with an asterisk are mandatory{' '}

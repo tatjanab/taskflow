@@ -23,6 +23,20 @@ function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
   const searchParams = useSearchParams()
   const taskId = searchParams.get('selectedTask') || ''
 
+  const form = useForm<addTaskFields>({
+    resolver: zodResolver(taskSchema),
+    mode: 'onChange',
+    defaultValues: {
+      summary: '',
+      description: '',
+      type: 'Task',
+      status: 'Open',
+      details: {
+        assignee: '',
+      },
+    },
+  })
+
   const handleAddTask: SubmitHandler<addTaskFields> = async (data) => {
     try {
       if (taskId) {
@@ -36,16 +50,10 @@ function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
     }
   }
 
-  const form = useForm<addTaskFields>({
-    resolver: zodResolver(taskSchema),
-    mode: 'onChange',
-  })
-
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    reset,
     setValue,
     control,
   } = form // destructure after creating form instance
@@ -63,18 +71,20 @@ function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
   }, [isAddSuccess, isUpdateSuccess, onCloseModal])
 
   return (
-    <Form {...form} onSubmit={handleSubmit(handleAddTask)}>
-      <TaskFormContent
-        onCloseModal={onCloseModal}
-        register={register}
-        errors={errors}
-        isSubmitting={isSubmitting}
-        taskDetails={taskDetails || {}}
-        taskId={taskId}
-        isLoading={isLoading}
-        setValue={setValue}
-        control={control}
-      />
+    <Form {...form}>
+      <form onSubmit={handleSubmit(handleAddTask)}>
+        <TaskFormContent
+          onCloseModal={onCloseModal}
+          register={register}
+          errors={errors}
+          isSubmitting={isSubmitting}
+          taskDetails={taskDetails || {}}
+          taskId={taskId}
+          isLoading={isLoading}
+          setValue={setValue}
+          control={control}
+        />
+      </form>
     </Form>
   )
 }

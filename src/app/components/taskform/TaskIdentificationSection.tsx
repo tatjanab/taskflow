@@ -29,7 +29,9 @@ function TaskIdentificationSection({ control }: TaskFormProps) {
         name='status'
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Status</FormLabel>
+            <FormLabel>
+              Status <span className='text-red-500'>*</span>
+            </FormLabel>
             <FormControl>
               <Select
                 {...field}

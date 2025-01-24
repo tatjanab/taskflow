@@ -15,15 +15,15 @@ const TaskFooterSubmitActions = ({
     <>
       <div className='flex gap-2'>
         <Button
-          className='text-gray-400 text-sm min-w-[80px] rounded-[2px]'
+          className='text-white text-sm min-w-[80px] bg-gray-400 hover:bg-gray-600 px-2 py-4'
           onClick={onCloseModal}
         >
           Cancel
         </Button>
         <Button
-          size='sm'
           type='submit'
-          className='text-gray-400 text-sm min-w-[80px] rounded-[2px] hover:bg-blue-600 hover:text-white'
+          disabled={isSubmitting}
+          className='text-white text-sm min-w-[80px] bg-blue-900 hover:bg-blue-600 px-2 py-4'
         >
           {isSubmitting ? 'Submitting...' : isEditing ? 'Update' : 'Create'}
         </Button>

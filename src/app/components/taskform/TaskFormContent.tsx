@@ -63,7 +63,7 @@ function TaskFormContent({
 
   return (
     <>
-      <div className='w-full rounded-none p-0'>
+      <div className='w-full p-0'>
         <TaskFormHeader
           onClose={onCloseModal}
           taskId={taskId}
@@ -74,7 +74,7 @@ function TaskFormContent({
             <TaskFormLoader />
           ) : (
             <>
-              <div className='p-4'>
+              <div className='p-2'>
                 <TaskIdentificationSection control={control} />
                 <TaskSummarySection control={control} />
                 <div className='flex flex-row gap-4 mb-5'>

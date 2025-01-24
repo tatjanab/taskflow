@@ -21,7 +21,10 @@ function TaskSummarySection({ control }: TaskFormProps) {
         name='summary'
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Summary</FormLabel>
+            <FormLabel>
+              Summary
+              <span className='text-red-500'>*</span>
+            </FormLabel>
             <FormControl>
               <Input {...field} />
             </FormControl>
