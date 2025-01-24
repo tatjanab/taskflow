@@ -28,10 +28,6 @@ function TaskFormHeader({ onClose, taskId, taskSummary }: TaskFormHeaderProps) {
           <span className='text-red-600'>*</span>
         </p>
       </div>
-
-      <button className='p-2 hover:bg-gray-100 rounded-md' onClick={onClose}>
-        <XCircle height='16px' width='16px' />
-      </button>
     </DialogHeader>
   )
 }

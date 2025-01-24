@@ -63,18 +63,19 @@ function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
   }, [isAddSuccess, isUpdateSuccess, onCloseModal])
 
   return (
-    <TaskFormContent
-      onCloseModal={onCloseModal}
-      register={register}
-      errors={errors}
-      isSubmitting={isSubmitting}
-      taskDetails={taskDetails || {}}
-      taskId={taskId}
-      isLoading={isLoading}
-      setValue={setValue}
-      handleSubmit={handleSubmit(handleAddTask)}
-      control={control}
-    />
+    <Form {...form} onSubmit={handleSubmit(handleAddTask)}>
+      <TaskFormContent
+        onCloseModal={onCloseModal}
+        register={register}
+        errors={errors}
+        isSubmitting={isSubmitting}
+        taskDetails={taskDetails || {}}
+        taskId={taskId}
+        isLoading={isLoading}
+        setValue={setValue}
+        control={control}
+      />
+    </Form>
   )
 }
 

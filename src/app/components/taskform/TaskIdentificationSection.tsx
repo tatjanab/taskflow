@@ -1,30 +1,59 @@
-import { UseFormRegister, FieldErrors } from 'react-hook-form'
+import { UseFormRegister, FieldErrors, Control } from 'react-hook-form'
 import { z } from 'zod'
 import taskSchema from '@/models/zod_schema'
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '../ui/form'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../ui/select'
+import { SelectGroup, SelectLabel } from '@radix-ui/react-select'
 
 type TaskFormProps = {
-  register: UseFormRegister<z.infer<typeof taskSchema>>
-  errors: FieldErrors<z.infer<typeof taskSchema>>
+  control: Control<z.infer<typeof taskSchema>>
 }
 
-function TaskIdentificationSection({ register, errors }: TaskFormProps) {
+function TaskIdentificationSection({ control }: TaskFormProps) {
   return (
     <div className='flex flex-col gap-4 mb-5 w-1/2'>
-      <div>
-        <label className='block mb-2'>Status</label>
-        <select
-          {...register('status')}
-          className='w-[180px] h-10 border border-gray-300 rounded-md bg-white px-3'
-          defaultValue='Open'
-        >
-          <option value='Open'>Open</option>
-          <option value='In Progress'>In Progress</option>
-          <option value='Done'>Done</option>
-        </select>
-        {errors.status && (
-          <p className='text-sm text-red-600'>{errors.status.message}</p>
+      <FormField
+        control={control}
+        name='status'
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Status</FormLabel>
+            <FormControl>
+              <Select
+                {...field}
+                onValueChange={field.onChange}
+                value={field.value}
+                defaultValue='Open'
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder='Select status' />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Status</SelectLabel>
+                    <SelectItem value='Open'>Open</SelectItem>
+                    <SelectItem value='In Progress'>In Progress</SelectItem>
+                    <SelectItem value='Done'>Done</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </FormControl>
+            <FormMessage />
+          </FormItem>
         )}
-      </div>
+      />
     </div>
   )
 }

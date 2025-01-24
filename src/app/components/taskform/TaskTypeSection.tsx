@@ -1,52 +1,91 @@
-import { UseFormRegister, FieldErrors } from 'react-hook-form'
+import { Control } from 'react-hook-form'
 import { z } from 'zod'
 import taskSchema from '@/models/zod_schema'
+import {
+  FormControl,
+  FormMessage,
+  FormItem,
+  FormField,
+  FormLabel,
+} from '../ui/form'
+import {
+  Select,
+  SelectGroup,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../ui/select'
 
 type TaskFormProps = {
-  register: UseFormRegister<z.infer<typeof taskSchema>>
-  errors: FieldErrors<z.infer<typeof taskSchema>>
+  control: Control<z.infer<typeof taskSchema>>
 }
 
-function TaskTypeSection({ register, errors }: TaskFormProps) {
+function TaskTypeSection({ control }: TaskFormProps) {
   return (
     <>
       <div className='flex flex-col w-1/2'>
-        <label htmlFor='type' className='mb-2 text-sm font-bold'>
-          Type <span className='text-red-600'>*</span>
-        </label>
-        <select
-          id='type'
-          {...register('type')}
-          className='w-[180px] h-10 border border-gray-300 rounded-md bg-white px-3'
-        >
-          <option value='' disabled>
-            Type
-          </option>
-          <option value='Feature'>Feature</option>
-          <option value='Improvement'>Improvement</option>
-          <option value='Task'>Task</option>
-          <option value='Bug'>Bug</option>
-        </select>
-        {errors.type && (
-          <p className='text-sm text-red-600'>{errors.type.message}</p>
-        )}
+        <FormField
+          control={control}
+          name='type'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Type</FormLabel>
+              <FormControl>
+                <Select
+                  {...field}
+                  onValueChange={field.onChange}
+                  value={field.value}
+                  defaultValue='Feature'
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder='Select type' />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value='Feature'>Feature</SelectItem>
+                      <SelectItem value='Improvement'>Improvement</SelectItem>
+                      <SelectItem value='Task'>Task</SelectItem>
+                      <SelectItem value='Bug'>Bug</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
       </div>
       <div className='flex flex-col w-1/2'>
-        <label htmlFor='priority' className='mb-2 text-sm font-bold'>
-          Priority
-        </label>
-        <select
-          id='priority'
-          {...register('details.priority')}
-          className='w-[180px] h-10 border border-gray-300 rounded-md bg-white px-3'
-        >
-          <option value='' disabled>
-            Priority
-          </option>
-          <option value='High'>High</option>
-          <option value='Medium'>Medium</option>
-          <option value='Low'>Low</option>
-        </select>
+        <FormField
+          control={control}
+          name='details.priority'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Priority</FormLabel>
+              <FormControl>
+                <Select
+                  {...field}
+                  onValueChange={field.onChange}
+                  value={field.value}
+                  defaultValue='High'
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder='Select priority' />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value='High'>High</SelectItem>
+                      <SelectItem value='Medium'>Medium</SelectItem>
+                      <SelectItem value='Low'>Low</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
       </div>
     </>
   )

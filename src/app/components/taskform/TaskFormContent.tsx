@@ -26,7 +26,6 @@ type TaskFormContentProps = {
   onCloseModal: () => void
   register: UseFormRegister<addTaskFields>
   errors: FieldErrors<addTaskFields>
-  handleSubmit: () => void
   isSubmitting: boolean
   taskDetails: addTaskFields
   taskId: string
@@ -39,7 +38,6 @@ function TaskFormContent({
   onCloseModal,
   register,
   errors,
-  handleSubmit,
   isSubmitting,
   taskDetails,
   taskId,
@@ -65,35 +63,34 @@ function TaskFormContent({
 
   return (
     <>
-      <div className='md:w-2/3 w-full rounded-none p-0'>
-        <Form>
-          <TaskFormHeader
-            onClose={onCloseModal}
-            taskId={taskId}
-            taskSummary={taskDetails.summary}
-          />
-          <div className='p-0'>
-            {isLoadingDelayed ? (
-              <TaskFormLoader />
-            ) : (
-              <>
-                <div className='p-4'>
-                  <TaskIdentificationSection
-                    register={register}
-                    errors={errors}
-                    control={control}
-                  />
-                  <TaskSummarySection register={register} errors={errors} />
-                  <div className='flex flex-row gap-4 mb-5'>
-                    <TaskTypeSection register={register} errors={errors} />
-                  </div>
-                  <TaskDetailsSection register={register} errors={errors} />
-                  <TaskDescriptionSection register={register} errors={errors} />
+      <div className='w-full rounded-none p-0'>
+        <TaskFormHeader
+          onClose={onCloseModal}
+          taskId={taskId}
+          taskSummary={taskDetails.summary}
+        />
+        <div className='p-0'>
+          {isLoadingDelayed ? (
+            <TaskFormLoader />
+          ) : (
+            <>
+              <div className='p-4'>
+                <TaskIdentificationSection control={control} />
+                <TaskSummarySection control={control} />
+                <div className='flex flex-row gap-4 mb-5'>
+                  <TaskTypeSection control={control} />
                 </div>
-              </>
-            )}
-          </div>
-        </Form>
+                <TaskDetailsSection control={control} />
+                <TaskDescriptionSection control={control} />
+                <TaskFormFooter
+                  isSubmitting={isSubmitting}
+                  isEditing={isEditing}
+                  onCloseModal={onCloseModal}
+                />
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </>
   )
