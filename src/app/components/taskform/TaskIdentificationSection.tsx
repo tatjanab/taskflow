@@ -14,8 +14,9 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  SelectGroup,
+  SelectLabel,
 } from '../ui/select'
-import { SelectGroup, SelectLabel } from '@radix-ui/react-select'
 
 type TaskFormProps = {
   control: Control<z.infer<typeof taskSchema>>
