@@ -21,15 +21,19 @@ function useFetchTaskDetails(taskId: string, isOpen) {
     }
   }
 
-  const { data: taskDetails, isLoading } = useQuery({
+  const {
+    data: taskDetails,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ['fetchTaskId', taskId],
     queryFn: () => fetchTaskDetails(taskId),
     enabled: !!taskId && isOpen, // Only run the query if the taskId is provided
     refetchOnWindowFocus: false, // Disable refetching on window focus
-    staleTime: 0, //cache for 5 minutes
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes    //cache for 5 minutes
   })
 
-  return { taskDetails, isLoading }
+  return { taskDetails, isLoading, isError }
 }
 
 export default useFetchTaskDetails

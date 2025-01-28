@@ -1,12 +1,6 @@
 'use client'
-import { DialogContent } from '@/components/ui/dialog'
 
-import {
-  UseFormReturn,
-  FieldErrors,
-  UseFormRegister,
-  Control,
-} from 'react-hook-form'
+import { FieldErrors, UseFormRegister, Control } from 'react-hook-form'
 import taskSchema from '@/models/zod_schema'
 import { z } from 'zod'
 import { useEffect, useState } from 'react'
@@ -19,7 +13,6 @@ import TaskTypeSection from './TaskTypeSection'
 import TaskDetailsSection from './TaskDetailsSection'
 import TaskDescriptionSection from './TaskDescriptionSection'
 import TaskFormFooter from './TaskFormFooter'
-import { Form } from '../ui/form'
 
 type addTaskFields = z.infer<typeof taskSchema>
 type TaskFormContentProps = {
@@ -36,8 +29,6 @@ type TaskFormContentProps = {
 
 function TaskFormContent({
   onCloseModal,
-  register,
-  errors,
   isSubmitting,
   taskDetails,
   taskId,
@@ -64,11 +55,7 @@ function TaskFormContent({
   return (
     <>
       <div className='w-full p-0'>
-        <TaskFormHeader
-          onClose={onCloseModal}
-          taskId={taskId}
-          taskSummary={taskDetails.summary}
-        />
+        <TaskFormHeader taskId={taskId} taskSummary={taskDetails.summary} />
         <div className='p-0'>
           {isLoadingDelayed ? (
             <TaskFormLoader />

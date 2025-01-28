@@ -1,7 +1,7 @@
 'use client'
 
 import { Form } from '@/components/ui/form'
-import { Suspense } from 'react'
+import { Suspense, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import taskSchema from '@/models/zod_schema'
 import { z } from 'zod'
@@ -20,8 +20,13 @@ type TaskProps = {
 type addTaskFields = z.infer<typeof taskSchema>
 
 function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
+  const [taskId, setTaskId] = useState('')
   const searchParams = useSearchParams()
-  const taskId = searchParams.get('selectedTask') || ''
+
+  useEffect(() => {
+    const selectedTask = searchParams.get('selectedTask') || ''
+    setTaskId(selectedTask)
+  }, [searchParams])
 
   const form = useForm<addTaskFields>({
     resolver: zodResolver(taskSchema),
@@ -33,6 +38,7 @@ function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
       status: 'Open',
       details: {
         assignee: '',
+        priority: 'High',
       },
     },
   })
@@ -59,10 +65,7 @@ function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
   } = form // destructure after creating form instance
 
   const { addTask, isAddSuccess, updateTask, isUpdateSuccess } = useTaskData()
-  const { taskDetails, isLoading } = useFetchTaskDetails(
-    isOpen && taskId ? taskId : '',
-    isOpen,
-  )
+  const { taskDetails, isLoading } = useFetchTaskDetails(taskId, isOpen)
 
   useEffect(() => {
     if (isAddSuccess || isUpdateSuccess) {

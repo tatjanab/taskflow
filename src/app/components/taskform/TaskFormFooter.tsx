@@ -31,17 +31,25 @@ function TaskFormFooter({
   }
 
   return (
-    <div className=' -mx-6 px-6 py-2 flex flex-row justify-between items-center'>
-      <TaskFooterDeleteAction
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        handleDelete={handleDelete}
-      />
-      <TaskFooterSubmitActions
-        onCloseModal={onCloseModal}
-        isSubmitting={isSubmitting}
-        isEditing={isEditing}
-      />
+    <div className='-mx-6 px-6 py-2 flex flex-row items-center'>
+      <div className='flex w-full justify-between'>
+        <div>
+          {isEditing && (
+            <TaskFooterDeleteAction
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+              handleDelete={handleDelete}
+            />
+          )}
+        </div>
+        <div>
+          <TaskFooterSubmitActions
+            onCloseModal={onCloseModal}
+            isSubmitting={isSubmitting}
+            isEditing={isEditing}
+          />
+        </div>
+      </div>
     </div>
   )
 }

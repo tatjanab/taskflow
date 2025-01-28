@@ -24,9 +24,12 @@ const TaskFooterDeleteAction = ({
   setIsOpen,
 }: TaskFooterDeleteActionProps) => {
   return (
-    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+    <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button className='text-red-600 min-w-[80px] bg-transparent shadow-none'>
+        <Button
+          onClick={() => setIsOpen(true)}
+          className='text-red-600 min-w-[80px] bg-transparent shadow-none'
+        >
           Delete
         </Button>
       </AlertDialogTrigger>
