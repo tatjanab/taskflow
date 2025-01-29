@@ -11,17 +11,17 @@ function SearchBarInner() {
   return (
     <div>
       <form>
-        <div className='flex flex-row items-center gap-2 w-[400px]'>
+        <div className='flex flex-row items-center gap-2 w-[400px] relative'>
           <Input
             type='text'
             placeholder='Search tasks'
             value={search}
-            className='w-full rounded-sm border-gray-100 bg-gray-50 pl-8 py-4 text-sm placeholder:text-gray-500'
+            className='w-full rounded-sm border-gray-100 bg-gray-50 pl-10  py-4 text-sm placeholder:text-gray-500'
             onChange={(e) => {
               handleSearch(e.target.value)
             }}
           />
-          <Search className='text-gray-500' />
+          <Search className='text-gray-400 absolute left-2' />
         </div>
       </form>
     </div>
