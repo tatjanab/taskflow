@@ -9,16 +9,10 @@ function TaskFormHeader({ taskId, taskSummary }: TaskFormHeaderProps) {
   return (
     <div className='sticky top-0 flex flex-row justify-between items-center mb-3 p-2'>
       <div>
-        {taskId ? (
-          <>
-            <DialogTitle className='uppercase text-gray-400'>
-              Edit task
-            </DialogTitle>
-            <h2 className='text-md font-bold'>{taskSummary}</h2>
-          </>
-        ) : (
-          <DialogTitle className='mb-3'>Create a new task</DialogTitle>
-        )}
+        <DialogTitle className='uppercase text-gray-400'>
+          {taskId ? 'Edit task' : 'Create a new task'}
+        </DialogTitle>
+        {taskId && <h2 className='text-md font-bold'>{taskSummary}</h2>}
         <p className='text-sm font-normal'>
           Fields marked with an asterisk are mandatory{' '}
           <span className='text-red-600'>*</span>

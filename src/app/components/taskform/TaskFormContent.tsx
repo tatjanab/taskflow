@@ -53,33 +53,31 @@ function TaskFormContent({
   const isLoadingDelayed = useMinimumLoadingTime(isLoading)
 
   return (
-    <>
-      <div className='w-full p-0'>
-        <TaskFormHeader taskId={taskId} taskSummary={taskDetails.summary} />
-        <div className='p-0'>
-          {isLoadingDelayed ? (
-            <TaskFormLoader />
-          ) : (
-            <>
-              <div className='p-2'>
-                <TaskIdentificationSection control={control} />
-                <TaskSummarySection control={control} />
-                <div className='flex flex-row gap-4 mb-5'>
-                  <TaskTypeSection control={control} />
-                </div>
-                <TaskDetailsSection control={control} />
-                <TaskDescriptionSection control={control} />
-                <TaskFormFooter
-                  isSubmitting={isSubmitting}
-                  isEditing={isEditing}
-                  onCloseModal={onCloseModal}
-                />
+    <div className='w-full p-0'>
+      <TaskFormHeader taskId={taskId} taskSummary={taskDetails.summary} />
+      <div className='p-0'>
+        {isLoadingDelayed ? (
+          <TaskFormLoader />
+        ) : (
+          <>
+            <div className='p-2'>
+              <TaskIdentificationSection control={control} />
+              <TaskSummarySection control={control} />
+              <div className='flex flex-row gap-4 mb-5'>
+                <TaskTypeSection control={control} />
               </div>
-            </>
-          )}
-        </div>
+              <TaskDetailsSection control={control} />
+              <TaskDescriptionSection control={control} />
+              <TaskFormFooter
+                isSubmitting={isSubmitting}
+                isEditing={isEditing}
+                onCloseModal={onCloseModal}
+              />
+            </div>
+          </>
+        )}
       </div>
-    </>
+    </div>
   )
 }
 

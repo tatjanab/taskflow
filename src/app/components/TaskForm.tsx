@@ -94,9 +94,11 @@ function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
 
 function TaskForm(props: TaskProps) {
   return (
-    <Suspense fallback={null}>
-      <TaskFormInner {...props} />
-    </Suspense>
+    <div>
+      <Suspense fallback={null}>
+        <TaskFormInner {...props} />
+      </Suspense>
+    </div>
   )
 }
 

@@ -36,40 +36,43 @@ function DashboardInner() {
   }, [router, setIsOpen])
 
   return (
-    <>
+    <div>
+      <Table className='px-4 text-sm w-full max-h-[100vh] overflow-y-scroll'>
+        <TableHeader className='bg-white'>
+          <TableRow className='text-sm'>
+            <TableHead className='px-8 py-4 5'>ID #</TableHead>
+            <TableHead className='px-8 py-4'>Summary</TableHead>
+            <TableHead className='px-8 py-4'>Status</TableHead>
+            <TableHead className='px-8 py-4'>Assignee</TableHead>
+            <TableHead className='px-8 py-4'>Priority</TableHead>
+            <TableHead className='px-8 py-4'>Date</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {isError && <TableCell>No tasks in the list</TableCell>}
+          {!isError &&
+            (isLoading ? (
+              <TableItemLoader />
+            ) : (
+              <TableItems
+                taskList={taskList}
+                onOpen={() => setIsOpen(true)}
+                handleOpenTask={handleOpenTask}
+              />
+            ))}
+        </TableBody>
+      </Table>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <Table className='px-4 text-sm w-full max-h-[100vh] overflow-y-scroll'>
-          <TableHeader className='bg-white'>
-            <TableRow className='text-sm'>
-              <TableHead className='px-8 py-4 5'>ID #</TableHead>
-              <TableHead className='px-8 py-4'>Summary</TableHead>
-              <TableHead className='px-8 py-4'>Status</TableHead>
-              <TableHead className='px-8 py-4'>Assignee</TableHead>
-              <TableHead className='px-8 py-4'>Priority</TableHead>
-              <TableHead className='px-8 py-4'>Date</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {isError && <TableCell>No tasks in the list</TableCell>}
-            {!isError &&
-              (isLoading ? (
-                <TableItemLoader />
-              ) : (
-                <TableItems
-                  taskList={taskList}
-                  onOpen={() => setIsOpen(true)}
-                  handleOpenTask={handleOpenTask}
-                />
-              ))}
-          </TableBody>
-        </Table>
-        {isOpen && (
-          <DialogContent className='w-[600px]'>
-            <TaskForm isOpen={isOpen} onCloseModal={handleClose} />
-          </DialogContent>
-        )}
+        <DialogContent className='w-[600px]'>
+          {console.log(
+            'DialogContent children:',
+            <TaskForm isOpen={isOpen} onCloseModal={handleClose} />,
+          )}
+
+          <TaskForm isOpen={isOpen} onCloseModal={handleClose} />
+        </DialogContent>
       </Dialog>
-    </>
+    </div>
   )
 }
 
