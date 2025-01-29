@@ -16,15 +16,17 @@ import TableItems from './TableItems'
 import TableItemLoader from './loaders/TableItemLoader'
 import TaskForm from './TaskForm'
 import { useCallback } from 'react'
+import TaskDetails from './taskDetails/TaskDetails'
 
 function DashboardInner() {
   const { taskList, isError, isLoading } = useFetchTasks()
   const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
-
+  const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null)
   // Memoize the handleOpenTask callback
   const handleOpenTask = useCallback(
     (taskId: string) => {
+      setSelectedTaskId(taskId)
       router.push(`?selectedTask=${taskId}`, { scroll: false }) // Add scroll: false to prevent unnecessary scrolling
     },
     [router],
@@ -62,16 +64,13 @@ function DashboardInner() {
             ))}
         </TableBody>
       </Table>
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className='w-[600px]'>
-          {console.log(
-            'DialogContent children:',
-            <TaskForm isOpen={isOpen} onCloseModal={handleClose} />,
-          )}
-
-          <TaskForm isOpen={isOpen} onCloseModal={handleClose} />
-        </DialogContent>
-      </Dialog>
+      {isOpen && (
+        <TaskDetails
+          isOpen={isOpen}
+          onCloseModal={handleClose}
+          selectedTaskId={selectedTaskId}
+        />
+      )}
     </div>
   )
 }

@@ -30,7 +30,7 @@ function useFetchTaskDetails(taskId: string, isOpen) {
     queryFn: () => fetchTaskDetails(taskId),
     enabled: !!taskId && isOpen, // Only run the query if the taskId is provided
     refetchOnWindowFocus: false, // Disable refetching on window focus
-    staleTime: 5 * 60 * 1000, // Cache for 5 minutes    //cache for 5 minutes
+    staleTime: 0, // Cache for 5 minutes    //cache for 5 minutes
   })
 
   return { taskDetails, isLoading, isError }

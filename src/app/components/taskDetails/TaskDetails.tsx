@@ -7,10 +7,26 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import taskSchema from '@/models/zod_schema'
 import { useEffect } from 'react'
 import { z } from 'zod'
-import { FormControl, FormLabel, FormMessage } from '../ui/form'
-import { FormItem } from '../ui/form'
-import { FormField } from '../ui/form'
-
+import {
+  FormControl,
+  FormLabel,
+  FormMessage,
+  FormItem,
+  FormField,
+} from '../ui/form'
+import {
+  Select,
+  SelectItem,
+  SelectContent,
+  SelectGroup,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '../ui/select'
+import { Input } from '../ui/input'
+import { Textarea } from '../ui/textarea'
+import TaskFormFooter from '../taskform/TaskFormFooter'
+import useTaskData from '@/hooks/useTaskData'
 type TaskFormFields = z.infer<typeof taskSchema>
 
 function TaskDetails({
@@ -23,6 +39,7 @@ function TaskDetails({
   selectedTaskId: string
 }) {
   const { taskDetails, isLoading } = useFetchTaskDetails(selectedTaskId, isOpen)
+  const { updateTask, isUpdateSuccess } = useTaskData()
   const {
     register,
     handleSubmit,
@@ -47,43 +64,74 @@ function TaskDetails({
     },
   })
 
+  // Add useEffect to set initial values when taskDetails changes
   useEffect(() => {
-    if (taskDetails) {
-      setValue('summary', taskDetails.summary)
-      setValue('type', taskDetails.type)
-      setValue('details.priority', taskDetails.details.priority)
-      setValue('status', taskDetails.status)
-      setValue('details.assignee', taskDetails.details.assignee)
-      setValue('description', taskDetails.description)
+    if (taskDetails && taskDetails._id) {
+      Object.entries(taskDetails).forEach(([key, value]) => {
+        setValue(key as keyof TaskFormFields, value)
+      })
     }
-  }, [taskDetails])
+  }, [taskDetails, setValue])
 
-  const onSubmit: SubmitHandler<TaskFormFields> = (data: TaskFormFields) => {
-    console.log(data)
+  const handleUpdateTask: SubmitHandler<TaskFormFields> = async (data) => {
+    console.log(data._id)
+    try {
+      await updateTask(data)
+      onCloseModal()
+      console.log('Task updated successfully')
+    } catch (error) {
+      console.error('Error updating task:', error)
+    }
   }
 
   return (
     <Dialog open={isOpen} onOpenChange={onCloseModal}>
-      <DialogContent className='w-[600px]'>
-        <DialogHeader>
-          <DialogTitle className='text-sm uppercase'>Edit task</DialogTitle>
-          <h2 className='text-md font-bold'>{taskDetails?.summary}</h2>
+      <DialogContent className='w-[600px] p-8'>
+        <DialogHeader className='mb-3'>
+          <DialogTitle className='mb-2'>{taskDetails?.summary}</DialogTitle>
           <p className='text-sm font-normal'>
             Fields marked with an asterisk are mandatory{' '}
             <span className='text-red-600'>*</span>
           </p>
         </DialogHeader>
         <FormProvider {...form}>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className='flex flex-col w-1/2'>
-              <label htmlFor='status'>Status</label>
-              <select name='status' id='status' {...register('status')}>
-                <option value='Open'>Open</option>
-                <option value='In Progress'>In Progress</option>
-                <option value='Done'>Done</option>
-              </select>
+          <form onSubmit={handleSubmit(handleUpdateTask)}>
+            <div className='flex flex-col w-1/2  mb-5'>
+              <FormField
+                control={control}
+                name='status'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel htmlFor='status'>
+                      Status <span className='text-red-500'>*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Select
+                        {...field}
+                        onValueChange={field.onChange}
+                        value={field.value}
+                        defaultValue='Open'
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder='Select status' />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectLabel>Status</SelectLabel>
+                            <SelectItem value='Open'>Open</SelectItem>
+                            <SelectItem value='In Progress'>
+                              In Progress
+                            </SelectItem>
+                            <SelectItem value='Done'>Done</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
             </div>
-            <div className='flex flex-col w-1/2 space-y-2'>
+            <div className='flex flex-col mb-5 w-full'>
               <FormField
                 control={control}
                 name='summary'
@@ -93,10 +141,10 @@ function TaskDetails({
                       htmlFor='summary'
                       className='font-medium text-sm leading-none'
                     >
-                      Summary
+                      Summary <span className='text-red-500'>*</span>
                     </FormLabel>
                     <FormControl>
-                      <input id='summary' type='text' {...field} />
+                      <Input id='summary' type='text' {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -105,55 +153,112 @@ function TaskDetails({
             </div>
             <div className='flex flex-row gap-4 mb-5'>
               <div className='flex flex-col w-1/2'>
-                <label htmlFor='type'>Type</label>
-                <select name='type' id='type' {...register('type')}>
-                  <option value='Feature'>Feature</option>
-                  <option value='Improvement'>Improvement</option>
-                  <option value='Task'>Task</option>
-                  <option value='Bug'>Bug</option>
-                </select>
+                <FormField
+                  control={control}
+                  name='type'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel htmlFor='type'>
+                        Type <span className='text-red-500'>*</span>
+                      </FormLabel>
+                      <FormControl>
+                        <Select
+                          {...field}
+                          onValueChange={field.onChange}
+                          value={field.value}
+                          defaultValue='Feature'
+                        >
+                          <SelectTrigger>
+                            <SelectValue placeholder='Select type' />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectGroup>
+                              <SelectLabel>Type</SelectLabel>
+                              <SelectItem value='Feature'>Feature</SelectItem>
+                              <SelectItem value='Improvement'>
+                                Improvement
+                              </SelectItem>
+                              <SelectItem value='Task'>Task</SelectItem>
+                              <SelectItem value='Bug'>Bug</SelectItem>
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
               </div>
               <div className='flex flex-col w-1/2'>
-                <label htmlFor='priority'>Priority</label>
-                <select
-                  name='priority'
-                  id='priority'
-                  {...register('details.priority')}
-                >
-                  <option value='High'>High</option>
-                  <option value='Medium'>Medium</option>
-                  <option value='Low'>Low</option>
-                </select>
+                <FormField
+                  control={control}
+                  name='details.priority'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel htmlFor='priority'>
+                        Priority <span className='text-red-500'>*</span>
+                      </FormLabel>
+                      <FormControl>
+                        <Select
+                          {...field}
+                          onValueChange={field.onChange}
+                          value={field.value}
+                          defaultValue='Medium'
+                        >
+                          <SelectTrigger>
+                            <SelectValue placeholder='Select priority' />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectGroup>
+                              <SelectLabel>Priority</SelectLabel>
+                              <SelectItem value='Low'>Low</SelectItem>
+                              <SelectItem value='Medium'>Medium</SelectItem>
+                              <SelectItem value='High'>High</SelectItem>
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
               </div>
             </div>
             <div className='mb-5 flex flex-col w-1/2'>
-              <label htmlFor='assignee'>Assignee</label>
-              <input
-                id='assignee'
-                type='text'
-                {...register('details.assignee')}
+              <FormField
+                control={control}
+                name='details.assignee'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel htmlFor='assignee'>
+                      Assignee <span className='text-red-500'>*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input id='assignee' type='text' {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-              {errors.details?.assignee && (
-                <p className='text-xs text-red-600'>
-                  {errors.details?.assignee.message}
-                </p>
-              )}
             </div>
             <div className='flex flex-col mb-5'>
-              <label htmlFor='description'>Description</label>
-              <textarea
-                id='description'
-                {...register('description')}
-              ></textarea>
+              <FormField
+                control={control}
+                name='description'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel htmlFor='description'>Description</FormLabel>
+                    <FormControl>
+                      <Textarea id='description' {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
-            <div className='flex justify-between'>
-              <button type='button' onClick={onCloseModal}>
-                Cancel
-              </button>
-              <button type='submit' disabled={isSubmitting}>
-                Submit
-              </button>
-            </div>
+            <TaskFormFooter
+              isSubmitting={isSubmitting}
+              isEditing={true}
+              onCloseModal={onCloseModal}
+            />
           </form>
         </FormProvider>
       </DialogContent>
