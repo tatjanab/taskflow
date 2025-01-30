@@ -10,7 +10,7 @@ function NewTaskBtn() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger>
-        <span className='px-4 py-3 rounded-md font-sm bg-teal-600 text-white hover:bg-teal-700'>
+        <span className='px-4 py-3 rounded-md text-sm bg-teal-600 text-white hover:bg-teal-700'>
           + Add task
         </span>
       </DialogTrigger>
