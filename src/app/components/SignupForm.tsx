@@ -3,7 +3,7 @@
 import { z } from 'zod'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Input } from '@chakra-ui/react'
+import { Input } from '@/components/ui/input'
 
 const userFormSchema = z
   .object({

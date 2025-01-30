@@ -16,12 +16,12 @@ function SearchBarInner() {
             type='text'
             placeholder='Search tasks'
             value={search}
-            className='w-full rounded-sm border-gray-100 bg-gray-50 pl-10  py-4 text-sm placeholder:text-gray-500'
+            className='w-full rounded-md border-none bg-gray-50 pl-12  py-5 text-sm placeholder:text-gray-400 placeholder:font-light'
             onChange={(e) => {
               handleSearch(e.target.value)
             }}
           />
-          <Search className='text-gray-400 absolute left-2' />
+          <Search className='text-gray-300 absolute left-4 h-5 w-5' />
         </div>
       </form>
     </div>

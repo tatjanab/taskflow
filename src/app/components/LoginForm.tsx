@@ -1,7 +1,6 @@
 'use client'
-import { Input } from '@chakra-ui/react'
 import { zodResolver } from '@hookform/resolvers/zod'
-
+import { Input } from '@/components/ui/input'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
 

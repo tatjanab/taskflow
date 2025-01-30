@@ -1,5 +1,5 @@
 import LoginForm from '@/components/LoginForm'
-import { Link } from '@chakra-ui/react'
+import Link from 'next/link'
 
 function Login() {
   return (
