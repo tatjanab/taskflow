@@ -1,62 +1,28 @@
-import { UseFormRegister, FieldErrors, Control } from 'react-hook-form'
+import { UseFormRegister } from 'react-hook-form'
 import { z } from 'zod'
 import taskSchema from '@/models/zod_schema'
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '../ui/form'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-  SelectGroup,
-  SelectLabel,
-} from '../ui/select'
 
 type TaskFormProps = {
-  control: Control<z.infer<typeof taskSchema>>
+  register: UseFormRegister<z.infer<typeof taskSchema>>
+  taskDetails?: z.infer<typeof taskSchema>
 }
 
-function TaskIdentificationSection({ control }: TaskFormProps) {
+function TaskIdentificationSection({ register, taskDetails }: TaskFormProps) {
   return (
     <div className='flex flex-col gap-4 mb-5 w-1/2'>
-      <FormField
-        control={control}
-        name='status'
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>
-              Status <span className='text-red-500'>*</span>
-            </FormLabel>
-            <FormControl>
-              <Select
-                {...field}
-                onValueChange={field.onChange}
-                value={field.value}
-                defaultValue='Open'
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder='Select status' />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Status</SelectLabel>
-                    <SelectItem value='Open'>Open</SelectItem>
-                    <SelectItem value='In Progress'>In Progress</SelectItem>
-                    <SelectItem value='Done'>Done</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+      <label htmlFor='status' className='font-medium text-gray-700'>
+        Status <span className='text-red-500'>*</span>
+      </label>
+      <select
+        {...register('status')}
+        id='status'
+        defaultValue={taskDetails?.status || 'Open'}
+        className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+      >
+        <option value='Open'>Open</option>
+        <option value='In Progress'>In Progress</option>
+        <option value='Done'>Done</option>
+      </select>
     </div>
   )
 }

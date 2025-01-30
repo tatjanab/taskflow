@@ -35,6 +35,8 @@ function TaskFormContent({
   isLoading,
   setValue,
   control,
+  register,
+  errors,
 }: TaskFormContentProps) {
   const [isEditing, setIsEditing] = useState(false)
   // Add useEffect to set initial values when taskDetails changes
@@ -54,29 +56,47 @@ function TaskFormContent({
 
   return (
     <div className='w-full p-0'>
-      <TaskFormHeader taskId={taskId} taskSummary={taskDetails.summary} />
-      <div className='p-0'>
-        {isLoadingDelayed ? (
-          <TaskFormLoader />
-        ) : (
-          <>
+      {isLoadingDelayed ? (
+        <TaskFormLoader />
+      ) : (
+        <>
+          <TaskFormHeader taskId={taskId} taskSummary={taskDetails.summary} />
+          <div className='p-0'>
             <div className='p-2'>
-              <TaskIdentificationSection control={control} />
-              <TaskSummarySection control={control} />
+              <TaskIdentificationSection
+                register={register}
+                taskDetails={taskDetails}
+              />
+              <TaskSummarySection
+                register={register}
+                taskDetails={taskDetails}
+                errors={errors}
+              />
               <div className='flex flex-row gap-4 mb-5'>
-                <TaskTypeSection control={control} />
+                <TaskTypeSection
+                  register={register}
+                  taskDetails={taskDetails}
+                  errors={errors}
+                />
               </div>
-              <TaskDetailsSection control={control} />
-              <TaskDescriptionSection control={control} />
+              <TaskDetailsSection
+                register={register}
+                taskDetails={taskDetails}
+                errors={errors}
+              />
+              <TaskDescriptionSection
+                register={register}
+                taskDetails={taskDetails}
+              />
               <TaskFormFooter
                 isSubmitting={isSubmitting}
                 isEditing={isEditing}
                 onCloseModal={onCloseModal}
               />
             </div>
-          </>
-        )}
-      </div>
+          </div>
+        </>
+      )}
     </div>
   )
 }

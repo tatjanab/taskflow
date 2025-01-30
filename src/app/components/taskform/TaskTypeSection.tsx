@@ -1,95 +1,46 @@
-import { Control } from 'react-hook-form'
+import { UseFormRegister, FieldErrors } from 'react-hook-form'
 import { z } from 'zod'
 import taskSchema from '@/models/zod_schema'
-import {
-  FormControl,
-  FormMessage,
-  FormItem,
-  FormField,
-  FormLabel,
-} from '../ui/form'
-import {
-  Select,
-  SelectGroup,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '../ui/select'
 
 type TaskFormProps = {
-  control: Control<z.infer<typeof taskSchema>>
+  register: UseFormRegister<z.infer<typeof taskSchema>>
+  taskDetails?: z.infer<typeof taskSchema>
+  errors: FieldErrors<z.infer<typeof taskSchema>>
 }
 
-function TaskTypeSection({ control }: TaskFormProps) {
+function TaskTypeSection({ register, taskDetails, errors }: TaskFormProps) {
   return (
     <>
       <div className='flex flex-col w-1/2'>
-        <FormField
-          control={control}
-          name='type'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                Type <span className='text-red-500'>*</span>
-              </FormLabel>
-              <FormControl>
-                <Select
-                  {...field}
-                  onValueChange={field.onChange}
-                  value={field.value}
-                  defaultValue='Feature'
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder='Select type' />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectItem value='Feature'>Feature</SelectItem>
-                      <SelectItem value='Improvement'>Improvement</SelectItem>
-                      <SelectItem value='Task'>Task</SelectItem>
-                      <SelectItem value='Bug'>Bug</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <label htmlFor='type' className='font-medium text-gray-700'>
+          Type <span className='text-red-500'>*</span>
+        </label>
+        <select
+          {...register('type')}
+          id='type'
+          defaultValue={taskDetails?.type || 'Feature'}
+          className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+        >
+          <option value='Feature'>Feature</option>
+          <option value='Improvement'>Improvement</option>
+          <option value='Task'>Task</option>
+          <option value='Bug'>Bug</option>
+        </select>
       </div>
       <div className='flex flex-col w-1/2'>
-        <FormField
-          control={control}
-          name='details.priority'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                Priority <span className='text-red-500'>*</span>
-              </FormLabel>
-              <FormControl>
-                <Select
-                  {...field}
-                  onValueChange={field.onChange}
-                  value={field.value}
-                  defaultValue='High'
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder='Select priority' />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectItem value='High'>High</SelectItem>
-                      <SelectItem value='Medium'>Medium</SelectItem>
-                      <SelectItem value='Low'>Low</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <label htmlFor='priority' className='font-medium text-gray-700'>
+          Priority <span className='text-red-500'>*</span>
+        </label>
+        <select
+          {...register('details.priority')}
+          id='priority'
+          defaultValue={taskDetails?.details?.priority || 'High'}
+          className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+        >
+          <option value='High'>High</option>
+          <option value='Medium'>Medium</option>
+          <option value='Low'>Low</option>
+        </select>
       </div>
     </>
   )

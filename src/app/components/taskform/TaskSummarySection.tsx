@@ -1,37 +1,28 @@
-import { Control } from 'react-hook-form'
+import { UseFormRegister, FieldErrors } from 'react-hook-form'
 import { z } from 'zod'
 import taskSchema from '@/models/zod_schema'
-import {
-  FormField,
-  FormMessage,
-  FormItem,
-  FormLabel,
-  FormControl,
-} from '../ui/form'
-import { Input } from '../ui/input'
+
 type TaskFormProps = {
-  control: Control<z.infer<typeof taskSchema>>
+  register: UseFormRegister<z.infer<typeof taskSchema>>
+  taskDetails?: z.infer<typeof taskSchema>
+  errors: FieldErrors<z.infer<typeof taskSchema>>
 }
 
-function TaskSummarySection({ control }: TaskFormProps) {
+function TaskSummarySection({ register, taskDetails, errors }: TaskFormProps) {
   return (
     <div className='flex flex-col mb-5 w-full'>
-      <FormField
-        control={control}
-        name='summary'
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>
-              Summary
-              <span className='text-red-500'>*</span>
-            </FormLabel>
-            <FormControl>
-              <Input {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
+      <label htmlFor='summary' className='font-medium text-gray-700'>
+        Summary <span className='text-red-500'>*</span>
+      </label>
+      <input
+        {...register('summary')}
+        defaultValue={taskDetails?.summary}
+        id='summary'
+        className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
       />
+      {errors?.summary && (
+        <p className='text-red-500 text-sm mt-1'>{errors?.summary?.message}</p>
+      )}
     </div>
   )
 }

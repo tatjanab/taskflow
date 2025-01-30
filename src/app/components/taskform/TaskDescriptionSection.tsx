@@ -1,34 +1,23 @@
-import { Control } from 'react-hook-form'
+import { UseFormRegister } from 'react-hook-form'
 import { z } from 'zod'
 import taskSchema from '@/models/zod_schema'
-import {
-  FormField,
-  FormControl,
-  FormLabel,
-  FormMessage,
-  FormItem,
-} from '../ui/form'
-import { Textarea } from '../ui/textarea'
 
 type TaskFormProps = {
-  control: Control<z.infer<typeof taskSchema>>
+  register: UseFormRegister<z.infer<typeof taskSchema>>
+  taskDetails?: z.infer<typeof taskSchema>
 }
 
-function TaskDescriptionSection({ control }: TaskFormProps) {
+function TaskDescriptionSection({ register, taskDetails }: TaskFormProps) {
   return (
     <div className='flex flex-col mb-5'>
-      <FormField
-        control={control}
-        name='description'
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Description</FormLabel>
-            <FormControl>
-              <Textarea {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
+      <label htmlFor='description' className='font-medium text-gray-700'>
+        Description
+      </label>
+      <textarea
+        {...register('description')}
+        id='description'
+        defaultValue={taskDetails?.description || ''}
+        className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
       />
     </div>
   )

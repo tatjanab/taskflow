@@ -77,7 +77,9 @@ function TaskDetails({
     console.log(data._id)
     try {
       await updateTask(data)
-      onCloseModal()
+      if (isUpdateSuccess) {
+        onCloseModal()
+      }
       console.log('Task updated successfully')
     } catch (error) {
       console.error('Error updating task:', error)

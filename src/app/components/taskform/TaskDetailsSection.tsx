@@ -1,37 +1,30 @@
-import { Control } from 'react-hook-form'
+import { UseFormRegister, FieldErrors } from 'react-hook-form'
 import { z } from 'zod'
 import taskSchema from '@/models/zod_schema'
-import {
-  FormMessage,
-  FormControl,
-  FormLabel,
-  FormItem,
-  FormField,
-} from '../ui/form'
-import { Input } from '../ui/input'
 
 type TaskFormProps = {
-  control: Control<z.infer<typeof taskSchema>>
+  register: UseFormRegister<z.infer<typeof taskSchema>>
+  taskDetails?: z.infer<typeof taskSchema>
+  errors: FieldErrors<z.infer<typeof taskSchema>>
 }
 
-function TaskDetailsSection({ control }: TaskFormProps) {
+function TaskDetailsSection({ register, taskDetails, errors }: TaskFormProps) {
   return (
     <div className='mb-5 flex flex-col w-1/2'>
-      <FormField
-        control={control}
-        name='details.assignee'
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>
-              Assignee <span className='text-red-500'>*</span>
-            </FormLabel>
-            <FormControl>
-              <Input {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
+      <label htmlFor='assignee' className='font-medium text-gray-700'>
+        Assignee <span className='text-red-500'>*</span>
+      </label>
+      <input
+        {...register('details.assignee')}
+        id='assignee'
+        defaultValue={taskDetails?.details?.assignee || ''}
+        className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
       />
+      {errors.details?.assignee && (
+        <p className='text-red-500 text-sm'>
+          {errors.details.assignee.message}
+        </p>
+      )}
     </div>
   )
 }
