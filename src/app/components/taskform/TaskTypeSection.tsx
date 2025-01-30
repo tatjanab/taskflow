@@ -1,32 +1,47 @@
-import { Input, FormControl, FormLabel, Select } from '@chakra-ui/react'
+import { UseFormRegister, FieldErrors } from 'react-hook-form'
+import { z } from 'zod'
+import taskSchema from '@/models/zod_schema'
 
-function TaskTypeSection({ errors, register }) {
+type TaskFormProps = {
+  register: UseFormRegister<z.infer<typeof taskSchema>>
+  taskDetails?: z.infer<typeof taskSchema>
+  errors: FieldErrors<z.infer<typeof taskSchema>>
+}
+
+function TaskTypeSection({ register, taskDetails, errors }: TaskFormProps) {
   return (
     <>
-      <FormControl isInvalid={!!errors.type} className='flex flex-col w-1/2'>
-        <FormLabel htmlFor='type' mb='5px' fontSize='xs' fontWeight='bold'>
-          Type <span className='text-red-600'>*</span>
-        </FormLabel>
-        <Select id='type' borderRadius='0' size='sm' {...register('type')}>
+      <div className='flex flex-col w-1/2'>
+        <label htmlFor='type' className='font-medium text-gray-700'>
+          Type <span className='text-red-500'>*</span>
+        </label>
+        <select
+          {...register('type')}
+          id='type'
+          defaultValue={taskDetails?.type || 'Feature'}
+          className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+        >
           <option value='Feature'>Feature</option>
           <option value='Improvement'>Improvement</option>
           <option value='Task'>Task</option>
           <option value='Bug'>Bug</option>
-        </Select>
-        {errors.type && (
-          <p className='text-xs text-red-600'>{errors.type.message}</p>
-        )}
-      </FormControl>
-      <FormControl className='flex flex-col w-1/2'>
-        <FormLabel htmlFor='priority' mb='5px' fontSize='xs' fontWeight='bold'>
-          Priority
-        </FormLabel>
-        <Select id='priority' size='sm' {...register('details.priority')}>
+        </select>
+      </div>
+      <div className='flex flex-col w-1/2'>
+        <label htmlFor='priority' className='font-medium text-gray-700'>
+          Priority <span className='text-red-500'>*</span>
+        </label>
+        <select
+          {...register('details.priority')}
+          id='priority'
+          defaultValue={taskDetails?.details?.priority || 'High'}
+          className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+        >
           <option value='High'>High</option>
           <option value='Medium'>Medium</option>
           <option value='Low'>Low</option>
-        </Select>
-      </FormControl>
+        </select>
+      </div>
     </>
   )
 }

@@ -1,27 +1,29 @@
-import { Input, FormControl, FormLabel } from '@chakra-ui/react'
+import { UseFormRegister, FieldErrors } from 'react-hook-form'
+import { z } from 'zod'
+import taskSchema from '@/models/zod_schema'
 
-function TaskSummarySection({ errors, register }) {
+type TaskFormProps = {
+  register: UseFormRegister<z.infer<typeof taskSchema>>
+  taskDetails?: z.infer<typeof taskSchema>
+  errors: FieldErrors<z.infer<typeof taskSchema>>
+}
+
+function TaskSummarySection({ register, taskDetails, errors }: TaskFormProps) {
   return (
-    <FormControl
-      isInvalid={!!errors.summary}
-      className='flex flex-col mb-5 w-full'
-    >
-      <FormLabel htmlFor='summary' mb='5px' fontSize='xs' fontWeight='bold'>
-        Summary <span className='text-red-600'>*</span>
-      </FormLabel>
-      <Input
-        id='summary'
-        type='text'
-        borderWidth='1'
-        borderRadius='0'
-        borderColor={errors.summary ? 'red.500' : 'gray.300'}
+    <div className='flex flex-col mb-5 w-full'>
+      <label htmlFor='summary' className='font-medium text-gray-700'>
+        Summary <span className='text-red-500'>*</span>
+      </label>
+      <input
         {...register('summary')}
-        size='sm'
+        defaultValue={taskDetails?.summary}
+        id='summary'
+        className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
       />
-      {errors.summary && (
-        <p className='text-xs text-red-600'>{errors.summary.message}</p>
+      {errors?.summary && (
+        <p className='text-red-500 text-sm mt-1'>{errors?.summary?.message}</p>
       )}
-    </FormControl>
+    </div>
   )
 }
 

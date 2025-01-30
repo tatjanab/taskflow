@@ -1,60 +1,44 @@
-import { FormControl, FormLabel, Skeleton } from '@chakra-ui/react'
-
 function TaskFormLoader() {
   return (
-    <div>
+    <div className='animate-pulse'>
       <div className='flex flex-row gap-4'>
-        <FormControl className='flex flex-col w-1/2'>
-          <FormLabel mb='5px' fontSize='xs' fontWeight='bold'>
-            Task ID
-          </FormLabel>
-          <Skeleton height='32px' />
-        </FormControl>
+        <div className='flex flex-col w-1/2'>
+          <label className='mb-5 text-sm font-bold'>Task ID</label>
+          <div className='h-8 bg-gray-300 rounded'></div>
+        </div>
 
-        <FormControl className='flex flex-col mb-4 w-1/2'>
-          <FormLabel mb='5px' fontSize='xs' fontWeight='bold'>
-            Status
-          </FormLabel>
-          <Skeleton height='32px' />
-        </FormControl>
+        <div className='flex flex-col mb-4 w-1/2'>
+          <label className='mb-5 text-sm font-bold'>Status</label>
+          <div className='h-8 bg-gray-300 rounded'></div>
+        </div>
       </div>
 
-      <FormControl className='flex flex-col mb-4 w-full'>
-        <FormLabel mb='5px' fontSize='xs' fontWeight='bold'>
-          Summary
-        </FormLabel>
-        <Skeleton height='32px' />
-      </FormControl>
-
-      <div className='flex flex-row gap-4'>
-        <FormControl className='flex flex-col mb-4 w-1/2'>
-          <FormLabel mb='5px' fontSize='xs' fontWeight='bold'>
-            Type
-          </FormLabel>
-          <Skeleton height='32px' />
-        </FormControl>
-
-        <FormControl className='flex flex-col mb-4 w-1/2'>
-          <FormLabel mb='5px' fontSize='xs' fontWeight='bold'>
-            Priority
-          </FormLabel>
-          <Skeleton height='32px' />
-        </FormControl>
+      <div className='flex flex-col mb-4 w-full'>
+        <label className='mb-5 text-sm font-bold'>Summary</label>
+        <div className='h-8 bg-gray-300 rounded'></div>
       </div>
 
-      <FormControl className='flex flex-col mb-4 w-1/2'>
-        <FormLabel mb='5px' fontSize='xs' fontWeight='bold'>
-          Assignee
-        </FormLabel>
-        <Skeleton height='32px' />
-      </FormControl>
+      <div className='flex flex-row gap-4'>
+        <div className='flex flex-col mb-4 w-1/2'>
+          <label className='mb-5 text-sm font-bold'>Type</label>
+          <div className='h-8 bg-gray-300 rounded'></div>
+        </div>
 
-      <FormControl className='flex flex-col mb-3'>
-        <FormLabel mb='5px' fontSize='xs' fontWeight='bold'>
-          Description
-        </FormLabel>
-        <Skeleton height='96px' />
-      </FormControl>
+        <div className='flex flex-col mb-4 w-1/2'>
+          <label className='mb-5 text-sm font-bold'>Priority</label>
+          <div className='h-8 bg-gray-300 rounded'></div>
+        </div>
+      </div>
+
+      <div className='flex flex-col mb-4 w-1/2'>
+        <label className='mb-5 text-sm font-bold'>Assignee</label>
+        <div className='h-16 bg-gray-300 rounded'></div>
+      </div>
+
+      <div className='flex flex-col mb-3'>
+        <label className='mb-5 text-sm font-bold'>Description</label>
+        <div className='h-24 bg-gray-300 rounded'></div>
+      </div>
     </div>
   )
 }

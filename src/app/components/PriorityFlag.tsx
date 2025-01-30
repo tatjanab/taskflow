@@ -1,16 +1,18 @@
-import { Td } from '@chakra-ui/react'
-import { ArrowUpIcon, ArrowUpDownIcon, ArrowDownIcon } from '@chakra-ui/icons'
+import { TableCell } from '@/components/ui/table'
+import { ArrowUp, ArrowDown, MoreHorizontal } from 'react-feather'
 
 function PriorityFlag({ priority }: { priority: string }) {
   return (
-    <Td p='8px'>
-      <span className={`rounded-sm bg-${priority} p-1 text-white mr-2`}>
-        {priority === 'High' && <ArrowUpIcon />}
-        {priority === 'Medium' && <ArrowUpDownIcon />}
-        {priority === 'Low' && <ArrowDownIcon />}
+    <TableCell className='px-8 py-4 flex flex-row items-center'>
+      <span
+        className={`rounded-sm bg-${priority} p-1 text-white mr-2 h-6 w-6 flex items-center justify-center`}
+      >
+        {priority === 'High' && <ArrowUp />}
+        {priority === 'Medium' && <MoreHorizontal />}
+        {priority === 'Low' && <ArrowDown />}
       </span>
       {priority}
-    </Td>
+    </TableCell>
   )
 }
 

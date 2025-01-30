@@ -1,23 +1,29 @@
-import { ModalFooter } from '@chakra-ui/react'
 import useTaskData from '@/hooks/useTaskData'
 import { useSearchParams } from 'next/navigation'
-import { useDisclosure } from '@chakra-ui/react'
-import { useRef } from 'react'
+import { useState } from 'react'
 import TaskFooterSubmitActions from './TaskFooterSubmitActions'
 import TaskFooterDeleteAction from './TaskFooterDeleteAction'
 
-function TaskFormFooter({ isSubmitting, isEditing, onCloseModal }) {
+type TaskFormFooterProps = {
+  isSubmitting: boolean
+  isEditing: boolean
+  onCloseModal: () => void
+}
+
+function TaskFormFooter({
+  isSubmitting,
+  isEditing,
+  onCloseModal,
+}: TaskFormFooterProps) {
   const { deleteTask } = useTaskData()
   const searchParams = useSearchParams()
   const taskId = searchParams.get('selectedTask') || ''
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const cancelRef = useRef(null)
+  const [isOpen, setIsOpen] = useState(true)
 
   const handleDelete = async () => {
     try {
-      //TODO: use taskId instead of id from params
       await deleteTask(taskId)
-      onClose()
+      setIsOpen(false)
       onCloseModal()
     } catch (error) {
       console.error('Error deleting task:', error)
@@ -25,27 +31,26 @@ function TaskFormFooter({ isSubmitting, isEditing, onCloseModal }) {
   }
 
   return (
-    <>
-      <ModalFooter
-        className='border-t-2 -mx-6 px-6 py-4 flex flex-row justify-between bg-slate-50'
-        sx={{
-          justifyContent: 'space-between !important',
-        }}
-      >
-        <TaskFooterDeleteAction
-          onOpen={onOpen}
-          onClose={onClose}
-          handleDelete={handleDelete}
-          cancelRef={cancelRef}
-          isOpen={isOpen}
-        />
-        <TaskFooterSubmitActions
-          onCloseModal={onCloseModal}
-          isSubmitting={isSubmitting}
-          isEditing={isEditing}
-        />
-      </ModalFooter>
-    </>
+    <div className='-mx-6 px-6 py-2 flex flex-row items-center'>
+      <div className='flex w-full justify-between'>
+        <div>
+          {isEditing && (
+            <TaskFooterDeleteAction
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+              handleDelete={handleDelete}
+            />
+          )}
+        </div>
+        <div>
+          <TaskFooterSubmitActions
+            onCloseModal={onCloseModal}
+            isSubmitting={isSubmitting}
+            isEditing={isEditing}
+          />
+        </div>
+      </div>
+    </div>
   )
 }
 

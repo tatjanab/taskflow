@@ -1,28 +1,30 @@
-import { FormLabel, Input, FormControl } from '@chakra-ui/react'
+import { UseFormRegister, FieldErrors } from 'react-hook-form'
+import { z } from 'zod'
+import taskSchema from '@/models/zod_schema'
 
-function TaskDetailsSection({ errors, register }) {
+type TaskFormProps = {
+  register: UseFormRegister<z.infer<typeof taskSchema>>
+  taskDetails?: z.infer<typeof taskSchema>
+  errors: FieldErrors<z.infer<typeof taskSchema>>
+}
+
+function TaskDetailsSection({ register, taskDetails, errors }: TaskFormProps) {
   return (
-    <div className='mb-5'>
-      <FormControl
-        isInvalid={!!errors.details?.assignee}
-        className='flex flex-col w-1/2'
-      >
-        <FormLabel htmlFor='assignee' mb='5px' fontSize='xs' fontWeight='bold'>
-          Assignee <span className='text-red-600'>*</span>
-        </FormLabel>
-        <Input
-          id='assignee'
-          type='text'
-          borderColor={errors.summary ? 'red.500' : 'gray.300'}
-          {...register('details.assignee')}
-          size='sm'
-        />
-        {errors.details?.assignee && (
-          <p className='text-xs text-red-600'>
-            {errors.details?.assignee.message}
-          </p>
-        )}
-      </FormControl>
+    <div className='mb-5 flex flex-col w-1/2'>
+      <label htmlFor='assignee' className='font-medium text-gray-700'>
+        Assignee <span className='text-red-500'>*</span>
+      </label>
+      <input
+        {...register('details.assignee')}
+        id='assignee'
+        defaultValue={taskDetails?.details?.assignee || ''}
+        className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+      />
+      {errors.details?.assignee && (
+        <p className='text-red-500 text-sm'>
+          {errors.details.assignee.message}
+        </p>
+      )}
     </div>
   )
 }

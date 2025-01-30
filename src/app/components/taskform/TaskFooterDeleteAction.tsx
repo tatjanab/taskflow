@@ -1,96 +1,65 @@
 import {
   AlertDialog,
-  AlertDialogBody,
+  AlertDialogAction,
+  AlertDialogCancel,
   AlertDialogContent,
+  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogOverlay,
-  Button,
-} from '@chakra-ui/react'
-import { WarningIcon } from '@chakra-ui/icons'
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog'
+import { Button } from '@/components/ui/button'
+import { AlertTriangle } from 'react-feather'
 
 type TaskFooterDeleteActionProps = {
-  onOpen: () => void
-  onClose: () => void
   handleDelete: () => void
-  cancelRef: React.RefObject<HTMLButtonElement>
   isOpen: boolean
+  setIsOpen: (isOpen: boolean) => void
 }
 
 const TaskFooterDeleteAction = ({
-  onOpen,
-  onClose,
   handleDelete,
-  cancelRef,
   isOpen,
+  setIsOpen,
 }: TaskFooterDeleteActionProps) => {
   return (
-    <>
-      <Button
-        variant='ghost'
-        color='red.500'
-        size='xs'
-        minWidth='80px'
-        borderRadius='2px'
-        onClick={onOpen}
-      >
-        Delete
-      </Button>
-
-      <AlertDialog
-        isOpen={isOpen}
-        leastDestructiveRef={cancelRef}
-        onClose={onClose}
-      >
-        <AlertDialogOverlay>
-          <AlertDialogContent borderRadius='0' top='20px' maxWidth='400px'>
-            <AlertDialogHeader
-              fontSize='md'
-              fontWeight='bold'
-              paddingBottom='10px'
-            >
-              <h3 className='font-bold flex items-center gap-2'>
-                <WarningIcon color='red.600' /> Delete task?
-              </h3>
-            </AlertDialogHeader>
-
-            <AlertDialogBody>
-              <p className='text-xs text-slate-600'>
-                Are you sure you want to delete this task? This action cannot be
-                undone.
-              </p>
-            </AlertDialogBody>
-
-            <AlertDialogFooter>
-              <Button
-                ref={cancelRef}
-                onClick={onClose}
-                variant='ghost'
-                size='xs'
-                minWidth='80px'
-                borderRadius='2px'
-              >
-                Cancel
-              </Button>
-              <Button
-                onClick={handleDelete}
-                backgroundColor='red.600'
-                _hover={{
-                  backgroundColor: 'red.600',
-                  cursor: 'pointer',
-                }}
-                color='white'
-                size='xs'
-                minWidth='80px'
-                borderRadius='2px'
-              >
-                Delete
-              </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialogOverlay>
-      </AlertDialog>
-    </>
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button
+          onClick={() => setIsOpen(true)}
+          className='text-red-600 min-w-[80px] bg-transparent shadow-none'
+        >
+          Delete
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent className='max-w-[400px] mt-5'>
+        <AlertDialogHeader>
+          <AlertDialogTitle className='flex items-center gap-2 text-red-600'>
+            <AlertTriangle size={16} />
+            Delete task?
+          </AlertDialogTitle>
+          <AlertDialogDescription className='text-sm text-slate-600'>
+            Are you sure you want to delete this task? This action cannot be
+            undone.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel
+            className='min-w-[80px] h-7 rounded-[2px]'
+            onClick={() => setIsOpen(false)}
+          >
+            Cancel
+          </AlertDialogCancel>
+          <AlertDialogAction
+            onClick={handleDelete}
+            className='min-w-[80px] h-7 rounded-[2px] bg-red-600 hover:bg-red-700'
+          >
+            Delete
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   )
 }
 

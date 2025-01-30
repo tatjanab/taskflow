@@ -1,4 +1,4 @@
-import { Button } from '@chakra-ui/react'
+import { Button } from '@/components/ui/button'
 
 type TaskFooterSubmitActionsProps = {
   onCloseModal: () => void
@@ -15,26 +15,15 @@ const TaskFooterSubmitActions = ({
     <>
       <div className='flex gap-2'>
         <Button
-          variant='ghost'
-          size='xs'
-          minWidth='80px'
-          borderRadius='2px'
+          className='text-white text-sm min-w-[80px] bg-gray-400 hover:bg-gray-600 px-2 py-4 shadow-none'
           onClick={onCloseModal}
         >
           Cancel
         </Button>
         <Button
-          size='xs'
-          minWidth='80px'
-          borderRadius='2px'
           type='submit'
-          isLoading={isSubmitting}
-          backgroundColor='blue.600'
-          color='white'
-          _hover={{
-            backgroundColor: 'blue.600',
-            cursor: 'pointer',
-          }}
+          disabled={isSubmitting}
+          className='text-white text-sm min-w-[80px] bg-blue-900 hover:bg-blue-600 px-2 py-4 shadow-none'
         >
           {isSubmitting ? 'Submitting...' : isEditing ? 'Update' : 'Create'}
         </Button>

@@ -1,9 +1,8 @@
 'use client'
 
-import { Modal, ModalOverlay } from '@chakra-ui/react'
-import { Suspense } from 'react'
-
-import { useForm, SubmitHandler } from 'react-hook-form'
+import { Form } from '@/components/ui/form'
+import { Suspense, useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import taskSchema from '@/models/zod_schema'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -21,38 +20,28 @@ type TaskProps = {
 type addTaskFields = z.infer<typeof taskSchema>
 
 function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
+  const [taskId, setTaskId] = useState('')
   const searchParams = useSearchParams()
-  const taskId = searchParams.get('selectedTask') || ''
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    reset,
-    setValue,
-  } = useForm<addTaskFields>({
+  useEffect(() => {
+    const selectedTask = searchParams.get('selectedTask') || ''
+    setTaskId(selectedTask)
+  }, [searchParams])
+
+  const form = useForm<addTaskFields>({
     resolver: zodResolver(taskSchema),
     mode: 'onChange',
+    defaultValues: {
+      summary: '',
+      description: '',
+      type: 'Task',
+      status: 'Open',
+      details: {
+        assignee: '',
+        priority: 'High',
+      },
+    },
   })
-
-  const { addTask, isAddSuccess, updateTask, isUpdateSuccess } = useTaskData()
-  // Only fetch when we have a taskId and the modal is open
-  const { taskDetails, isLoading } = useFetchTaskDetails(
-    isOpen && taskId ? taskId : '',
-    isOpen,
-  )
-
-  useEffect(() => {
-    if (isAddSuccess) {
-      onCloseModal()
-    }
-  }, [isAddSuccess, onCloseModal])
-
-  useEffect(() => {
-    if (isUpdateSuccess) {
-      onCloseModal()
-    }
-  }, [isUpdateSuccess, onCloseModal])
 
   const handleAddTask: SubmitHandler<addTaskFields> = async (data) => {
     try {
@@ -67,38 +56,49 @@ function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
     }
   }
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    setValue,
+    control,
+  } = form // destructure after creating form instance
+
+  const { addTask, isAddSuccess, updateTask, isUpdateSuccess } = useTaskData()
+  const { taskDetails, isLoading } = useFetchTaskDetails(taskId, isOpen)
+
+  useEffect(() => {
+    if (isAddSuccess || isUpdateSuccess) {
+      onCloseModal()
+    }
+  }, [isAddSuccess, isUpdateSuccess, onCloseModal])
+
   return (
-    <>
-      <Modal
-        isOpen={isOpen}
-        onClose={onCloseModal}
-        blockScrollOnMount={true}
-        onCloseComplete={() => reset()}
-        size='lg'
-        variant='outline'
-      >
-        <ModalOverlay />
+    <Form {...form}>
+      <form onSubmit={handleSubmit(handleAddTask)}>
         <TaskFormContent
           onCloseModal={onCloseModal}
-          handleSubmit={handleSubmit(handleAddTask)}
-          errors={errors}
           register={register}
+          errors={errors}
           isSubmitting={isSubmitting}
           taskDetails={taskDetails || {}}
           taskId={taskId}
-          setValue={setValue}
           isLoading={isLoading}
+          setValue={setValue}
+          control={control}
         />
-      </Modal>
-    </>
+      </form>
+    </Form>
   )
 }
 
 function TaskForm(props: TaskProps) {
   return (
-    <Suspense fallback={null}>
-      <TaskFormInner {...props} />
-    </Suspense>
+    <div>
+      <Suspense fallback={null}>
+        <TaskFormInner {...props} />
+      </Suspense>
+    </div>
   )
 }
 

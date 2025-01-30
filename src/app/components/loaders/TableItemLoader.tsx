@@ -1,30 +1,32 @@
-import { Tr, Td } from '@chakra-ui/react'
+import { TableRow, TableCell } from '@/components/ui/table'
 
 function TableItemLoader() {
-  // Create an array of 5 items to show multiple loading rows
   return (
     <>
       {[...Array(10)].map((_, index) => (
-        <Tr key={index} border='none'>
-          <Td p='8px' width='40px' border='none'>
-            <div className='form-item' />
-          </Td>
-          <Td p='8px' border='none'>
-            <div className='form-item' />
-          </Td>
-          <Td p='8px' border='none'>
-            <div className='form-item' />
-          </Td>
-          <Td p='8px' border='none'>
-            <div className='form-item' />
-          </Td>
-          <Td p='8px' border='none'>
-            <div className='form-item' />
-          </Td>
-          <Td p='8px' border='none'>
-            <div className='form-item' />
-          </Td>
-        </Tr>
+        <TableRow
+          key={index}
+          className='animate-pulse border-b border-gray-200'
+        >
+          <TableCell className='px-8 py-4 w-24'>
+            <div className='h-6 bg-gray-300 rounded w-full'></div>
+          </TableCell>
+          <TableCell className='px-8 py-4 w-64'>
+            <div className='h-6 bg-gray-300 rounded w-full'></div>
+          </TableCell>
+          <TableCell className='px-8 py-4 w-32'>
+            <div className='h-6 bg-gray-300 rounded w-full'></div>
+          </TableCell>
+          <TableCell className='px-8 py-4 w-40'>
+            <div className='h-6 bg-gray-300 rounded w-full'></div>
+          </TableCell>
+          <TableCell className='px-8 py-4 w-32'>
+            <div className='h-6 bg-gray-300 rounded w-full'></div>
+          </TableCell>
+          <TableCell className='px-8 py-4 w-40'>
+            <div className='h-6 bg-gray-300 rounded w-full'></div>
+          </TableCell>
+        </TableRow>
       ))}
     </>
   )

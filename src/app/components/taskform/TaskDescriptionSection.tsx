@@ -1,28 +1,25 @@
-import { Textarea, FormLabel, FormControl } from '@chakra-ui/react'
+import { UseFormRegister } from 'react-hook-form'
+import { z } from 'zod'
+import taskSchema from '@/models/zod_schema'
 
-function TaskDescriptionSection({ errors, register }) {
+type TaskFormProps = {
+  register: UseFormRegister<z.infer<typeof taskSchema>>
+  taskDetails?: z.infer<typeof taskSchema>
+}
+
+function TaskDescriptionSection({ register, taskDetails }: TaskFormProps) {
   return (
-    <>
-      <FormControl className='flex flex-col mb-5'>
-        <FormLabel
-          htmlFor='description'
-          mb='5px'
-          fontSize='xs'
-          fontWeight='bold'
-        >
-          Description
-        </FormLabel>
-        <Textarea
-          id='description'
-          {...register('description')}
-          size='sm'
-          resize='none'
-        ></Textarea>
-        {errors.description && (
-          <p className='text-xs text-red-600'>{errors.description.message}</p>
-        )}
-      </FormControl>
-    </>
+    <div className='flex flex-col mb-5'>
+      <label htmlFor='description' className='font-medium text-gray-700'>
+        Description
+      </label>
+      <textarea
+        {...register('description')}
+        id='description'
+        defaultValue={taskDetails?.description || ''}
+        className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+      />
+    </div>
   )
 }
 

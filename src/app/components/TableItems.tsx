@@ -1,9 +1,8 @@
-import { Tr, Td } from '@chakra-ui/react'
+import { TableRow, TableCell } from '@/components/ui/table'
 import { format } from 'date-fns' // Optional, for better formatting
 import taskSchema from '@/models/zod_schema'
 import { z } from 'zod'
 import PriorityFlag from './PriorityFlag'
-import { useCallback } from 'react'
 
 type TaskLists = {
   taskList: z.infer<typeof taskSchema>[]
@@ -22,7 +21,7 @@ function TableItems({ taskList, onOpen, handleOpenTask }: TaskLists) {
           : 'N/A'
 
         return (
-          <Tr
+          <TableRow
             key={item._id}
             onClick={() => {
               onOpen()
@@ -30,23 +29,21 @@ function TableItems({ taskList, onOpen, handleOpenTask }: TaskLists) {
             }}
             className='hover:bg-slate-100 hover:cursor-pointer'
           >
-            <Td p='8px' width='40px'>
-              {item._id}
-            </Td>
-            <Td p='8px'>{item.summary}</Td>
-            <Td p='8px'>
+            <TableCell className='px-8 py-4 w-25'>{item._id}</TableCell>
+            <TableCell className='px-8 py-4'>{item.summary}</TableCell>
+            <TableCell className='px-8 py-4'>
               <span className='rounded-sm bg-green-100 p-1 font-medium text-green-700'>
                 {item.status}
               </span>
-            </Td>
-            <Td p='8px'>{item.details.assignee}</Td>
+            </TableCell>
+            <TableCell className='px-8 py-4'>{item.details.assignee}</TableCell>
             <PriorityFlag priority={item.details.priority} />
-            <Td p='8px'>
+            <TableCell className='px-8 py-4'>
               <span className='rounded-sm bg-slate-100 p-1 font-medium text-slate-500'>
                 {formattedCreationDate}
               </span>
-            </Td>
-          </Tr>
+            </TableCell>
+          </TableRow>
         )
       })}
     </>

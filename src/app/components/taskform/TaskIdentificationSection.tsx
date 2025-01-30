@@ -1,24 +1,28 @@
-import { FormControl, FormLabel, Select } from '@chakra-ui/react'
+import { UseFormRegister } from 'react-hook-form'
+import { z } from 'zod'
+import taskSchema from '@/models/zod_schema'
 
-function TaskIdentificationSection({ register, errors }) {
+type TaskFormProps = {
+  register: UseFormRegister<z.infer<typeof taskSchema>>
+  taskDetails?: z.infer<typeof taskSchema>
+}
+
+function TaskIdentificationSection({ register, taskDetails }: TaskFormProps) {
   return (
-    <div className='flex flex-row gap-4 mb-5'>
-      <FormControl className='flex flex-col w-1/2'>
-        <FormLabel htmlFor='status' mb='5px' fontSize='xs' fontWeight='bold'>
-          Status
-        </FormLabel>
-        <Select
-          id='status'
-          size='sm'
-          {...register('status')}
-          borderRadius='0'
-          backgroundColor='gray.100'
-        >
-          <option value='Open'>Open</option>
-          <option value='In Progress'>In Progress</option>
-          <option value='Done'>Done</option>
-        </Select>
-      </FormControl>
+    <div className='flex flex-col gap-4 mb-5 w-1/2'>
+      <label htmlFor='status' className='font-medium text-gray-700'>
+        Status <span className='text-red-500'>*</span>
+      </label>
+      <select
+        {...register('status')}
+        id='status'
+        defaultValue={taskDetails?.status || 'Open'}
+        className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+      >
+        <option value='Open'>Open</option>
+        <option value='In Progress'>In Progress</option>
+        <option value='Done'>Done</option>
+      </select>
     </div>
   )
 }
