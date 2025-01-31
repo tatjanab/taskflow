@@ -5,7 +5,8 @@ import Counter from '@/models/counter'
 export const GET = async (request, { params }) => {
   try {
     await connectToDB()
-    const task = await Task.findById(params.id)
+    const { id } = await params
+    const task = await Task.findById(id)
 
     return new Response(JSON.stringify({ success: true, data: task }), {
       status: 200,
@@ -21,7 +22,8 @@ export const PATCH = async (request, { params }) => {
   try {
     await connectToDB()
     const body = await request.json()
-    const task = await Task.findByIdAndUpdate(params.id, body, {
+    const { id } = await params
+    const task = await Task.findByIdAndUpdate(id, body, {
       new: true, // This option returns the updated document
     })
     return new Response(JSON.stringify({ success: true, data: task }), {
@@ -37,9 +39,9 @@ export const PATCH = async (request, { params }) => {
 export const DELETE = async (request, { params }) => {
   try {
     await connectToDB()
-
+    const { id } = await params
     // Delete the current task
-    const task = await Task.findByIdAndDelete(params.id)
+    const task = await Task.findByIdAndDelete(id)
 
     // Find the new highest task after deletion
     const newHighestTask = await Task.findOne({}).sort({ _id: -1 }).lean()
