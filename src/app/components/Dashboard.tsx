@@ -16,6 +16,7 @@ import TableItems from './TableItems'
 import TableItemLoader from './loaders/TableItemLoader'
 import TaskForm from './TaskForm'
 import { useCallback } from 'react'
+import { TablePagination } from './TablePagination'
 
 function DashboardInner() {
   const { taskList, isError, isLoading } = useFetchTasks()
@@ -61,6 +62,7 @@ function DashboardInner() {
               />
             ))}
         </TableBody>
+        <TablePagination />
       </Table>
 
       <Dialog open={isOpen} onOpenChange={(open) => !open && handleClose()}>
