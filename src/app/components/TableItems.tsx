@@ -3,6 +3,7 @@ import { format } from 'date-fns' // Optional, for better formatting
 import taskSchema from '@/models/zod_schema'
 import { z } from 'zod'
 import PriorityFlag from './PriorityFlag'
+import TaskStatus from './TaskStatus'
 
 type TaskLists = {
   taskList: z.infer<typeof taskSchema>[]
@@ -32,9 +33,7 @@ function TableItems({ taskList, onOpen, handleOpenTask }: TaskLists) {
             <TableCell className='px-8 py-4 w-25'>{item._id}</TableCell>
             <TableCell className='px-8 py-4'>{item.summary}</TableCell>
             <TableCell className='px-8 py-4'>
-              <span className='rounded-sm bg-green-100 p-1 font-medium text-green-700'>
-                {item.status}
-              </span>
+              <TaskStatus status={item.status} />
             </TableCell>
             <TableCell className='px-8 py-4'>{item.details.assignee}</TableCell>
             <PriorityFlag priority={item.details.priority} />
