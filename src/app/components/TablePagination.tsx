@@ -37,7 +37,6 @@ export function TablePagination({
         <PaginationItem>
           <PaginationPrevious
             href='#'
-            disabled={currentPage === 1}
             onClick={(e) => {
               e.preventDefault()
               if (currentPage > 1) goToPage(currentPage - 1)
@@ -68,7 +67,6 @@ export function TablePagination({
         <PaginationItem>
           <PaginationNext
             href='#'
-            disabled={currentPage === totalPages}
             onClick={(e) => {
               e.preventDefault()
               if (currentPage < totalPages) goToPage(currentPage + 1)
