@@ -2,23 +2,67 @@ import { connectToDB } from '@/utils/database'
 import Task from '@/models/task'
 import Counter from '@/models/counter'
 
-export const GET = async () => {
+export const GET = async (request) => {
   try {
     await connectToDB()
 
-    const tasks = await Task.find({}) // Fetch all tasks
-    console.log('Fetched tasks:', tasks)
+    // ✅ Correctly extract query parameters from request
+    const url = new URL(request.url)
+    const page = parseInt(url.searchParams.get('page') || '1', 10) // Default to page 1
+    const itemsPerPage = parseInt(
+      url.searchParams.get('itemsPerPage') || '10',
+      10,
+    ) // Default to 10
 
-    return new Response(JSON.stringify({ success: true, data: tasks }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    })
+    if (page < 1 || itemsPerPage < 1) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          message: 'Invalid pagination parameters',
+        }),
+        { status: 400 },
+      )
+    }
+
+    // ✅ Ensure skip calculation is correct
+    const skip = (page - 1) * itemsPerPage
+
+    console.log(
+      `Fetching tasks for page ${page}, skip ${skip}, limit ${itemsPerPage}`,
+    )
+
+    // ✅ Fetch total task count
+    const totalItems = await Task.countDocuments()
+
+    // ✅ Fetch paginated tasks
+    const tasks = await Task.find({})
+      .sort({ _id: 1 })
+      .skip(skip)
+      .limit(itemsPerPage)
+
+    return new Response(
+      JSON.stringify({
+        success: true,
+        data: tasks,
+        totalItems,
+        currentPage: page,
+        itemsPerPage,
+      }),
+      {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      },
+    )
   } catch (error) {
-    console.log(error)
-    return new Response('Failed to fetch all tasks', { status: 500 })
+    console.error('Error fetching paginated tasks:', error)
+    return new Response(
+      JSON.stringify({ success: false, message: 'Failed to fetch tasks' }),
+      {
+        status: 500,
+      },
+    )
   }
 }
-
 export const POST = async (request) => {
   try {
     const body = await request.json()

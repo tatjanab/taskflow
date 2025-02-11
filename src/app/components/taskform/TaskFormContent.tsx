@@ -34,7 +34,6 @@ function TaskFormContent({
   taskId,
   isLoading,
   setValue,
-  control,
   register,
   errors,
 }: TaskFormContentProps) {

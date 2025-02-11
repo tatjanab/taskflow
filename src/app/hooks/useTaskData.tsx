@@ -9,6 +9,7 @@ function useTaskData() {
   const queryClient = useQueryClient()
   const searchParams = useSearchParams()
   const search = searchParams.get('search')
+  const currentPage = parseInt(searchParams.get('page') || '1', 10)
 
   const handleAddTask = async (data: addTaskFields) => {
     const baseUrl = process.env.NEXT_PUBLIC_API_URL || ''
@@ -65,7 +66,7 @@ function useTaskData() {
       console.log('Mutation successful, invalidating tasks query...')
 
       queryClient.invalidateQueries({
-        queryKey: ['taskList', search],
+        queryKey: ['taskList', search, currentPage],
         exact: true,
         refetchType: 'active',
       })
@@ -79,7 +80,7 @@ function useTaskData() {
 
       // Force a fresh refetch of the task list
       queryClient.invalidateQueries({
-        queryKey: ['taskList', search],
+        queryKey: ['taskList', search, currentPage],
         exact: true,
         refetchType: 'active',
       })
@@ -93,7 +94,7 @@ function useTaskData() {
     mutationFn: handleDeleteTask,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['taskList', search],
+        queryKey: ['taskList', search, currentPage],
         exact: true,
         refetchType: 'active',
       })
