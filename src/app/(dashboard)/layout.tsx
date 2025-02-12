@@ -1,4 +1,3 @@
-import Sidebar from '@/components/Sidebar'
 import { Providers } from '@/providers'
 import '@/globals.scss'
 import TopBar from '@/components/TopBar'
@@ -21,7 +20,6 @@ export default function RootLayout({
       <body className='font-mainFont overflow-y-hidden'>
         <Providers>
           <div className='flex flex-row'>
-            <Sidebar />
             <div className='w-full'>
               <TopBar />
               {children}
