@@ -16,13 +16,33 @@ function SidebarProjectsGroup({ project }) {
   const router = useRouter()
   const searchParams = useSearchParams()
 
-  const handleClick = () => {
-    const params = new URLSearchParams(searchParams)
-    params.set('projectId', project.prefix)
-    router.push(`?${params.toString()}`, { scroll: false })
+  const updateQueryParams = (updates = {}) => {
+    const params = new URLSearchParams(window.location.search)
+
+    Object.entries(updates).forEach(([key, value]) => {
+      if (value === null || value === undefined) {
+        params.delete(key)
+      } else {
+        params.set(key, value.toString())
+      }
+    })
+
+    router.replace(`?${params.toString()}`, { scroll: false })
   }
+
+  const handleClick = () => {
+    updateQueryParams({
+      projectId: project.prefix,
+      status: 'Open, In Progress',
+    })
+  }
+
+  const handleCompletedTasks = () => {
+    updateQueryParams({ projectId: project.prefix, status: 'Done' })
+  }
+
   return (
-    <Collapsible key={project.key} className='group/collapsible'>
+    <Collapsible key={project.name} className='group/collapsible'>
       <SidebarMenuItem>
         <CollapsibleTrigger asChild>
           <SidebarMenuButton>
@@ -44,7 +64,7 @@ function SidebarProjectsGroup({ project }) {
               </SidebarMenuButton>
             </SidebarMenuSubItem>
             <SidebarMenuSubItem>
-              <SidebarMenuButton>
+              <SidebarMenuButton onClick={handleCompletedTasks}>
                 <ListChecks className='mr-4' />
                 <span>Completed</span>
               </SidebarMenuButton>

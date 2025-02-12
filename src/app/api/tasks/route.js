@@ -14,6 +14,7 @@ export const GET = async (request) => {
       10,
     )
     const projectId = url.searchParams.get('projectId') // ✅ Keep as string
+    const statusParam = url.searchParams.get('status')
 
     if (page < 1 || itemsPerPage < 1) {
       return new Response(
@@ -35,14 +36,19 @@ export const GET = async (request) => {
       )
     }
 
-    // ✅ Don't convert projectId to ObjectId (since it's stored as a string)
-    console.log(`🔍 Fetching tasks for projectId: ${projectId}, page: ${page}`)
+    // Build the filter object based on the query parameters
+    const status = statusParam
+      ? statusParam.split(',').map((s) => s.trim())
+      : ['Open', 'In Progress']
+
+    // Build filter dynamically
+    const filter = { projectId, status: { $in: status } }
 
     const skip = (page - 1) * itemsPerPage
 
-    // ✅ Query using projectId as a string (match DB format)
-    const totalItems = await Task.countDocuments({ projectId })
-    const tasks = await Task.find({ projectId })
+    // Query using projectId as a string (match DB format)
+    const totalItems = await Task.countDocuments(filter)
+    const tasks = await Task.find(filter)
       .sort({ _id: 1 })
       .skip(skip)
       .limit(itemsPerPage)

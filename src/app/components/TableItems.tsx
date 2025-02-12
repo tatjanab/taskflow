@@ -23,7 +23,7 @@ function TableItems({ taskList, onOpen, handleOpenTask }: TaskLists) {
 
         return (
           <TableRow
-            key={item._id}
+            key={item.taskId}
             onClick={() => {
               onOpen()
               handleOpenTask(item._id?.toString() || '')

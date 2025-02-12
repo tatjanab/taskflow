@@ -5,24 +5,26 @@ function useFetchTasks() {
   const searchParams = useSearchParams()
   const search = searchParams.get('search')
   const currentPage = parseInt(searchParams.get('page') || '1', 10)
-  const projectId = searchParams.get('projectId') // ✅ Keep as string
-
-  console.log('🔍 Fetching tasks for projectId:', projectId) // ✅ Debugging
+  const projectId = searchParams.get('projectId')
+  const status = searchParams.get('status') || null
 
   const fetchTasks = async (itemsPerPage = 10) => {
     try {
       if (!projectId) {
-        console.warn('❌ Missing projectId') // ✅ Debugging
+        console.warn('❌ Missing projectId')
         return { tasks: [], totalItems: 0 }
       }
 
       const queryParams = new URLSearchParams({
         page: currentPage.toString(),
         itemsPerPage: itemsPerPage.toString(),
-        projectId: projectId, // ✅ Send as string
+        projectId: projectId,
       })
       if (search) {
         queryParams.set('search', search)
+      }
+      if (status) {
+        queryParams.set('status', status)
       }
 
       const res = await fetch(`/api/tasks?${queryParams.toString()}`)
@@ -44,9 +46,12 @@ function useFetchTasks() {
     isError,
     isLoading,
   } = useQuery({
-    queryKey: ['taskList', search, currentPage, projectId],
+    queryKey: ['taskList', search, currentPage, projectId, status],
     queryFn: () => fetchTasks(10),
-    enabled: !!projectId, // ✅ Only fetch if `projectId` exists
+    enabled: !!projectId && !!status, // only if projectId and status are present
+    staleTime: 0,
+    refetchOnMount: true,
+    retry: 2,
   })
 
   return {
