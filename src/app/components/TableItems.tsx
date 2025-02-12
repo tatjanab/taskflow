@@ -30,7 +30,7 @@ function TableItems({ taskList, onOpen, handleOpenTask }: TaskLists) {
             }}
             className='hover:bg-slate-100 hover:cursor-pointer max-h-[50px]'
           >
-            <TableCell className='px-8 py-4 w-25'>{item._id}</TableCell>
+            <TableCell className='px-8 py-4 w-25'>{item.taskId}</TableCell>
             <TableCell className='px-8 py-4'>{item.summary}</TableCell>
             <TableCell className='px-8 py-4'>
               <TaskStatus status={item.status} />

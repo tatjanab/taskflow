@@ -16,32 +16,28 @@ import TableItems from './TableItems'
 import TableItemLoader from './loaders/TableItemLoader'
 import TaskForm from './TaskForm'
 import { useCallback } from 'react'
-import { TablePagination } from './TablePagination'
 
 function DashboardInner() {
-  const { taskList, isError, isLoading, totalItems, currentPage } =
-    useFetchTasks()
+  const { taskList, isError, isLoading } = useFetchTasks()
   const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
 
   const handleOpenTask = useCallback(
     (taskId: string) => {
       setIsOpen(true)
-      router.push(`?selectedTask=${taskId}&page=${currentPage}`, {
-        scroll: false,
-      }) // Add scroll: false to prevent unnecessary scrolling
+      router.push(`?selectedTask=${taskId}`, { scroll: false }) // Add scroll: false to prevent unnecessary scrolling
     },
-    [router, currentPage],
+    [router],
   )
 
   const handleClose = useCallback(() => {
-    router.push(`?page=${currentPage}`, { scroll: false })
+    router.push('/', { scroll: false })
     setIsOpen(false)
-  }, [router, currentPage, setIsOpen])
+  }, [router, setIsOpen])
 
   return (
-    <div className='relative'>
-      <Table className='px-4 mb-4 text-sm w-full'>
+    <div>
+      <Table className='px-4 text-sm w-full max-h-[100vh] overflow-y-scroll'>
         <TableHeader className='bg-white'>
           <TableRow className='text-sm'>
             <TableHead className='px-8 py-4'>ID #</TableHead>
@@ -52,7 +48,7 @@ function DashboardInner() {
             <TableHead className='px-8 py-4'>Date</TableHead>
           </TableRow>
         </TableHeader>
-        <TableBody className='align-top h-auto overflow-y-scroll'>
+        <TableBody>
           {isError && <TableCell>No tasks in the list</TableCell>}
           {!isError &&
             (isLoading ? (
@@ -66,7 +62,6 @@ function DashboardInner() {
             ))}
         </TableBody>
       </Table>
-      <TablePagination totalItems={totalItems} currentPage={currentPage} />
 
       <Dialog open={isOpen} onOpenChange={(open) => !open && handleClose()}>
         <DialogContent className='w-[600px]'>

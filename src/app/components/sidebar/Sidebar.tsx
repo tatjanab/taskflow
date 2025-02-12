@@ -2,15 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import {
-  FolderDot,
-  LayoutDashboard,
-  Settings,
-  User,
-  ChevronsUpDown,
-  ListChecks,
-  Logs,
-} from 'lucide-react'
+import { Settings } from 'lucide-react'
 import {
   Sidebar,
   SidebarContent,
@@ -21,17 +13,15 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubItem,
   SidebarSeparator,
 } from '@/components/ui/sidebar'
-import {
-  Collapsible,
-  CollapsibleTrigger,
-  CollapsibleContent,
-} from '@/components/ui/collapsible'
+import SidebarProjectsGroup from './SidebarProjectsGroup'
+
+import useFetchProjects from '@/hooks/useFetchProjects'
 
 function AppSidebar() {
+  const { projects, isLoading, isError } = useFetchProjects()
+  console.log('projects', projects)
   return (
     <Sidebar>
       <SidebarHeader>
@@ -43,7 +33,6 @@ function AppSidebar() {
               width={28}
               height={28}
             />
-
             <h3 className='ml-4 text-md font-medium'>Taskasaurus</h3>
           </Link>
         </SidebarMenuButton>
@@ -51,43 +40,14 @@ function AppSidebar() {
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Projects</SidebarGroupLabel>
+          {/* {isLoading && <p>Loading...</p>} */}
+          {isError && <p>Error fetching projects</p>}
           <SidebarGroupContent>
             <SidebarMenu>
-              <Collapsible className='group/collapsible'>
-                <SidebarMenuItem>
-                  <CollapsibleTrigger asChild>
-                    <SidebarMenuButton>
-                      <div className='flex flex-row items-center justify-between w-full'>
-                        <div className='flex flex-row items-center justify-between'>
-                          <FolderDot className='mr-4' />
-                          <span>First project</span>
-                        </div>
-                        <ChevronsUpDown className='h-4 w-4' />
-                      </div>
-                    </SidebarMenuButton>
-                  </CollapsibleTrigger>
-                  <CollapsibleContent>
-                    <SidebarMenuSub>
-                      <SidebarMenuSubItem>
-                        <SidebarMenuButton asChild>
-                          <Link href='/'>
-                            <Logs className='mr-4' />
-                            <span>Task List</span>
-                          </Link>
-                        </SidebarMenuButton>
-                      </SidebarMenuSubItem>
-                      <SidebarMenuSubItem>
-                        <SidebarMenuButton asChild>
-                          <Link href='/'>
-                            <ListChecks className='mr-4' />
-                            <span>Completed</span>
-                          </Link>
-                        </SidebarMenuButton>
-                      </SidebarMenuSubItem>
-                    </SidebarMenuSub>
-                  </CollapsibleContent>
-                </SidebarMenuItem>
-              </Collapsible>
+              {projects.map((project) => (
+                <SidebarProjectsGroup key={project.name} project={project} />
+              ))}
+
               <SidebarSeparator />
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>

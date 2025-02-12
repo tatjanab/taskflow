@@ -41,10 +41,8 @@ function TaskDetails({
   const { taskDetails, isLoading } = useFetchTaskDetails(selectedTaskId, isOpen)
   const { updateTask, isUpdateSuccess } = useTaskData()
   const {
-    register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    reset,
     setValue,
     control,
   } = useForm<TaskFormFields>({

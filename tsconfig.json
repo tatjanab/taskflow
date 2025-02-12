@@ -31,6 +31,6 @@
     ".next/types/**/*.ts",
     "src/app/models/types.ts",
     "src/app/models/task.js"
-  ],
+, "src/app/models/counter.js"  ],
   "exclude": ["node_modules"]
 }
