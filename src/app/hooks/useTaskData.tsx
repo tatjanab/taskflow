@@ -11,7 +11,7 @@ function useTaskData() {
   const search = searchParams.get('search')
   const currentPage = parseInt(searchParams.get('page') || '1', 10)
 
-  const handleAddTask = async (data: addTaskFields) => {
+  const handleAddTask = async (data: addTaskFields, projectId: string) => {
     const baseUrl = process.env.NEXT_PUBLIC_API_URL || ''
     const res = await fetch(`${baseUrl}/api/tasks`, {
       method: 'POST',
@@ -19,10 +19,12 @@ function useTaskData() {
         'Content-Type': 'application/json',
       },
 
-      body: JSON.stringify(data),
+      body: JSON.stringify({ ...data, projectId }),
     })
 
     if (!res.ok) {
+      const errorText = await res.text()
+      console.error('Server error response:', errorText)
       throw new Error('Failed to create a task')
     }
 
@@ -61,14 +63,18 @@ function useTaskData() {
   }
 
   const addTaskMutation = useMutation({
-    mutationFn: handleAddTask,
+    mutationFn: ({
+      data,
+      projectId,
+    }: {
+      data: addTaskFields
+      projectId: string
+    }) => handleAddTask(data, projectId),
     onSuccess: () => {
       console.log('Mutation successful, invalidating tasks query...')
 
       queryClient.invalidateQueries({
-        queryKey: ['taskList', search, currentPage],
-        exact: true,
-        refetchType: 'active',
+        queryKey: ['taskList'],
       })
     },
   })

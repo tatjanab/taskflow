@@ -14,7 +14,6 @@ import { useRouter, useSearchParams } from 'next/navigation'
 
 function SidebarProjectsGroup({ project }) {
   const router = useRouter()
-  const searchParams = useSearchParams()
 
   const updateQueryParams = (updates = {}) => {
     const params = new URLSearchParams(window.location.search)

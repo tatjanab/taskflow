@@ -22,6 +22,10 @@ type addTaskFields = z.infer<typeof taskSchema>
 function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
   const [taskId, setTaskId] = useState('')
   const searchParams = useSearchParams()
+  const { addTask, isAddSuccess, updateTask, isUpdateSuccess } = useTaskData()
+  const { taskDetails, isLoading } = useFetchTaskDetails(taskId, isOpen)
+  const projectId = searchParams.get('projectId')
+  console.log('projectId', projectId)
 
   useEffect(() => {
     const selectedTask = searchParams.get('selectedTask') || ''
@@ -44,13 +48,10 @@ function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
   })
 
   const handleAddTask: SubmitHandler<addTaskFields> = async (data) => {
+    console.log('data', data, 'projectId', projectId)
     try {
-      if (taskId) {
-        await updateTask(data)
-      } else {
-        await addTask(data)
-      }
-      console.log('Task added successfully')
+      await addTask({ data, projectId })
+      console.log('data', data)
     } catch (error) {
       console.error('Error adding task:', error)
     }
@@ -64,9 +65,6 @@ function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
     control,
   } = form // destructure after creating form instance
 
-  const { addTask, isAddSuccess, updateTask, isUpdateSuccess } = useTaskData()
-  const { taskDetails, isLoading } = useFetchTaskDetails(taskId, isOpen)
-
   useEffect(() => {
     if (isAddSuccess || isUpdateSuccess) {
       onCloseModal()
@@ -75,7 +73,12 @@ function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={handleSubmit(handleAddTask)}>
+      <form
+        onSubmit={(event) => {
+          console.log('Submitting form')
+          handleSubmit(handleAddTask)(event)
+        }}
+      >
         <TaskFormContent
           onCloseModal={onCloseModal}
           register={register}

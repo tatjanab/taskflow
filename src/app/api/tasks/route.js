@@ -1,6 +1,7 @@
 import { connectToDB } from '@/utils/database'
 import Task from '@/models/task'
 import Counter from '@/models/counter'
+import Project from '@/models/project'
 import mongoose from 'mongoose'
 
 export const GET = async (request) => {
@@ -13,7 +14,7 @@ export const GET = async (request) => {
       url.searchParams.get('itemsPerPage') || '10',
       10,
     )
-    const projectId = url.searchParams.get('projectId') // ✅ Keep as string
+    const projectId = url.searchParams.get('projectId') //  Keep as string
     const statusParam = url.searchParams.get('status')
 
     if (page < 1 || itemsPerPage < 1) {
@@ -78,41 +79,51 @@ export const GET = async (request) => {
 export const POST = async (request) => {
   try {
     const body = await request.json()
-
     await connectToDB()
 
-    // Validate that projecId exists
-    const project = await Project.findOne({ _id: body.projectId })
+    console.log('Received payload:', body)
+
+    // Use projectId from body (not from URL)
+    const projectId = body.projectId
+
+    // Validate that project exists
+    const project = await Project.findOne({ prefix: projectId })
     if (!project) {
+      console.error('Project not found for prefix:', projectId)
       return new Response(
         JSON.stringify({ success: false, message: 'Project not found' }),
         { status: 404 },
       )
     }
+    console.log('Found project:', project)
+    console.log('Project _id:', project._id, 'Type:', typeof project._id)
 
-    // update the projectId counter sequence
-    let counter = await Counter.findOne({ projectId: project._id })
+    // Update the projectId counter sequence using projectId from body
+    const counter = await Counter.findOneAndUpdate(
+      { projectId }, // filter: counter for this project
+      { $inc: { seq: 1 } }, // increment the sequence by 1
+      { new: true, upsert: true }, // return the new doc; create if not exists
+    )
     if (!counter) {
-      counter = new Counter({ projectId: project._id, seq: 1 })
-    } else {
-      counter.seq += 1
+      throw new Error('Counter update failed')
     }
+
     await counter.save()
+    console.log('Counter saved successfully:', counter)
 
     const newTaskId = `${project.prefix}-${counter.seq}`
 
-    // create a new task using the data from the request
+    // Create a new task using the data from the request
     const newTask = new Task({
-      _id: new mongoose.Types.ObjectId(), //Keep MongoDB default ID
       taskId: newTaskId,
-      projectId: project._id,
+      projectId, // Use the same projectId here
       type: body.type,
       summary: body.summary,
       status: body.status,
       details: {
         assignee: body.details.assignee,
         priority: body.details.priority,
-        labels: body.detils?.labels,
+        labels: body.details?.labels,
         creationDate: body.details?.creationDate,
         completionDate: body.details?.completionDate,
       },
@@ -121,13 +132,14 @@ export const POST = async (request) => {
 
     // Save the new task to the DB
     await newTask.save()
+    console.log('New task saved:', newTask)
 
-    // Return success response
     return new Response(JSON.stringify({ success: true, data: newTask }), {
       status: 201,
       headers: { 'Content-Type': 'application/json' },
     })
   } catch (error) {
+    console.error('Error in POST API:', error)
     return new Response(
       JSON.stringify({
         success: false,
