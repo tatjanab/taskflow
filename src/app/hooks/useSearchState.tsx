@@ -9,11 +9,15 @@ const useSearchState = () => {
   const [search, setSearch] = useState(searchValue || '')
 
   const debouncedSearch = useDebouncedCallback((value: string) => {
+    const params = new URLSearchParams(searchParams.toString())
+
     if (value.trim().length >= 3) {
-      router.push(`?search=${encodeURIComponent(value)}`, { scroll: false })
+      params.set('search', value)
     } else {
-      router.push('/', { scroll: false })
+      params.delete('search')
     }
+
+    router.push(`?${params.toString()}`, { scroll: false })
   }, 300)
 
   const handleSearch = (value: string) => {

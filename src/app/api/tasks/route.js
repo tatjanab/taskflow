@@ -16,6 +16,7 @@ export const GET = async (request) => {
     )
     const projectId = url.searchParams.get('projectId') //  Keep as string
     const statusParam = url.searchParams.get('status')
+    const searchParam = url.searchParams.get('search')
 
     if (page < 1 || itemsPerPage < 1) {
       return new Response(
@@ -45,9 +46,13 @@ export const GET = async (request) => {
     // Build filter dynamically
     const filter = { projectId, status: { $in: status } }
 
+    // Add search conditions if search parameter exists
+    if (searchParam) {
+      filter.$or = [{ summary: { $regex: searchParam, $options: 'i' } }]
+    }
     const skip = (page - 1) * itemsPerPage
 
-    // Query using projectId as a string (match DB format)
+    // Query using the combined filter
     const totalItems = await Task.countDocuments(filter)
     const tasks = await Task.find(filter)
       .sort({ _id: 1 })
