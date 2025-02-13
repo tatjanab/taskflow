@@ -1,9 +1,9 @@
-import Dashboard from '../components/Dashboard'
+import WelcomeComponent from '@/components/WelcomeComponent'
 
 export default function Home() {
   return (
-    <div className='mt-8'>
-      <Dashboard />
+    <div>
+      <WelcomeComponent />
     </div>
   )
 }

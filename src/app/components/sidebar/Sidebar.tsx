@@ -40,7 +40,6 @@ function AppSidebar() {
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Projects</SidebarGroupLabel>
-          {/* {isLoading && <p>Loading...</p>} */}
           {isError && <p>Error fetching projects</p>}
           <SidebarGroupContent>
             <SidebarMenu>
