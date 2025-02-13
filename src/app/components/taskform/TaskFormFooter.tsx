@@ -21,6 +21,7 @@ function TaskFormFooter({
   const [isOpen, setIsOpen] = useState(true)
 
   const handleDelete = async () => {
+    console.log('Deleting task:', taskId)
     try {
       await deleteTask(taskId)
       setIsOpen(false)

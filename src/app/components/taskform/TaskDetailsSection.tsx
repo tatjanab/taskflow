@@ -17,7 +17,6 @@ function TaskDetailsSection({ register, taskDetails, errors }: TaskFormProps) {
       <input
         {...register('details.assignee')}
         id='assignee'
-        defaultValue={taskDetails?.details?.assignee || ''}
         className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
       />
       {errors.details?.assignee && (

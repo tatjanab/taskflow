@@ -30,20 +30,24 @@ type TaskFormContentProps = {
 function TaskFormContent({
   onCloseModal,
   isSubmitting,
-  taskDetails,
   taskId,
   isLoading,
   setValue,
+  taskDetails,
   register,
   errors,
 }: TaskFormContentProps) {
   const [isEditing, setIsEditing] = useState(false)
   // Add useEffect to set initial values when taskDetails changes
   useEffect(() => {
-    if (taskDetails && taskDetails._id) {
-      Object.entries(taskDetails).forEach(([key, value]) => {
-        setValue(key as keyof addTaskFields, value)
-      })
+    if (taskDetails && taskId) {
+      // Set required fields explicitly
+      setValue('summary', taskDetails.summary || '')
+      setValue('type', taskDetails.type || 'Task')
+      setValue('status', taskDetails.status || 'Open')
+      setValue('details.assignee', taskDetails.details?.assignee || '')
+      setValue('details.priority', taskDetails.details?.priority || 'High')
+      setValue('description', taskDetails.description || '')
 
       setIsEditing(true)
     } else {

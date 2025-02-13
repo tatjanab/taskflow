@@ -22,11 +22,16 @@ type addTaskFields = z.infer<typeof taskSchema>
 function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
   const [taskId, setTaskId] = useState('')
   const searchParams = useSearchParams()
+  const { addTask, isAddSuccess, updateTask, isUpdateSuccess } = useTaskData()
+  const { taskDetails, isLoading } = useFetchTaskDetails(taskId, isOpen)
+  const projectId = searchParams.get('projectId')
 
   useEffect(() => {
     const selectedTask = searchParams.get('selectedTask') || ''
     setTaskId(selectedTask)
   }, [searchParams])
+
+  console.log('taskId aaa', taskId)
 
   const form = useForm<addTaskFields>({
     resolver: zodResolver(taskSchema),
@@ -44,13 +49,19 @@ function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
   })
 
   const handleAddTask: SubmitHandler<addTaskFields> = async (data) => {
+    console.log('Form submission:', {
+      isEditing: taskId ? true : false,
+      taskId,
+      data,
+    })
     try {
       if (taskId) {
-        await updateTask(data)
+        console.log('Attempting to update task:', taskId)
+        await updateTask({ data, taskId })
       } else {
-        await addTask(data)
+        await addTask({ data, projectId })
       }
-      console.log('Task added successfully')
+      console.log('data', data)
     } catch (error) {
       console.error('Error adding task:', error)
     }
@@ -63,9 +74,6 @@ function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
     setValue,
     control,
   } = form // destructure after creating form instance
-
-  const { addTask, isAddSuccess, updateTask, isUpdateSuccess } = useTaskData()
-  const { taskDetails, isLoading } = useFetchTaskDetails(taskId, isOpen)
 
   useEffect(() => {
     if (isAddSuccess || isUpdateSuccess) {

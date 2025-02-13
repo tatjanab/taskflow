@@ -16,7 +16,6 @@ function TaskIdentificationSection({ register, taskDetails }: TaskFormProps) {
       <select
         {...register('status')}
         id='status'
-        defaultValue={taskDetails?.status || 'Open'}
         className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
       >
         <option value='Open'>Open</option>

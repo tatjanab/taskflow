@@ -2,7 +2,6 @@ import mongoose from 'mongoose'
 
 // Define the schema
 const TaskSchema = new mongoose.Schema({
-  _id: mongoose.Schema.Types.ObjectId, // Keep MongoDB's default unique ID
   taskId: {
     type: String,
     required: true,

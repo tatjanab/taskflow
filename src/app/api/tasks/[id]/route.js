@@ -6,7 +6,8 @@ export const GET = async (request, { params }) => {
   try {
     await connectToDB()
     const { id } = await params
-    const task = await Task.findById(id)
+    // Use findOne with the custom taskId field instead of findById
+    const task = await Task.findOne({ taskId: id })
 
     return new Response(JSON.stringify({ success: true, data: task }), {
       status: 200,
@@ -22,8 +23,8 @@ export const PATCH = async (request, { params }) => {
   try {
     await connectToDB()
     const body = await request.json()
-    const { id } = await params
-    const task = await Task.findByIdAndUpdate(id, body, {
+    const { id } = params
+    const task = await Task.findOneAndUpdate({ taskId: id }, body, {
       new: true, // This option returns the updated document
     })
     return new Response(JSON.stringify({ success: true, data: task }), {
@@ -41,16 +42,25 @@ export const DELETE = async (request, { params }) => {
     await connectToDB()
     const { id } = await params
     // Delete the current task
-    const task = await Task.findByIdAndDelete(id)
+    const task = await Task.findOneAndDelete({ taskId: id })
 
-    // Find the new highest task after deletion
-    const newHighestTask = await Task.findOne({}).sort({ _id: -1 }).lean()
+    // Extract project prefix from taskId (e.g., "PROJ" from "PROJ-123")
+    const projectId = id.split('-')[0]
 
-    // Update the counter with the new highest task ID
-    // If no tasks remain, set sequence to 0
-    await Counter.findByIdAndUpdate(
-      'taskId',
-      { $set: { seq: newHighestTask ? newHighestTask._id : 0 } },
+    // Find the highest sequence number for this project
+    const highestTask = await Task.findOne({
+      taskId: new RegExp(`^${projectId}-`),
+    })
+      .sort({ taskId: -1 })
+      .lean()
+
+    // Extract sequence number from taskId
+    const seq = highestTask ? parseInt(highestTask.taskId.split('-')[1]) : 0
+
+    // Update the counter for this project
+    await Counter.findOneAndUpdate(
+      { projectId },
+      { $set: { seq } },
       { upsert: true },
     )
 

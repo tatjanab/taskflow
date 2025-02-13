@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/table'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import useFetchTasks from '@/hooks/useFetchTasks'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import TableItems from './TableItems'
 import TableItemLoader from './loaders/TableItemLoader'
 import TaskForm from './TaskForm'
@@ -21,19 +21,29 @@ function DashboardInner() {
   const { taskList, isError, isLoading } = useFetchTasks()
   const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
+  const searchParams = useSearchParams()
 
   const handleOpenTask = useCallback(
     (taskId: string) => {
       setIsOpen(true)
-      router.push(`?selectedTask=${taskId}`, { scroll: false }) // Add scroll: false to prevent unnecessary scrolling
+      // Create a new URLSearchParams instance from the current search parameters
+      const currentParams = new URLSearchParams(searchParams.toString())
+      // Set/update the selectedTask parameter
+      currentParams.set('selectedTask', taskId)
+      router.push(`?${currentParams.toString()}`, { scroll: false })
     },
-    [router],
+    [router, searchParams],
   )
 
   const handleClose = useCallback(() => {
-    router.push('/', { scroll: false })
+    // Create a mutable copy of the current search parameters
+    const currentParams = new URLSearchParams(searchParams.toString())
+    // Remove the selectedTask parameter
+    currentParams.delete('selectedTask')
+    // Push the updated query string while preserving other params
+    router.push(`?${currentParams.toString()}`, { scroll: false })
     setIsOpen(false)
-  }, [router, setIsOpen])
+  }, [router, searchParams, setIsOpen])
 
   return (
     <div>

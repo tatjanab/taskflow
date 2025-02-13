@@ -18,7 +18,6 @@ function TaskTypeSection({ register, taskDetails, errors }: TaskFormProps) {
         <select
           {...register('type')}
           id='type'
-          defaultValue={taskDetails?.type || 'Feature'}
           className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
         >
           <option value='Feature'>Feature</option>
@@ -34,7 +33,6 @@ function TaskTypeSection({ register, taskDetails, errors }: TaskFormProps) {
         <select
           {...register('details.priority')}
           id='priority'
-          defaultValue={taskDetails?.details?.priority || 'High'}
           className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
         >
           <option value='High'>High</option>
