@@ -6,7 +6,8 @@ export const GET = async (request, { params }) => {
   try {
     await connectToDB()
     const { id } = await params
-    const task = await Task.findById(id)
+    // Use findOne with the custom taskId field instead of findById
+    const task = await Task.findOne({ taskId: id })
 
     return new Response(JSON.stringify({ success: true, data: task }), {
       status: 200,

@@ -1,6 +1,6 @@
 'use client'
 
-import { FieldErrors, UseFormRegister, Control } from 'react-hook-form'
+import { FieldErrors, UseFormRegister } from 'react-hook-form'
 import taskSchema from '@/models/zod_schema'
 import { z } from 'zod'
 import { useEffect, useState } from 'react'
@@ -24,15 +24,14 @@ type TaskFormContentProps = {
   taskId: string
   isLoading: boolean
   setValue: any
-  control: Control<addTaskFields>
 }
 
 function TaskFormContent({
   onCloseModal,
   isSubmitting,
-  taskDetails,
   taskId,
   isLoading,
+  taskDetails,
   setValue,
   register,
   errors,
@@ -40,7 +39,7 @@ function TaskFormContent({
   const [isEditing, setIsEditing] = useState(false)
   // Add useEffect to set initial values when taskDetails changes
   useEffect(() => {
-    if (taskDetails && taskDetails._id) {
+    if (taskDetails && taskDetails.taskId) {
       Object.entries(taskDetails).forEach(([key, value]) => {
         setValue(key as keyof addTaskFields, value)
       })

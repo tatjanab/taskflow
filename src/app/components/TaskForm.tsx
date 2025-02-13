@@ -32,6 +32,8 @@ function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
     setTaskId(selectedTask)
   }, [searchParams])
 
+  console.log('taskDetails', taskDetails)
+
   const form = useForm<addTaskFields>({
     resolver: zodResolver(taskSchema),
     mode: 'onChange',
@@ -50,7 +52,11 @@ function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
   const handleAddTask: SubmitHandler<addTaskFields> = async (data) => {
     console.log('data', data, 'projectId', projectId)
     try {
-      await addTask({ data, projectId })
+      if (taskId) {
+        await updateTask({ taskId })
+      } else {
+        await addTask({ data, projectId })
+      }
       console.log('data', data)
     } catch (error) {
       console.error('Error adding task:', error)
