@@ -9,36 +9,12 @@ import {
   SidebarMenuSub,
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar'
+import Link from 'next/link'
 import { FolderDot, ChevronsUpDown, Logs, ListChecks } from 'lucide-react'
-import { useRouter, useSearchParams } from 'next/navigation'
 
 function SidebarProjectsGroup({ project }) {
-  const router = useRouter()
-
-  const updateQueryParams = (updates = {}) => {
-    const params = new URLSearchParams(window.location.search)
-
-    Object.entries(updates).forEach(([key, value]) => {
-      if (value === null || value === undefined) {
-        params.delete(key)
-      } else {
-        params.set(key, value.toString())
-      }
-    })
-
-    router.replace(`?${params.toString()}`, { scroll: false })
-  }
-
-  const handleClick = () => {
-    updateQueryParams({
-      projectId: project.prefix,
-      status: 'Open, In Progress',
-    })
-  }
-
-  const handleCompletedTasks = () => {
-    updateQueryParams({ projectId: project.prefix, status: 'Done' })
-  }
+  const taskListUrl = `/project?projectId=${project.prefix}&status=Open, In Progress`
+  const completedTasksUrl = `/project?projectId=${project.prefix}&status=Done`
 
   return (
     <Collapsible key={project.name} className='group/collapsible'>
@@ -57,15 +33,19 @@ function SidebarProjectsGroup({ project }) {
         <CollapsibleContent>
           <SidebarMenuSub>
             <SidebarMenuSubItem>
-              <SidebarMenuButton onClick={handleClick}>
-                <Logs className='mr-4' />
-                <span>Task List</span>
+              <SidebarMenuButton asChild>
+                <Link href={taskListUrl}>
+                  <Logs className='mr-4' />
+                  <span>Task List</span>
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuSubItem>
             <SidebarMenuSubItem>
-              <SidebarMenuButton onClick={handleCompletedTasks}>
-                <ListChecks className='mr-4' />
-                <span>Completed</span>
+              <SidebarMenuButton asChild>
+                <Link href={completedTasksUrl}>
+                  <ListChecks className='mr-4' />
+                  <span>Completed</span>
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuSubItem>
           </SidebarMenuSub>
