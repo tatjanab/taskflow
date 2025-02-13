@@ -25,14 +25,13 @@ function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
   const { addTask, isAddSuccess, updateTask, isUpdateSuccess } = useTaskData()
   const { taskDetails, isLoading } = useFetchTaskDetails(taskId, isOpen)
   const projectId = searchParams.get('projectId')
-  console.log('projectId', projectId)
 
   useEffect(() => {
     const selectedTask = searchParams.get('selectedTask') || ''
     setTaskId(selectedTask)
   }, [searchParams])
 
-  console.log('taskDetails', taskDetails)
+  console.log('taskId aaa', taskId)
 
   const form = useForm<addTaskFields>({
     resolver: zodResolver(taskSchema),
@@ -50,10 +49,15 @@ function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
   })
 
   const handleAddTask: SubmitHandler<addTaskFields> = async (data) => {
-    console.log('data', data, 'projectId', projectId)
+    console.log('Form submission:', {
+      isEditing: taskId ? true : false,
+      taskId,
+      data,
+    })
     try {
       if (taskId) {
-        await updateTask({ taskId })
+        console.log('Attempting to update task:', taskId)
+        await updateTask({ data, taskId })
       } else {
         await addTask({ data, projectId })
       }
@@ -79,12 +83,7 @@ function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={(event) => {
-          console.log('Submitting form')
-          handleSubmit(handleAddTask)(event)
-        }}
-      >
+      <form onSubmit={handleSubmit(handleAddTask)}>
         <TaskFormContent
           onCloseModal={onCloseModal}
           register={register}

@@ -35,8 +35,8 @@ function useTaskData() {
 
   // Add new handler for updating tasks
 
-  const handleUpdateTask = async (data: addTaskFields) => {
-    const res = await fetch(`/api/tasks/${data._id}`, {
+  const handleUpdateTask = async (data: addTaskFields, taskId: string) => {
+    const res = await fetch(`/api/tasks/${taskId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -80,15 +80,14 @@ function useTaskData() {
   })
 
   const updateTaskMutation = useMutation({
-    mutationFn: handleUpdateTask,
+    mutationFn: ({ data, taskId }: { data: addTaskFields; taskId: string }) =>
+      handleUpdateTask(data, taskId),
     onSuccess: () => {
       console.log('Mutation successful, invalidating tasks query...')
 
       // Force a fresh refetch of the task list
       queryClient.invalidateQueries({
-        queryKey: ['taskList', search, currentPage],
-        exact: true,
-        refetchType: 'active',
+        queryKey: ['taskList'],
       })
 
       // Optionally, you can also remove any stale data

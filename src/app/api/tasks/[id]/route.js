@@ -23,8 +23,8 @@ export const PATCH = async (request, { params }) => {
   try {
     await connectToDB()
     const body = await request.json()
-    const { id } = await params
-    const task = await Task.findByIdAndUpdate(id, body, {
+    const { id } = params
+    const task = await Task.findOneAndUpdate({ taskId: id }, body, {
       new: true, // This option returns the updated document
     })
     return new Response(JSON.stringify({ success: true, data: task }), {
@@ -42,7 +42,7 @@ export const DELETE = async (request, { params }) => {
     await connectToDB()
     const { id } = await params
     // Delete the current task
-    const task = await Task.findByIdAndDelete(id)
+    const task = await Task.findOneAndDelete({ taskId: id })
 
     // Find the new highest task after deletion
     const newHighestTask = await Task.findOne({}).sort({ _id: -1 }).lean()
