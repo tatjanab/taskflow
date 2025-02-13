@@ -2,6 +2,8 @@ import { z } from 'zod'
 
 const taskSchema = z.object({
   _id: z.number().optional(),
+  taskId: z.string(),
+  projectId: z.string(),
   type: z.enum(['Feature', 'Improvement', 'Task', 'Bug']).optional(),
   summary: z
     .string()

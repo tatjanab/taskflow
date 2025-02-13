@@ -1,18 +1,20 @@
 import { connectToDB } from '@/utils/database'
 import Task from '@/models/task'
 import Counter from '@/models/counter'
+import mongoose from 'mongoose'
 
 export const GET = async (request) => {
   try {
     await connectToDB()
 
-    // ✅ Correctly extract query parameters from request
     const url = new URL(request.url)
-    const page = parseInt(url.searchParams.get('page') || '1', 10) // Default to page 1
+    const page = parseInt(url.searchParams.get('page') || '1', 10)
     const itemsPerPage = parseInt(
       url.searchParams.get('itemsPerPage') || '10',
       10,
-    ) // Default to 10
+    )
+    const projectId = url.searchParams.get('projectId') // ✅ Keep as string
+    const statusParam = url.searchParams.get('status')
 
     if (page < 1 || itemsPerPage < 1) {
       return new Response(
@@ -24,18 +26,29 @@ export const GET = async (request) => {
       )
     }
 
-    // ✅ Ensure skip calculation is correct
+    if (!projectId) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          message: 'Missing projectId parameter',
+        }),
+        { status: 400 },
+      )
+    }
+
+    // Build the filter object based on the query parameters
+    const status = statusParam
+      ? statusParam.split(',').map((s) => s.trim())
+      : ['Open', 'In Progress']
+
+    // Build filter dynamically
+    const filter = { projectId, status: { $in: status } }
+
     const skip = (page - 1) * itemsPerPage
 
-    console.log(
-      `Fetching tasks for page ${page}, skip ${skip}, limit ${itemsPerPage}`,
-    )
-
-    // ✅ Fetch total task count
-    const totalItems = await Task.countDocuments()
-
-    // ✅ Fetch paginated tasks
-    const tasks = await Task.find({})
+    // Query using projectId as a string (match DB format)
+    const totalItems = await Task.countDocuments(filter)
+    const tasks = await Task.find(filter)
       .sort({ _id: 1 })
       .skip(skip)
       .limit(itemsPerPage)
@@ -48,18 +61,17 @@ export const GET = async (request) => {
         currentPage: page,
         itemsPerPage,
       }),
-      {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' },
-      },
+      { status: 200 },
     )
   } catch (error) {
-    console.error('Error fetching paginated tasks:', error)
+    console.error('❌ Error fetching paginated tasks:', error)
     return new Response(
-      JSON.stringify({ success: false, message: 'Failed to fetch tasks' }),
-      {
-        status: 500,
-      },
+      JSON.stringify({
+        success: false,
+        message: 'Failed to fetch tasks',
+        error: error.message,
+      }),
+      { status: 500 },
     )
   }
 }
@@ -69,26 +81,31 @@ export const POST = async (request) => {
 
     await connectToDB()
 
-    // Find the highest existing task ID
-    const highestTask = await Task.findOne({}).sort({ _id: -1 }).lean()
-    const startValue = highestTask ? highestTask._id : 0
+    // Validate that projecId exists
+    const project = await Project.findOne({ _id: body.projectId })
+    if (!project) {
+      return new Response(
+        JSON.stringify({ success: false, message: 'Project not found' }),
+        { status: 404 },
+      )
+    }
 
-    // Initialize or update counter if needed
-    await Counter.findByIdAndUpdate(
-      'taskId',
-      { $max: { seq: startValue } },
-      { upsert: true },
-    )
-    // Get next sequence value
-    const counter = await Counter.findByIdAndUpdate(
-      'taskId',
-      { $inc: { seq: 1 } },
-      { new: true, upsert: true },
-    )
+    // update the projectId counter sequence
+    let counter = await Counter.findOne({ projectId: project._id })
+    if (!counter) {
+      counter = new Counter({ projectId: project._id, seq: 1 })
+    } else {
+      counter.seq += 1
+    }
+    await counter.save()
+
+    const newTaskId = `${project.prefix}-${counter.seq}`
 
     // create a new task using the data from the request
     const newTask = new Task({
-      _id: counter.seq, // Use the sequence number as _id
+      _id: new mongoose.Types.ObjectId(), //Keep MongoDB default ID
+      taskId: newTaskId,
+      projectId: project._id,
       type: body.type,
       summary: body.summary,
       status: body.status,

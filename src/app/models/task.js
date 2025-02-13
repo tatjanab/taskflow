@@ -2,8 +2,14 @@ import mongoose from 'mongoose'
 
 // Define the schema
 const TaskSchema = new mongoose.Schema({
-  _id: {
-    type: Number,
+  _id: mongoose.Schema.Types.ObjectId, // Keep MongoDB's default unique ID
+  taskId: {
+    type: String,
+    required: true,
+    unique: true,
+  }, // Store prefixed task ID (e.g., "WEB-1", "MKT-2")
+  projectId: {
+    type: String,
     required: true,
   },
   type: {

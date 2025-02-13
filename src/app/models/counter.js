@@ -1,7 +1,12 @@
 import mongoose from 'mongoose'
 
 const CounterSchema = new mongoose.Schema({
-  _id: { type: String, required: true },
+  projectId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Project',
+    required: true,
+    unique: true,
+  }, // each project has its own counter
   seq: { type: Number, default: 0 },
 })
 
