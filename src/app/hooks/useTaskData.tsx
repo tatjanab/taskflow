@@ -96,12 +96,10 @@ function useTaskData() {
   })
 
   const deleteTaskMutation = useMutation({
-    mutationFn: handleDeleteTask,
+    mutationFn: (taskId: string) => handleDeleteTask(taskId),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['taskList', search, currentPage],
-        exact: true,
-        refetchType: 'active',
+        queryKey: ['taskList'],
       })
     },
   })

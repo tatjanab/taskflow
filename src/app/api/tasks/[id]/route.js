@@ -44,14 +44,23 @@ export const DELETE = async (request, { params }) => {
     // Delete the current task
     const task = await Task.findOneAndDelete({ taskId: id })
 
-    // Find the new highest task after deletion
-    const newHighestTask = await Task.findOne({}).sort({ _id: -1 }).lean()
+    // Extract project prefix from taskId (e.g., "PROJ" from "PROJ-123")
+    const projectId = id.split('-')[0]
 
-    // Update the counter with the new highest task ID
-    // If no tasks remain, set sequence to 0
-    await Counter.findByIdAndUpdate(
-      'taskId',
-      { $set: { seq: newHighestTask ? newHighestTask._id : 0 } },
+    // Find the highest sequence number for this project
+    const highestTask = await Task.findOne({
+      taskId: new RegExp(`^${projectId}-`),
+    })
+      .sort({ taskId: -1 })
+      .lean()
+
+    // Extract sequence number from taskId
+    const seq = highestTask ? parseInt(highestTask.taskId.split('-')[1]) : 0
+
+    // Update the counter for this project
+    await Counter.findOneAndUpdate(
+      { projectId },
+      { $set: { seq } },
       { upsert: true },
     )
 
