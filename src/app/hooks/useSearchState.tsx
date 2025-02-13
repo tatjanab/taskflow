@@ -25,7 +25,14 @@ const useSearchState = () => {
     debouncedSearch(value)
   }
 
-  return { handleSearch, search }
+  const clearSearch = () => {
+    setSearch('')
+    const params = new URLSearchParams(searchParams.toString())
+    params.delete('search')
+    router.push(`?${params.toString()}`, { scroll: false })
+  }
+
+  return { handleSearch, search, clearSearch }
 }
 
 export default useSearchState

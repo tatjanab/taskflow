@@ -3,10 +3,10 @@
 import { Suspense } from 'react'
 import useSearchState from '@/hooks/useSearchState'
 import { Input } from '@/components/ui/input'
-import { Search } from 'react-feather'
+import { Search, CircleX } from 'lucide-react'
 
 function SearchBarInner() {
-  const { handleSearch, search } = useSearchState()
+  const { handleSearch, search, clearSearch } = useSearchState()
 
   return (
     <div>
@@ -22,6 +22,12 @@ function SearchBarInner() {
             }}
           />
           <Search className='text-gray-300 absolute left-4 h-5 w-5' />
+          {search && (
+            <CircleX
+              className='text-gray-500 absolute right-4 h-5 w-5 hover:cursor-pointer'
+              onClick={clearSearch}
+            />
+          )}
         </div>
       </form>
     </div>
