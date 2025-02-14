@@ -28,7 +28,7 @@ function SidebarProjectsGroup({ project }) {
       <SidebarMenuItem>
         <CollapsibleTrigger asChild>
           <SidebarMenuButton className='flex flex-row items-center justify-start w-full'>
-            <PanelsTopLeft className='size-5' />
+            <PanelsTopLeft className='size-5 mr-2' />
             <span>{project.name}</span>
             <ChevronRight className='ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90' />
           </SidebarMenuButton>
