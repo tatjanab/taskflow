@@ -1,6 +1,6 @@
 import { TableRow, TableCell } from '@/components/ui/table'
 import { format } from 'date-fns' // Optional, for better formatting
-import taskSchema from '@/models/zod_schema'
+import { taskSchema } from '@/models/zod_schema'
 import { z } from 'zod'
 import PriorityFlag from './PriorityFlag'
 import TaskStatus from './TaskStatus'

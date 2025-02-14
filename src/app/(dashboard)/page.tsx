@@ -1,5 +1,5 @@
 import WelcomeComponent from '@/components/WelcomeComponent'
-import AddProject from '@/components/AddProject'
+import AddProject from '@/components/new project/AddProject'
 
 export default function Home() {
   return (

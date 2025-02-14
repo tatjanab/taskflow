@@ -14,10 +14,6 @@ import { useState } from 'react'
 function AddProject() {
   const [isOpen, setIsOpen] = useState(false)
 
-  const handleSubmit = () => {
-    console.log('Form submitted')
-  }
-
   return (
     <>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -39,7 +35,6 @@ function AddProject() {
         <AddProjectDialog
           isOpen={isOpen}
           onCloseModal={() => setIsOpen(false)}
-          onSubmit={handleSubmit}
         />
       </Dialog>
     </>
