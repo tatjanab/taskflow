@@ -31,4 +31,16 @@ const taskSchema = z.object({
   description: z.string().optional(),
 })
 
-export default taskSchema
+const projectSchema = z.object({
+  _id: z.number().optional(),
+  name: z
+    .string()
+    .min(1, { message: 'Name must contain at least 1 character' }),
+  description: z.string().optional(),
+  prefix: z
+    .string()
+    .min(3, { message: 'Prefix must contain 3 characters' })
+    .max(3, { message: 'Prefix must contain 3 characters' }),
+})
+
+export { taskSchema, projectSchema }

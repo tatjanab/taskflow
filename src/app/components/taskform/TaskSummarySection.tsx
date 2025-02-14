@@ -1,6 +1,6 @@
 import { UseFormRegister, FieldErrors } from 'react-hook-form'
 import { z } from 'zod'
-import taskSchema from '@/models/zod_schema'
+import { taskSchema } from '@/models/zod_schema'
 
 type TaskFormProps = {
   register: UseFormRegister<z.infer<typeof taskSchema>>

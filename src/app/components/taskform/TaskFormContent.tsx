@@ -1,7 +1,7 @@
 'use client'
 
 import { FieldErrors, UseFormRegister, Control } from 'react-hook-form'
-import taskSchema from '@/models/zod_schema'
+import { taskSchema } from '@/models/zod_schema'
 import { z } from 'zod'
 import { useEffect, useState } from 'react'
 import TaskFormLoader from '../loaders/TaskFormLoader'

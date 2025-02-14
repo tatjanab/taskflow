@@ -1,4 +1,4 @@
-import taskSchema from '@/models/zod_schema'
+import { taskSchema } from '@/models/zod_schema'
 import { z } from 'zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useSearchParams } from 'next/navigation'

@@ -7,7 +7,7 @@ function WelcomeComponent() {
         <SidebarTrigger />
         <span>Hello user!</span>
       </p>
-      <div className='flex flex-col gap-2 mt-6 px-4'>
+      <div className='flex flex-col gap-2 mt-6'>
         <h2 className='text-3xl font-bold'>Welcome back!</h2>
 
         <p>Create a new project or select an existing one.</p>
