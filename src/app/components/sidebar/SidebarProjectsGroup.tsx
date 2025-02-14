@@ -16,6 +16,7 @@ import {
   Logs,
   ListChecks,
   PanelsTopLeft,
+  ChevronRight,
 } from 'lucide-react'
 
 function SidebarProjectsGroup({ project }) {
@@ -28,8 +29,8 @@ function SidebarProjectsGroup({ project }) {
         <CollapsibleTrigger asChild>
           <SidebarMenuButton className='flex flex-row items-center justify-start w-full'>
             <PanelsTopLeft className='size-5' />
-            <span className='ml-2'>{project.name}</span>
-            <ChevronsUpDown className='size-5' />
+            <span>{project.name}</span>
+            <ChevronRight className='ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90' />
           </SidebarMenuButton>
         </CollapsibleTrigger>
         <CollapsibleContent>
