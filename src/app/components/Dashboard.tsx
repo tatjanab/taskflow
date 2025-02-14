@@ -59,6 +59,13 @@ function DashboardInner() {
           </TableRow>
         </TableHeader>
         <TableBody>
+          {taskList.length === 0 && (
+            <TableRow className='mt-6'>
+              <TableCell colSpan={6} className='text-center mt-6'>
+                No tasks in the list
+              </TableCell>
+            </TableRow>
+          )}
           {isError && <TableCell>No tasks in the list</TableCell>}
           {!isError &&
             (isLoading ? (

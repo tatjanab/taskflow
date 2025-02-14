@@ -10,11 +10,16 @@ import useFetchProjects from '@/hooks/useFetchProjects'
 
 type addProjectFields = z.infer<typeof projectSchema>
 
-function AddProjectForm() {
+function AddProjectForm({ onClose }: { onClose: () => void }) {
   const { addProjectMutation } = useFetchProjects()
 
-  const handleAddProject = (data: addProjectFields) => {
-    addProjectMutation.mutate(data)
+  const handleAddProject = (data) => {
+    const projectData = {
+      ...data,
+      _id: data.prefix,
+    }
+    addProjectMutation.mutate(projectData)
+    onClose()
   }
 
   const form = useForm<addProjectFields>({

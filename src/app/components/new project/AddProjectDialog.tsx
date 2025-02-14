@@ -17,7 +17,7 @@ function AddProjectDialog({ isOpen, onCloseModal }: AddProjectDialogProps) {
         Fill in the details below to create a new project.
       </DialogDescription>
       <div className='flex flex-col gap-4'>
-        <AddProjectForm />
+        <AddProjectForm onClose={onCloseModal} />
       </div>
     </DialogContent>
   )
