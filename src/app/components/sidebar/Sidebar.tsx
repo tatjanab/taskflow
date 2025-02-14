@@ -51,7 +51,7 @@ function AppSidebar() {
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
                   <Link href='/'>
-                    <Settings className='mr-4' />
+                    <Settings className='mr-2 size-5' />
                     <span>Settings</span>
                   </Link>
                 </SidebarMenuButton>

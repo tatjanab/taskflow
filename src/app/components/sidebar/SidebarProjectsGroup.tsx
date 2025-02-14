@@ -10,7 +10,13 @@ import {
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar'
 import Link from 'next/link'
-import { FolderDot, ChevronsUpDown, Logs, ListChecks } from 'lucide-react'
+import {
+  FolderDot,
+  ChevronsUpDown,
+  Logs,
+  ListChecks,
+  PanelsTopLeft,
+} from 'lucide-react'
 
 function SidebarProjectsGroup({ project }) {
   const taskListUrl = `/project?projectId=${project.prefix}&status=Open, In Progress`
@@ -20,14 +26,10 @@ function SidebarProjectsGroup({ project }) {
     <Collapsible key={project.name} className='group/collapsible'>
       <SidebarMenuItem>
         <CollapsibleTrigger asChild>
-          <SidebarMenuButton>
-            <div className='flex flex-row items-center justify-between w-full'>
-              <div className='flex flex-row items-center justify-between'>
-                <FolderDot className='mr-4' />
-                <span>{project.name}</span>
-              </div>
-              <ChevronsUpDown className='h-4 w-4' />
-            </div>
+          <SidebarMenuButton className='flex flex-row items-center justify-start w-full'>
+            <PanelsTopLeft className='size-5' />
+            <span className='ml-2'>{project.name}</span>
+            <ChevronsUpDown className='size-5' />
           </SidebarMenuButton>
         </CollapsibleTrigger>
         <CollapsibleContent>
@@ -35,7 +37,7 @@ function SidebarProjectsGroup({ project }) {
             <SidebarMenuSubItem>
               <SidebarMenuButton asChild>
                 <Link href={taskListUrl}>
-                  <Logs className='mr-4' />
+                  <Logs className='mr-2 size-5' />
                   <span>Task List</span>
                 </Link>
               </SidebarMenuButton>
@@ -43,7 +45,7 @@ function SidebarProjectsGroup({ project }) {
             <SidebarMenuSubItem>
               <SidebarMenuButton asChild>
                 <Link href={completedTasksUrl}>
-                  <ListChecks className='mr-4' />
+                  <ListChecks className='mr-2 size-5' />
                   <span>Completed</span>
                 </Link>
               </SidebarMenuButton>
