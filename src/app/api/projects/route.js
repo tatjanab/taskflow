@@ -19,3 +19,19 @@ export const GET = async (request) => {
     return new Response('Internal Server Error', { status: 500 })
   }
 }
+
+export const POST = async (request) => {
+  try {
+    await connectToDB()
+    const body = await request.json()
+    const { name, description, prefix } = body
+    const project = new Project({ name, description, prefix })
+    await project.save()
+    return new Response(JSON.stringify({ success: true, data: project }), {
+      status: 200,
+    })
+  } catch (error) {
+    console.error('Error connecting to database:', error)
+    return new Response('Internal Server Error', { status: 500 })
+  }
+}

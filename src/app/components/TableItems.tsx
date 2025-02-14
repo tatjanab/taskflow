@@ -12,7 +12,9 @@ type TaskLists = {
 }
 
 function TableItems({ taskList, onOpen, handleOpenTask }: TaskLists) {
-  const taskListSorted = taskList.sort((a, b) => Number(a._id) - Number(b._id))
+  const taskListSorted = taskList.sort(
+    (a, b) => Number(a.taskId) - Number(b.taskId),
+  )
 
   return (
     <>

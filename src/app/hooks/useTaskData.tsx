@@ -8,8 +8,6 @@ type addTaskFields = z.infer<typeof taskSchema>
 function useTaskData() {
   const queryClient = useQueryClient()
   const searchParams = useSearchParams()
-  const search = searchParams.get('search')
-  const currentPage = parseInt(searchParams.get('page') || '1', 10)
 
   const handleAddTask = async (data: addTaskFields, projectId: string) => {
     const baseUrl = process.env.NEXT_PUBLIC_API_URL || ''
