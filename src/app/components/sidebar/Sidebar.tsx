@@ -33,7 +33,7 @@ function AppSidebar() {
               width={28}
               height={28}
             />
-            <h3 className='ml-4 text-md font-medium'>Taskasaurus</h3>
+            <h3 className='ml-2 text-md font-bold'>Taskasaurus</h3>
           </Link>
         </SidebarMenuButton>
       </SidebarHeader>
@@ -51,7 +51,7 @@ function AppSidebar() {
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
                   <Link href='/'>
-                    <Settings className='mr-4' />
+                    <Settings className='mr-2 size-5' />
                     <span>Settings</span>
                   </Link>
                 </SidebarMenuButton>
