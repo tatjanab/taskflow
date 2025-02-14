@@ -6,13 +6,22 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { projectSchema } from '@/models/zod_schema'
+import useFetchProjects from '@/hooks/useFetchProjects'
 
 type addProjectFields = z.infer<typeof projectSchema>
 
-function AddProjectForm() {
-  const handleAddProject = () => {
-    console.log('Form submitted')
+function AddProjectForm({ onClose }: { onClose: () => void }) {
+  const { addProjectMutation } = useFetchProjects()
+
+  const handleAddProject = (data) => {
+    const projectData = {
+      ...data,
+      _id: data.prefix,
+    }
+    addProjectMutation.mutate(projectData)
+    onClose()
   }
+
   const form = useForm<addProjectFields>({
     resolver: zodResolver(projectSchema),
     mode: 'onChange',

@@ -55,7 +55,7 @@ export const GET = async (request) => {
     // Query using the combined filter
     const totalItems = await Task.countDocuments(filter)
     const tasks = await Task.find(filter)
-      .sort({ _id: 1 })
+      .sort({ taskId: 1 })
       .skip(skip)
       .limit(itemsPerPage)
 
@@ -100,8 +100,6 @@ export const POST = async (request) => {
         { status: 404 },
       )
     }
-    console.log('Found project:', project)
-    console.log('Project _id:', project._id, 'Type:', typeof project._id)
 
     // Update the projectId counter sequence using projectId from body
     const counter = await Counter.findOneAndUpdate(
