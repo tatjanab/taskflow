@@ -1,15 +1,17 @@
 import { Button } from '@/components/ui/button'
+import { z } from 'zod'
+import { taskSchema } from '@/models/zod_schema'
 
 type TaskFooterSubmitActionsProps = {
   onCloseModal: () => void
   isSubmitting: boolean
-  isEditing: boolean
+  taskDetails: z.infer<typeof taskSchema>
 }
 
 const TaskFooterSubmitActions = ({
   onCloseModal,
   isSubmitting,
-  isEditing,
+  taskDetails,
 }: TaskFooterSubmitActionsProps) => {
   return (
     <>
@@ -25,7 +27,7 @@ const TaskFooterSubmitActions = ({
           disabled={isSubmitting}
           className='text-white text-sm min-w-[80px] bg-blue-900 hover:bg-blue-600 px-2 py-4 shadow-none'
         >
-          {isSubmitting ? 'Submitting...' : isEditing ? 'Update' : 'Create'}
+          {isSubmitting ? 'Submitting...' : taskDetails ? 'Update' : 'Create'}
         </Button>
       </div>
     </>

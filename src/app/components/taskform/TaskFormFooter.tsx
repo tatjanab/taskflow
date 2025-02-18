@@ -3,17 +3,19 @@ import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 import TaskFooterSubmitActions from './TaskFooterSubmitActions'
 import TaskFooterDeleteAction from './TaskFooterDeleteAction'
+import { z } from 'zod'
+import { taskSchema } from '@/models/zod_schema'
 
 type TaskFormFooterProps = {
   isSubmitting: boolean
-  isEditing: boolean
   onCloseModal: () => void
+  taskDetails: z.infer<typeof taskSchema>
 }
 
 function TaskFormFooter({
   isSubmitting,
-  isEditing,
   onCloseModal,
+  taskDetails,
 }: TaskFormFooterProps) {
   const { deleteTask } = useTaskData()
   const searchParams = useSearchParams()
@@ -35,7 +37,7 @@ function TaskFormFooter({
     <div className='-mx-6 px-6 py-2 flex flex-row items-center'>
       <div className='flex w-full justify-between'>
         <div>
-          {isEditing && (
+          {taskDetails && (
             <TaskFooterDeleteAction
               isOpen={isOpen}
               setIsOpen={setIsOpen}
@@ -47,7 +49,7 @@ function TaskFormFooter({
           <TaskFooterSubmitActions
             onCloseModal={onCloseModal}
             isSubmitting={isSubmitting}
-            isEditing={isEditing}
+            taskDetails={taskDetails}
           />
         </div>
       </div>

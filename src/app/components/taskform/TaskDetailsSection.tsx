@@ -4,11 +4,10 @@ import { taskSchema } from '@/models/zod_schema'
 
 type TaskFormProps = {
   register: UseFormRegister<z.infer<typeof taskSchema>>
-  taskDetails?: z.infer<typeof taskSchema>
   errors: FieldErrors<z.infer<typeof taskSchema>>
 }
 
-function TaskDetailsSection({ register, taskDetails, errors }: TaskFormProps) {
+function TaskDetailsSection({ register, errors }: TaskFormProps) {
   return (
     <div className='mb-5 flex flex-col w-1/2'>
       <label htmlFor='assignee' className='font-medium text-gray-700'>

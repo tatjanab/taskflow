@@ -1,14 +1,12 @@
-import { UseFormRegister, FieldErrors } from 'react-hook-form'
+import { UseFormRegister } from 'react-hook-form'
 import { z } from 'zod'
 import { taskSchema } from '@/models/zod_schema'
 
 type TaskFormProps = {
   register: UseFormRegister<z.infer<typeof taskSchema>>
-  taskDetails?: z.infer<typeof taskSchema>
-  errors: FieldErrors<z.infer<typeof taskSchema>>
 }
 
-function TaskTypeSection({ register, taskDetails, errors }: TaskFormProps) {
+function TaskTypeSection({ register }: TaskFormProps) {
   return (
     <>
       <div className='flex flex-col w-1/2'>

@@ -13,7 +13,7 @@ import TaskTypeSection from './TaskTypeSection'
 import TaskDetailsSection from './TaskDetailsSection'
 import TaskDescriptionSection from './TaskDescriptionSection'
 import TaskFormFooter from './TaskFormFooter'
-
+import { UseFormSetValue } from 'react-hook-form'
 type addTaskFields = z.infer<typeof taskSchema>
 type TaskFormContentProps = {
   onCloseModal: () => void
@@ -23,8 +23,6 @@ type TaskFormContentProps = {
   taskDetails: addTaskFields
   taskId: string
   isLoading: boolean
-  setValue: any
-  control: Control<addTaskFields>
 }
 
 function TaskFormContent({
@@ -32,29 +30,10 @@ function TaskFormContent({
   isSubmitting,
   taskId,
   isLoading,
-  setValue,
   taskDetails,
   register,
   errors,
 }: TaskFormContentProps) {
-  const [isEditing, setIsEditing] = useState(false)
-  // Add useEffect to set initial values when taskDetails changes
-  useEffect(() => {
-    if (taskDetails && taskId) {
-      // Set required fields explicitly
-      setValue('summary', taskDetails.summary || '')
-      setValue('type', taskDetails.type || 'Task')
-      setValue('status', taskDetails.status || 'Open')
-      setValue('details.assignee', taskDetails.details?.assignee || '')
-      setValue('details.priority', taskDetails.details?.priority || 'High')
-      setValue('description', taskDetails.description || '')
-
-      setIsEditing(true)
-    } else {
-      setIsEditing(false)
-    }
-  }, [taskDetails, setValue])
-
   const isLoadingDelayed = useMinimumLoadingTime(isLoading)
 
   return (
@@ -66,34 +45,16 @@ function TaskFormContent({
           <TaskFormHeader taskId={taskId} taskSummary={taskDetails.summary} />
           <div className='p-0'>
             <div className='p-2'>
-              <TaskIdentificationSection
-                register={register}
-                taskDetails={taskDetails}
-              />
-              <TaskSummarySection
-                register={register}
-                taskDetails={taskDetails}
-                errors={errors}
-              />
+              <TaskIdentificationSection register={register} />
+              <TaskSummarySection register={register} errors={errors} />
               <div className='flex flex-row gap-4 mb-5'>
-                <TaskTypeSection
-                  register={register}
-                  taskDetails={taskDetails}
-                  errors={errors}
-                />
+                <TaskTypeSection register={register} />
               </div>
-              <TaskDetailsSection
-                register={register}
-                taskDetails={taskDetails}
-                errors={errors}
-              />
-              <TaskDescriptionSection
-                register={register}
-                taskDetails={taskDetails}
-              />
+              <TaskDetailsSection register={register} errors={errors} />
+              <TaskDescriptionSection register={register} />
               <TaskFormFooter
                 isSubmitting={isSubmitting}
-                isEditing={isEditing}
+                taskDetails={taskDetails}
                 onCloseModal={onCloseModal}
               />
             </div>
