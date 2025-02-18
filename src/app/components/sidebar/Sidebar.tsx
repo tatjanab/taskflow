@@ -15,6 +15,12 @@ import {
   SidebarMenuItem,
   SidebarSeparator,
 } from '@/components/ui/sidebar'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 import SidebarProjectsGroup from './SidebarProjectsGroup'
 
 import useFetchProjects from '@/hooks/useFetchProjects'
@@ -49,12 +55,21 @@ function AppSidebar() {
 
               <SidebarSeparator />
               <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <Link href='/'>
-                    <Settings className='mr-2 size-5' />
-                    <span>Settings</span>
-                  </Link>
-                </SidebarMenuButton>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <SidebarMenuButton asChild>
+                        <Link href='/'>
+                          <Settings className='mr-2 size-5' />
+                          <span>Settings</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </TooltipTrigger>
+                    <TooltipContent side='right' align='center'>
+                      <span>Settings</span>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>

@@ -31,8 +31,6 @@ function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
     setTaskId(selectedTask)
   }, [searchParams])
 
-  console.log('taskId aaa', taskId)
-
   const form = useForm<addTaskFields>({
     resolver: zodResolver(taskSchema),
     mode: 'onChange',
@@ -43,17 +41,28 @@ function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
       status: 'Open',
       details: {
         assignee: '',
-        priority: 'High',
+        priority: 'Medium',
       },
     },
   })
 
+  // Reset form with task details when they're loaded
+  useEffect(() => {
+    if (taskDetails) {
+      form.reset({
+        summary: taskDetails.summary,
+        description: taskDetails.description,
+        type: taskDetails.type,
+        status: taskDetails.status,
+        details: {
+          assignee: taskDetails.details?.assignee,
+          priority: taskDetails.details?.priority,
+        },
+      })
+    }
+  }, [taskDetails, form])
+
   const handleAddTask: SubmitHandler<addTaskFields> = async (data) => {
-    console.log('Form submission:', {
-      isEditing: taskId ? true : false,
-      taskId,
-      data,
-    })
     try {
       if (taskId) {
         console.log('Attempting to update task:', taskId)
@@ -72,7 +81,6 @@ function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
     handleSubmit,
     formState: { errors, isSubmitting },
     setValue,
-    control,
   } = form // destructure after creating form instance
 
   useEffect(() => {
@@ -91,9 +99,8 @@ function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
           isSubmitting={isSubmitting}
           taskDetails={taskDetails || {}}
           taskId={taskId}
-          isLoading={isLoading}
           setValue={setValue}
-          control={control}
+          isLoading={isLoading}
         />
       </form>
     </Form>
