@@ -21,7 +21,8 @@
     ],
     "paths": {
       "@/*": ["./src/app/*"],
-      "@ui/*": ["./src/components/ui/*"]
+      "@ui/*": ["./src/components/ui/*"],
+      "@features/*": ["./src/features/*"]
     }
   },
   "include": [
@@ -30,7 +31,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/app/models/types.ts",
-    "src/app/models/task.js"
-, "src/app/models/counter.js"  ],
+    "src/app/models/task.js",
+    "src/app/models/counter.js"
+  ],
   "exclude": ["node_modules"]
 }
