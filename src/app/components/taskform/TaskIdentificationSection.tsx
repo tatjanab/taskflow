@@ -1,26 +1,46 @@
-import { UseFormRegister } from 'react-hook-form'
+import { UseFormRegister, UseFormSetValue } from 'react-hook-form'
 import { z } from 'zod'
 import { taskSchema } from '@/models/zod_schema'
+import { Label } from '../ui/label'
+import {
+  Select,
+  SelectItem,
+  SelectContent,
+  SelectTrigger,
+  SelectValue,
+} from '../ui/select'
 
 type TaskFormProps = {
   register: UseFormRegister<z.infer<typeof taskSchema>>
+  setValue: UseFormSetValue<z.infer<typeof taskSchema>>
+  taskDetails: z.infer<typeof taskSchema>
 }
 
-function TaskIdentificationSection({ register }: TaskFormProps) {
+function TaskIdentificationSection({
+  register,
+  setValue,
+  taskDetails,
+}: TaskFormProps) {
   return (
-    <div className='flex flex-col gap-4 mb-5 w-1/2'>
-      <label htmlFor='status' className='font-medium text-gray-700'>
+    <div className='flex flex-col gap-2 mb-5 w-1/2'>
+      <Label htmlFor='status' className='font-medium text-gray-700'>
         Status <span className='text-red-500'>*</span>
-      </label>
-      <select
-        {...register('status')}
-        id='status'
-        className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+      </Label>
+      <Select
+        defaultValue={taskDetails?.status || 'Open'}
+        onValueChange={(value) =>
+          setValue('status', value as 'Open' | 'In Progress' | 'Done')
+        }
       >
-        <option value='Open'>Open</option>
-        <option value='In Progress'>In Progress</option>
-        <option value='Done'>Done</option>
-      </select>
+        <SelectTrigger>
+          <SelectValue placeholder='Select Status' />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value='Open'>Open</SelectItem>
+          <SelectItem value='In Progress'>In Progress</SelectItem>
+          <SelectItem value='Done'>Done</SelectItem>
+        </SelectContent>
+      </Select>
     </div>
   )
 }

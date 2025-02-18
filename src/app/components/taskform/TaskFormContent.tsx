@@ -23,6 +23,7 @@ type TaskFormContentProps = {
   taskDetails: addTaskFields
   taskId: string
   isLoading: boolean
+  setValue: UseFormSetValue<addTaskFields>
 }
 
 function TaskFormContent({
@@ -33,6 +34,7 @@ function TaskFormContent({
   taskDetails,
   register,
   errors,
+  setValue,
 }: TaskFormContentProps) {
   const isLoadingDelayed = useMinimumLoadingTime(isLoading)
 
@@ -43,12 +45,21 @@ function TaskFormContent({
       ) : (
         <>
           <TaskFormHeader taskId={taskId} taskSummary={taskDetails.summary} />
+          <hr className='border-gray-300 my-3' />
           <div className='p-0'>
             <div className='p-2'>
-              <TaskIdentificationSection register={register} />
+              <TaskIdentificationSection
+                setValue={setValue}
+                register={register}
+                taskDetails={taskDetails}
+              />
               <TaskSummarySection register={register} errors={errors} />
               <div className='flex flex-row gap-4 mb-5'>
-                <TaskTypeSection register={register} />
+                <TaskTypeSection
+                  setValue={setValue}
+                  register={register}
+                  taskDetails={taskDetails}
+                />
               </div>
               <TaskDetailsSection register={register} errors={errors} />
               <TaskDescriptionSection register={register} />

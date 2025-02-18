@@ -1,6 +1,8 @@
 import { UseFormRegister, FieldErrors } from 'react-hook-form'
 import { z } from 'zod'
 import { taskSchema } from '@/models/zod_schema'
+import { Label } from '../ui/label'
+import { Input } from '../ui/input'
 
 type TaskFormProps = {
   register: UseFormRegister<z.infer<typeof taskSchema>>
@@ -9,11 +11,11 @@ type TaskFormProps = {
 
 function TaskDetailsSection({ register, errors }: TaskFormProps) {
   return (
-    <div className='mb-5 flex flex-col w-1/2'>
-      <label htmlFor='assignee' className='font-medium text-gray-700'>
+    <div className='mb-5 flex flex-col gap-2 w-1/2'>
+      <Label htmlFor='assignee' className='font-medium text-gray-700'>
         Assignee <span className='text-red-500'>*</span>
-      </label>
-      <input
+      </Label>
+      <Input
         {...register('details.assignee')}
         id='assignee'
         className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'

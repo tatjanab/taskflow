@@ -80,6 +80,7 @@ function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    setValue,
   } = form // destructure after creating form instance
 
   useEffect(() => {
@@ -98,6 +99,7 @@ function TaskFormInner({ isOpen, onCloseModal }: TaskProps) {
           isSubmitting={isSubmitting}
           taskDetails={taskDetails || {}}
           taskId={taskId}
+          setValue={setValue}
           isLoading={isLoading}
         />
       </form>

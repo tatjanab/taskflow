@@ -2,11 +2,6 @@ function TaskFormLoader() {
   return (
     <div className='animate-pulse'>
       <div className='flex flex-row gap-4'>
-        <div className='flex flex-col w-1/2'>
-          <label className='mb-5 text-sm font-bold'>Task ID</label>
-          <div className='h-8 bg-gray-300 rounded'></div>
-        </div>
-
         <div className='flex flex-col mb-4 w-1/2'>
           <label className='mb-5 text-sm font-bold'>Status</label>
           <div className='h-8 bg-gray-300 rounded'></div>

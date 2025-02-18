@@ -1,42 +1,66 @@
-import { UseFormRegister } from 'react-hook-form'
+import { UseFormRegister, UseFormSetValue } from 'react-hook-form'
 import { z } from 'zod'
 import { taskSchema } from '@/models/zod_schema'
-
+import { Label } from '../ui/label'
+import {
+  Select,
+  SelectItem,
+  SelectContent,
+  SelectTrigger,
+  SelectValue,
+} from '../ui/select'
 type TaskFormProps = {
   register: UseFormRegister<z.infer<typeof taskSchema>>
+  setValue: UseFormSetValue<z.infer<typeof taskSchema>>
+  taskDetails: z.infer<typeof taskSchema>
 }
 
-function TaskTypeSection({ register }: TaskFormProps) {
+function TaskTypeSection({ register, setValue, taskDetails }: TaskFormProps) {
   return (
     <>
-      <div className='flex flex-col w-1/2'>
-        <label htmlFor='type' className='font-medium text-gray-700'>
+      <div className='flex flex-col gap-2 w-1/2'>
+        <Label htmlFor='type' className='font-medium text-gray-700'>
           Type <span className='text-red-500'>*</span>
-        </label>
-        <select
-          {...register('type')}
-          id='type'
-          className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+        </Label>
+        <Select
+          defaultValue={taskDetails?.type || 'Feature'}
+          onValueChange={(value) =>
+            setValue(
+              'type',
+              value as 'Feature' | 'Improvement' | 'Task' | 'Bug',
+            )
+          }
         >
-          <option value='Feature'>Feature</option>
-          <option value='Improvement'>Improvement</option>
-          <option value='Task'>Task</option>
-          <option value='Bug'>Bug</option>
-        </select>
+          <SelectTrigger>
+            <SelectValue placeholder='Select Type' />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value='Feature'>Feature</SelectItem>
+            <SelectItem value='Improvement'>Improvement</SelectItem>
+            <SelectItem value='Task'>Task</SelectItem>
+            <SelectItem value='Bug'>Bug</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
-      <div className='flex flex-col w-1/2'>
-        <label htmlFor='priority' className='font-medium text-gray-700'>
+      <div className='flex flex-col gap-2 w-1/2'>
+        <Label htmlFor='priority' className='font-medium text-gray-700'>
           Priority <span className='text-red-500'>*</span>
-        </label>
-        <select
-          {...register('details.priority')}
-          id='priority'
-          className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+        </Label>
+        <Select
+          defaultValue={taskDetails?.details?.priority || 'High'}
+          onValueChange={(value) =>
+            setValue('details.priority', value as 'High' | 'Medium' | 'Low')
+          }
         >
-          <option value='High'>High</option>
-          <option value='Medium'>Medium</option>
-          <option value='Low'>Low</option>
-        </select>
+          <SelectTrigger>
+            <SelectValue placeholder='Select Priority' />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value='High'>High</SelectItem>
+            <SelectItem value='Medium'>Medium</SelectItem>
+            <SelectItem value='Low'>Low</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
     </>
   )

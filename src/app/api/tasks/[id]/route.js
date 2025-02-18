@@ -23,7 +23,7 @@ export const PATCH = async (request, { params }) => {
   try {
     await connectToDB()
     const body = await request.json()
-    const { id } = params
+    const { id } = await params
     const task = await Task.findOneAndUpdate({ taskId: id }, body, {
       new: true, // This option returns the updated document
     })
