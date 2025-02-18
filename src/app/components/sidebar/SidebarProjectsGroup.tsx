@@ -9,15 +9,14 @@ import {
   SidebarMenuSub,
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar'
-import Link from 'next/link'
 import {
-  FolderDot,
-  ChevronsUpDown,
-  Logs,
-  ListChecks,
-  PanelsTopLeft,
-  ChevronRight,
-} from 'lucide-react'
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
+import Link from 'next/link'
+import { Logs, ListChecks, PanelsTopLeft, ChevronRight } from 'lucide-react'
 
 function SidebarProjectsGroup({ project }) {
   const taskListUrl = `/project?projectId=${project.prefix}&status=Open, In Progress`
@@ -26,13 +25,22 @@ function SidebarProjectsGroup({ project }) {
   return (
     <Collapsible key={project.name} className='group/collapsible'>
       <SidebarMenuItem>
-        <CollapsibleTrigger asChild>
-          <SidebarMenuButton className='flex flex-row items-center justify-start w-full'>
-            <PanelsTopLeft className='size-5 mr-2' />
-            <span>{project.name}</span>
-            <ChevronRight className='ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90' />
-          </SidebarMenuButton>
-        </CollapsibleTrigger>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <CollapsibleTrigger asChild>
+                <SidebarMenuButton className='flex flex-row items-center justify-start w-full'>
+                  <PanelsTopLeft className='size-5 mr-2' />
+                  <span>{project.name}</span>
+                  <ChevronRight className='ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90' />
+                </SidebarMenuButton>
+              </CollapsibleTrigger>
+            </TooltipTrigger>
+            <TooltipContent side='right' align='center'>
+              <span>{project.name}</span>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
         <CollapsibleContent>
           <SidebarMenuSub>
             <SidebarMenuSubItem>
