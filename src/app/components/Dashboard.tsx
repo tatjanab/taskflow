@@ -59,7 +59,7 @@ function DashboardInner() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {taskList.length === 0 && (
+          {taskList.length === 0 && !isLoading && (
             <TableRow className='mt-6'>
               <TableCell colSpan={6} className='text-center mt-6'>
                 No tasks in the list
