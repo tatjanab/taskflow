@@ -19,15 +19,15 @@ function LoginForm() {
   return (
     <Card className='border-none'>
       <CardHeader>
-        {/* <div className='flex flex-row items-center'>
+        <div className='flex flex-row items-center mb-6'>
           <Image
             src='/images/logo.svg'
             alt='Taskasaurus'
-            width={28}
-            height={28}
+            width={18}
+            height={18}
           />
           <h3 className='ml-2 text-md font-bold'>Taskasaurus</h3>
-        </div> */}
+        </div>
         <CardTitle className='text-xl'>Login</CardTitle>
         <CardDescription>
           Enter your email below to login to your account
