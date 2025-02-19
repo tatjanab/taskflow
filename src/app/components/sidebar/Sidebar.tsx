@@ -2,10 +2,11 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { Settings } from 'lucide-react'
+import { LogOut, Settings } from 'lucide-react'
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -21,8 +22,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
+import { Button } from '@/components/ui/button'
 import SidebarProjectsGroup from './SidebarProjectsGroup'
-
+import { logout } from '@/lib/actions'
 import useFetchProjects from '@/hooks/useFetchProjects'
 
 function AppSidebar() {
@@ -75,6 +77,12 @@ function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter>
+        <Button onClick={() => logout()} className='w-full'>
+          <LogOut className='mr-2 size-5' />
+          <span>Logout</span>
+        </Button>
+      </SidebarFooter>
     </Sidebar>
   )
 }
