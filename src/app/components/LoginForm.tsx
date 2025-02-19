@@ -1,6 +1,7 @@
 'use client'
 import { Input } from '@/components/ui/input'
 import { useActionState } from 'react'
+import { useFormStatus } from 'react-dom'
 import { login } from '../lib/actions'
 import {
   Card,
@@ -67,12 +68,7 @@ function LoginForm() {
               </div>
             )}
           </div>
-          <button
-            type='submit'
-            className='btn-main w-full rounded-md bg-blue-600 px-5 py-2 text-sm uppercase text-white'
-          >
-            Login
-          </button>
+          <SubmitButton />
         </form>
       </CardContent>
       <CardFooter>
@@ -84,6 +80,19 @@ function LoginForm() {
         </p>
       </CardFooter>
     </Card>
+  )
+}
+
+const SubmitButton = () => {
+  const { pending } = useFormStatus()
+  return (
+    <button
+      type='submit'
+      disabled={pending}
+      className='btn-main w-full rounded-md bg-blue-600 px-5 py-2 text-sm uppercase text-white'
+    >
+      {pending ? 'Logging in...' : 'Login'}
+    </button>
   )
 }
 
