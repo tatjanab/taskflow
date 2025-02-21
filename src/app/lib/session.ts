@@ -16,7 +16,6 @@ export async function createSession(userId: string) {
     httpOnly: true,
     secure: true,
     expires: expiresAt,
-    sameSite: 'lax', // Prevents issues in some browsers
   })
 
   console.log('Session cookie set:', cookieStore.get('session'))
