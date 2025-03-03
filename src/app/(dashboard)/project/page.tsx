@@ -1,4 +1,4 @@
-import Dashboard from '@/components/Dashboard'
+import Dashboard from '@features/table/Dashboard'
 
 export default function ProjectPage() {
   return (
