@@ -8,7 +8,7 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useTaskData from '../../hooks/useTaskData'
 import { useEffect } from 'react'
-import TaskFormContent from './taskform/TaskFormContent'
+import TaskFormContent from './TaskFormContent'
 import useFetchTaskDetails from '../../hooks/useFetchTaskDetails'
 import { useSearchParams } from 'next/navigation'
 

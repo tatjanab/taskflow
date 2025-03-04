@@ -1,8 +1,8 @@
 import { UseFormRegister } from 'react-hook-form'
 import { z } from 'zod'
 import { taskSchema } from '@/models/zod_schema'
-import { Label } from '../ui/label'
-import { Textarea } from '../ui/textarea'
+import { Label } from '@components/ui/label'
+import { Textarea } from '@components/ui/textarea'
 
 type TaskFormProps = {
   register: UseFormRegister<z.infer<typeof taskSchema>>

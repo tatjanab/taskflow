@@ -1,14 +1,14 @@
 import { UseFormRegister, UseFormSetValue } from 'react-hook-form'
 import { z } from 'zod'
 import { taskSchema } from '@/models/zod_schema'
-import { Label } from '../ui/label'
+import { Label } from '@components/ui/label'
 import {
   Select,
   SelectItem,
   SelectContent,
   SelectTrigger,
   SelectValue,
-} from '../ui/select'
+} from '@components/ui/select'
 type TaskFormProps = {
   register: UseFormRegister<z.infer<typeof taskSchema>>
   setValue: UseFormSetValue<z.infer<typeof taskSchema>>

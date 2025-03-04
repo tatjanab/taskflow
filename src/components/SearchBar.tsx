@@ -1,8 +1,8 @@
 'use client'
 
 import { Suspense } from 'react'
-import useSearchState from '../../hooks/useSearchState'
-import { Input } from '../../components/ui/input'
+import useSearchState from '@hooks/useSearchState'
+import { Input } from '@components/ui/input'
 import { Search, CircleX } from 'lucide-react'
 
 function SearchBarInner() {

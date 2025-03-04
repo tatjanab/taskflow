@@ -1,8 +1,8 @@
 import { UseFormRegister, FieldErrors } from 'react-hook-form'
 import { z } from 'zod'
 import { taskSchema } from '@/models/zod_schema'
-import { Input } from '../ui/input'
-import { Label } from '../ui/label'
+import { Input } from '@components/ui/input'
+import { Label } from '@components/ui/label'
 type TaskFormProps = {
   register: UseFormRegister<z.infer<typeof taskSchema>>
   errors: FieldErrors<z.infer<typeof taskSchema>>

@@ -1,9 +1,9 @@
 'use client'
 
-import NewTaskBtn from './NewTaskBtn'
-import SearchBar from './SearchBar'
+import NewTaskBtn from '@components/NewTaskBtn'
+import SearchBar from '@components/SearchBar'
 import { ChevronRight } from 'lucide-react'
-import { SidebarTrigger } from '../../components/ui/sidebar'
+import { SidebarTrigger } from '@components/ui/sidebar'
 
 function TopBar() {
   return (

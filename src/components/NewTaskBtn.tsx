@@ -1,8 +1,8 @@
 'use client'
 
-import TaskForm from '../../components/TaskForm'
+import TaskForm from '@features/taskform/TaskForm'
 import { useState } from 'react'
-import { Dialog, DialogContent, DialogTrigger } from '../../components/ui/dialog'
+import { Dialog, DialogContent, DialogTrigger } from '@components/ui/dialog'
 
 function NewTaskBtn() {
   const [isOpen, setIsOpen] = useState(false)

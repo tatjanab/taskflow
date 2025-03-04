@@ -32,7 +32,7 @@ function AddProject() {
             </CardContent>
           </Card>
         </DialogTrigger>
-        <AddProjectDialog
+        <AddProjectDialog 
           isOpen={isOpen}
           onCloseModal={() => setIsOpen(false)}
         />
