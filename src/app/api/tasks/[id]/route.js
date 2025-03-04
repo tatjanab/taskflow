@@ -1,4 +1,4 @@
-import { connectToDB } from '@/utils/database'
+import { connectToDB } from '@utils/database'
 import Task from '@/models/task'
 import Counter from '@/models/counter'
 

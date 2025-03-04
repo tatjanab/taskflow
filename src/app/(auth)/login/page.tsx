@@ -1,5 +1,4 @@
-import LoginForm from '@/components/LoginForm'
-import Link from 'next/link'
+import LoginForm from '@features/auth/LoginForm'
 
 function Login() {
   return (

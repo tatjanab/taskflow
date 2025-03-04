@@ -1,4 +1,4 @@
-import { connectToDB } from '@/utils/database'
+import { connectToDB } from '@utils/database'
 import Project from '@/models/project'
 
 export const GET = async (request) => {

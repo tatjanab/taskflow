@@ -21,7 +21,12 @@
     ],
     "paths": {
       "@/*": ["./src/app/*"],
-      "@ui/*": ["./src/components/ui/*"]
+      "@components/*": ["./src/components/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@ui/*": ["./src/components/ui/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@features/*": ["./src/features/*"]
     }
   },
   "include": [
@@ -30,7 +35,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/app/models/types.ts",
-    "src/app/models/task.js"
-, "src/app/models/counter.js"  ],
+    "src/app/models/task.js",
+    "src/app/models/counter.js"
+  ],
   "exclude": ["node_modules"]
 }
